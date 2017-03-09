@@ -9,13 +9,13 @@ class IndexView(generic.ListView):
     context_object_name = 'latest_article_list'
 
     def get_queryset(self):
-        """ 
-            Return the last five published articles 
         """
-        return Article.objects.order_by('-pub_date')[:5]
+            Return the last five published articles
+        """
+        return Article.objects.order_by('-date')[:5]
 
 class DetailView(generic.DetailView):
     """
     """
-    model = Article 
+    model = Article
     template_name = 'blog/detail.html'

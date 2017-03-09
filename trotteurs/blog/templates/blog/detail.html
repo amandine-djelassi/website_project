@@ -1,6 +1,33 @@
-<h1>{{ article.title }}</h1>
+{% extends "blog/skeleton.html" %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% block blog_content %}
 
-<p>{{ article.abstract }}</p>
-<p>{{ article.text }}</p>
+    <!-- Blog Post -->
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <!-- Title -->
+    <h1>{{ article.title }}</h1>
+
+    <hr>
+
+    <!-- Date/Time -->
+    <p><span class="glyphicon glyphicon-time"></span> Posted on {{ article.date }}</p>
+
+    <hr>
+
+    <!-- Preview Image -->
+    {% if article.image %}
+        <img class="img-responsive" src="{{ article.image.url }}" alt="">
+    {% endif %}
+
+    <hr>
+
+    <!-- Post Content -->
+    {% if article.abstract %}
+        <p class="lead">{{ article.abstract }}</p>
+    {% endif %}
+    <p>{{ article.text }}</p>
+
+    <hr>
+
+{% endblock %}

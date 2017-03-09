@@ -1,9 +1,28 @@
-{% if latest_article_list %}
-    <ul> 
-    {% for article in latest_article_list %}
-        <li><a href="{% url 'blog:detail' article.id %}">{{ article.title }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No article are available.</p>
-{% endif %}
+{% extends "blog/skeleton.html" %}
+
+{% block blog_content %}
+
+    {% if latest_article_list %}
+        {% for article in latest_article_list %}
+            <h2>
+                <a href="{% url 'blog:detail' article.id %}">{{ article.title }}</a>
+            </h2>
+            <p><span class="glyphicon glyphicon-time"></span> Posted on {{ article.date }}</p>
+
+            <hr>
+
+            {% if article.image %}
+                <img class="img-responsive" src="{{ article.image.url }}" alt="">
+            {% endif %}
+            {% if article.abstract %}
+                <p>{{ article.abstract }}</p>
+            {% endif %}
+            <a class="btn btn-primary" href="{% url 'blog:detail' article.id %}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No article are available.</p>
+    {% endif %}
+
+{% endblock %}
