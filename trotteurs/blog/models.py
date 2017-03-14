@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from ckeditor_uploader.fields import RichTextUploadingField
 
 class Tag(models.Model):
     """
@@ -25,7 +26,7 @@ class Article(models.Model):
     date = models.DateTimeField("Date de publication")
     image = models.ImageField(upload_to='media/images', blank=True)
     abstract = models.CharField("Résumé", max_length=1000, blank=True)
-    text = models.TextField("Corps de l'article")
+    text = RichTextUploadingField()
     # tags = models.ManyToManyFiled("Tag", Tag, blank=True)
 
     def __str__(self):

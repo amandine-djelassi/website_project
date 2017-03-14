@@ -26,8 +26,7 @@
     {% if article.abstract %}
         <p class="lead">{{ article.abstract }}</p>
     {% endif %}
-    <p>{{ article.text }}</p>
-
+    {% autoescape off %}{{ article.text }}{% endautoescape %}
     <hr>
 
 {% endblock %}
