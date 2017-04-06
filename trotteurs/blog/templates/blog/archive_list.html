@@ -1,0 +1,12 @@
+{% if archive %}
+  <ul>
+  {% for y, months in archive %}
+    <li><a href="{% url 'blog:article_year_archive' y.year  %}">{{ y.year }}</a></li>
+    <ul>
+    {% for m in months %}
+      <li><a href="{% url 'blog:article_month_archive' y.year m.month %}">{{ m|date:"F" }}</a></li>
+    {% endfor %}
+    </ul>
+  {% endfor %}
+  </ul>
+{% endif %}

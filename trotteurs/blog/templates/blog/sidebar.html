@@ -1,17 +1,13 @@
 <div class="well">
     <h4>Tags</h4>
     <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        Inventore, perspiciatis adipisci accusamus laudantium odit aliquam
-        repellat tempore quos aspernatur vero.
+      {% include "blog/tag_list.html" with tags=tags %}
     </p>
 </div>
 
 <div class="well">
     <h4>Archive</h4>
     <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-        Inventore, perspiciatis adipisci accusamus laudantium odit aliquam
-        repellat tempore quos aspernatur vero.
+      {% include "blog/archive_list.html" with archive=archive %}
     </p>
 </div>

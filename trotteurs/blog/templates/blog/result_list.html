@@ -1,0 +1,40 @@
+{% extends "blog/skeleton.html" %}
+
+{% block blog_content %}
+
+    {% if article_list %}
+        {% for article in article_list %}
+        <!-- Page Content -->
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <img class="img-thumbnail" src="{{ article.image.url }}" style="max-width:100%; height:auto; display:block;" alt="">
+                </div>
+
+                <div class="col-md-5">
+                  <h2>
+                      <a href="{% url 'blog:detail' article.slug %}">{{ article.title }}</a>
+                  </h2>
+                  <p>
+                    <span class="glyphicon glyphicon-time"></span> Posté le {{ article.date }}
+                    {% include "blog/tag_list.html" with tags=article.tags.all %}
+                  </p>
+                  {% if article.abstract %}
+                      <p>{{ article.abstract }}</p>
+                  {% endif %}
+                  <a class="btn btn-primary" href="{% url 'blog:detail' article.slug %}">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                </div>
+
+              </div>
+            </div>
+            <hr>
+        {% endfor %}
+    {% else %}
+        <p>No article are available.</p>
+    {% endif %}
+
+{% endblock %}
+
+{% block blog_sidebar %}
+    {% include "blog/sidebar.html" with tags=tags_list archive=archive %}
+{% endblock %}

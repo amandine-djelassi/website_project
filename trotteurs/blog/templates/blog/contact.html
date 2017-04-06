@@ -6,3 +6,7 @@
     <img class="img-responsive" src={% static "blog/img/en-construction.jpg" %} alt="">
 
 {% endblock %}
+
+{% block blog_sidebar %}
+    {% include "blog/sidebar.html" with tags=tags_list archive=archive %}
+{% endblock %}

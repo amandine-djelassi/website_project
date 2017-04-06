@@ -11,13 +11,16 @@
     <hr>
 
     <!-- Date/Time -->
-    <p><span class="glyphicon glyphicon-time"></span> Posted on {{ article.date }}</p>
+    <p>
+      <span class="glyphicon glyphicon-time"></span> Posté le  {{ article.date }}
+      {% include "blog/tag_list.html" with tags=article.tags.all %}
+    </p>
 
     <hr>
 
     <!-- Preview Image -->
     {% if article.image %}
-        <img class="img-responsive" src="{{ article.image.url }}" alt="">
+        <img src="{{ article.image.url }}" style="max-width:100%; height:auto; display:block;"/>
     {% endif %}
 
     <hr>
@@ -29,4 +32,9 @@
     {% autoescape off %}{{ article.text }}{% endautoescape %}
     <hr>
 
+{% endblock %}
+
+
+{% block blog_sidebar %}
+    {% include "blog/sidebar.html" with tags=tags_list archive=archive %}
 {% endblock %}

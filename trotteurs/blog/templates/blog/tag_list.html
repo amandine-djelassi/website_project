@@ -1,0 +1,7 @@
+{% if tags %}
+    {% for tag in tags %}
+    <span style="line-height: 170%">
+        <a href={% url 'blog:tag_list' tag.slug  %} class="label label-primary">{{ tag.name }}</a>
+    </span>
+   {% endfor %}
+{% endif %}
