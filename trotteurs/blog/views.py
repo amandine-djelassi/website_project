@@ -3,10 +3,11 @@ from django.http import HttpResponseRedirect
 from django.views.generic import ListView, DetailView, View
 from django.views.generic.base import TemplateView
 from django.views.generic.dates import YearArchiveView, MonthArchiveView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import Article, Tag
 
-class IndexView(ListView):
+class IndexView(LoginRequiredMixin, ListView):
     template_name = 'blog/index.html'
     context_object_name = 'latest_article_list'
 
@@ -37,7 +38,7 @@ class IndexView(ListView):
         return context
 
 
-class DetailView(DetailView):
+class DetailView(LoginRequiredMixin, DetailView):
     model = Article
     template_name = 'blog/detail.html'
 
@@ -60,7 +61,7 @@ class DetailView(DetailView):
 
         return context
 
-class TagView(ListView):
+class TagView(LoginRequiredMixin, ListView):
     template_name = 'blog/result_list.html'
     context_object_name = 'article_list'
 
@@ -90,7 +91,7 @@ class TagView(ListView):
 
         return context
 
-class ArticleYearArchiveView(YearArchiveView):
+class ArticleYearArchiveView(LoginRequiredMixin, YearArchiveView):
     template_name = 'blog/result_list.html'
     context_object_name = 'article_list'
 
@@ -118,7 +119,7 @@ class ArticleYearArchiveView(YearArchiveView):
         return context
 
 
-class ArticleMonthArchiveView(MonthArchiveView):
+class ArticleMonthArchiveView(LoginRequiredMixin, MonthArchiveView):
     template_name = 'blog/result_list.html'
     context_object_name = 'article_list'
 

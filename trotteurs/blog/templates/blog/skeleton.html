@@ -1,79 +1,22 @@
-<!DOCTYPE html>
-<html lang="fr">
+{% extends "trotteurs/skeleton.html" %}
 
-    {% load staticfiles %}
-    <head>
+{% block content %}
+<div class="row">
 
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
+    <!-- Blog content -->
+    <div class="col-md-8">
+      {% block blog_content %}
+      {% endblock %}
+    </div>
 
-        <title>Blog Home - Start Bootstrap Template</title>
-
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-        <style>
-          /* Note: Try to remove the following lines to see the effect of CSS positioning */
-          .affix {
-              top: 0;
-              width: 100%;
-          }
-
-          .affix + .container-fluid {
-              padding-top: 70px;
-          }
-
-          .navbar{
-            z-index: 9999;
-          }
-        </style>
-
-    </head>
-
-    <body>
-
-        <!-- Navigation bar -->
-        {% block blog_header %}
-        {% include "blog/header.html" %}
+    <!-- Blog sidebar -->
+    <div class="col-md-4">
+        {% block sidebar %}
         {% endblock %}
+    </div>
+</div>
+{% endblock %}
 
-        <!-- Page Content -->
-        <div class="container">
-            <div class="row">
-
-                <!-- Blog content -->
-                <div class="col-md-8">
-                    {% block blog_content %}
-                    {% endblock %}
-                </div>
-
-                <!-- Blog sidebar -->
-                <div class="col-md-4">
-                    {% block blog_sidebar %}
-                        {% include "blog/sidebar.html" %}
-                    {% endblock %}
-                </div>
-            </div>
-
-            <hr>
-
-            <!-- Footer -->
-            {% block blog_footer %}
-            {% include "blog/footer.html" %}
-            {% endblock %}
-
-        </div>
-    </body>
-
-</html>
+{% block sidebar %}
+  {% include "blog/sidebar.html" %}
+{% endblock %}

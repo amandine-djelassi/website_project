@@ -5,8 +5,6 @@ import datetime
 from django.db import models
 from django.template.defaultfilters import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
-from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill
 
 class Tag(models.Model):
     """
