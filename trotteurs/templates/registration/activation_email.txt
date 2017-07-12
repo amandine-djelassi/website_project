@@ -1,2 +1,5 @@
+Merci de votre inscription sur le site trotteur.tk. 
+Pour finalisez votre inscription cliquez sur le lien suivant : http://trotteur.tk/accounts/activate/{{activation_key}}
 
-localhost:9000/accounts/activate/{{activation_key}}
+
+

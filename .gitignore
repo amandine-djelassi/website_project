@@ -1,1 +1,10 @@
 *.pyc
+trotteurs/launch_gunicorn.sh
+trotteurs/bin
+trotteurs/include
+trotteurs/lib
+trotteurs/media
+trotteurs/run
+trotteurs/static_files
+trotteurs/db.sqlite3
+trotteurs/pip-selfcheck.json

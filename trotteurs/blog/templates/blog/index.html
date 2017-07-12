@@ -3,9 +3,13 @@
 {% block blog_content %}
     {% if latest_article_list %}
         {% for article in latest_article_list %}
+
+            <!-- title -->
             <h2>
                 <a href="{% url 'blog:detail' article.slug %}">{{ article.title }}</a>
             </h2>
+
+            <!-- date and tag -->
             <p>
               <span class="glyphicon glyphicon-time"></span> Posté le {{ article.date }}
               {% include "blog/tag_list.html" with tags=article.tags.all %}
@@ -13,9 +17,12 @@
 
             <hr>
 
+            <!-- image -->
             {% if article.image %}
                 <img class="img-responsive" src="{{ article.image.url }}" style="height:300px; width:900px" alt="">
             {% endif %}
+
+            <!-- text -->
             {% if article.abstract %}
                 <p>{{ article.abstract }}</p>
             {% endif %}
@@ -24,11 +31,11 @@
             <hr>
         {% endfor %}
     {% else %}
-        <p>No article are available.</p>
+        <h2>No article are available.</h2>
     {% endif %}
 
 {% endblock %}
 
 {% block blog_sidebar %}
-    {% include "blog/sidebar.html" with tags=tags_list archive=archive %}
+    {% include "blog/sidebar.html" with tags=tags archive=archive %}
 {% endblock %}

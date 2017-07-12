@@ -1,7 +1,8 @@
+{% load staticfiles %}
 
-<div class="container-fluid" style="height:150px;">
-  <h1>Header1</h1>
-	<h2>Header2</h2>
+<!-- Logo disapear when the page is scrolled -->
+<div class="container-fluid" style="height:150px; background-color:#ffffff;" >
+  <img class="img-responsive" src={% static "trotteurs/img/logo.png" %} alt="" height="150" style="margin-left: auto; margin-right: auto;">
 </div>
 
 <!-- Navigation -->
@@ -9,32 +10,33 @@
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'blog:index' %}">Accueil</a>
+            <a class="navbar-brand" href="{% url 'home' %}">Accueil</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse" id="navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="{% url 'blog:about' %}">About</a></li>
-                <li><a href="{% url 'blog:contact' %}">Contact</a></li>
+                <li><a href="{% url 'blog:index' %}">Blog</a></li>
+                <li><a href="{% url 'about' %}">A propos</a></li>
+                <li><a href="{% url 'contact' %}">Contact</a></li>
             </ul>
+
+            <!-- Login/logout part -->
             <div class="nav navbar-btn navbar-right">
               {% if user.is_authenticated %}
-                Logged in<a href="{% url 'profile' %}">{{ user.username }}</a>
-                (<a href="{% url 'auth_logout' %}?next={{ request.path }}">Log out</a> )
+              <a href="{% url 'profile' %}" class="btn btn-link">{{ user.username }}</a>
+              <a href="{% url 'auth_logout' %}?next=/" class="btn btn-primary">Log out</a>
               {% else %}
-                  <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-link">Login</a>
-                  <a href="{% url 'registration_register' %}"
-                     class="btn btn-primary">Register</a>
+              <a href="{% url 'login' %}?next={{ request.path }}#tologin" class="btn btn-link">Login</a>
+              <a href="{% url 'registration_register' %}#toregister" class="btn btn-primary">Register</a>
               {% endif %}
             </div>
         </div>
-        <!-- /.navbar-collapse -->
     </div>
-    <!-- /.container -->
 </nav>

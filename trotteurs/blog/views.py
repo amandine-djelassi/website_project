@@ -22,7 +22,7 @@ class IndexView(LoginRequiredMixin, ListView):
         # Call the base implementation first to get a context
         context = super(IndexView, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the tags
-        context['tags_list'] = Tag.objects.all()
+        context['tags'] = Tag.objects.all()
 
         # Archive part
         archive = {}
@@ -46,7 +46,7 @@ class DetailView(LoginRequiredMixin, DetailView):
         # Call the base implementation first to get a context
         context = super(DetailView, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the tags
-        context['tags_list'] = Tag.objects.all()
+        context['tags'] = Tag.objects.all()
 
         # Archive part
         archive = {}
@@ -76,7 +76,7 @@ class TagView(LoginRequiredMixin, ListView):
         # Call the base implementation first to get a context
         context = super(TagView, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the tags
-        context['tags_list'] = Tag.objects.all()
+        context['tags'] = Tag.objects.all()
 
         # Archive part
         archive = {}
@@ -103,7 +103,7 @@ class ArticleYearArchiveView(LoginRequiredMixin, YearArchiveView):
         # Call the base implementation first to get a context
         context = super(ArticleYearArchiveView, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the tags
-        context['tags_list'] = Tag.objects.all()
+        context['tags'] = Tag.objects.all()
 
         # Archive part
         archive = {}
@@ -131,7 +131,7 @@ class ArticleMonthArchiveView(LoginRequiredMixin, MonthArchiveView):
         # Call the base implementation first to get a context
         context = super(ArticleMonthArchiveView, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the tags
-        context['tags_list'] = Tag.objects.all()
+        context['tags'] = Tag.objects.all()
 
         # Archive part
         archive = {}
@@ -145,35 +145,3 @@ class ArticleMonthArchiveView(LoginRequiredMixin, MonthArchiveView):
         context['archive'] = archive
 
         return context
-
-
-################################################################################
-#                               Static pages                                   #
-################################################################################
-
-class StaticView(TemplateView):
-
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super(StaticView, self).get_context_data(**kwargs)
-        # Add in a QuerySet of all the tags
-        context['tags_list'] = Tag.objects.all()
-
-        # Archive part
-        archive = {}
-        date_field = 'date'
-        years =  Article.objects.dates(date_field, 'year')[::-1]
-        for date_year in years:
-            months = Article.objects.filter(date__year=date_year.year).dates(date_field, 'month')
-            archive[date_year] = months
-
-        archive = sorted(archive.items(), reverse=True)
-        context['archive'] = archive
-
-        return context
-
-class AboutView(StaticView):
-    template_name = "blog/about.html"
-
-class ContactView(StaticView):
-    template_name = "blog/contact.html"

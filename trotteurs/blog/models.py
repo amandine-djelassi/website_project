@@ -1,25 +1,31 @@
 from __future__ import unicode_literals
-
 import datetime
-
 from django.db import models
 from django.template.defaultfilters import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
 
 class Tag(models.Model):
     """
+        An Tag is composed of :
+            * a name
+            * a slug
     """
     name = models.CharField("Nom", max_length=200)
     slug = models.SlugField(blank=True, unique=True)
 
     def __str__(self):
+        """
+            Return the string version of the object
+        """
         return self.name
 
     def save(self, *args, **kwargs):
+        """
+            Create a slug when saved
+        """
         # If the object is newly created, we set the slug
         if not self.id:
             self.slug = slugify(self.name)
-
         super(Tag, self).save(*args, **kwargs)
 
 class Article(models.Model):
@@ -44,11 +50,16 @@ class Article(models.Model):
     slug = models.SlugField(blank=True, unique=True)
 
     def __str__(self):
+        """
+            Return the string version of the object
+        """
         return self.title
 
     def save(self, *args, **kwargs):
+        """
+            Create a slug when saved
+        """
         # If the object is newly created, we set the slug
         if not self.id:
             self.slug = slugify(self.title)
-
         super(Article, self).save(*args, **kwargs)

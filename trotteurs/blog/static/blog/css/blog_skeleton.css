@@ -1,0 +1,42 @@
+:root {
+  --page-bg-color: white;
+  --archive-year-color: black;
+  --archive-month-color:black;
+  --sidebar-bg-color: var(--theme_color3);
+  --sidebar_border_color: black;
+}
+
+/* sidebar */
+.well h4  {
+  color:var(--text_color1);
+}
+
+.well {
+  background-color:var(--sidebar-bg-color);
+  border:var(--sidebar_border_color);
+}
+
+.well ul li a{
+  color:var(--archive-year-color);
+}
+
+.well ul ul li a{
+  color:var(--archive-month-color);
+}
+
+/* main page */
+#page h2 a  {
+  color:var(--text_color1);
+}
+
+#page {
+  background-color:var(--page-bg-color);
+  /* offset left, top, thickness, color with alpha */
+  -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+#page #article {
+  margin-top: 20px
+}

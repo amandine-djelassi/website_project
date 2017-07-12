@@ -1,7 +1,6 @@
-{% extends "blog/skeleton.html" %}
+{% extends "trotteurs/skeleton.html" %}
 
-{% block blog_content %}
-<p>Logged out!</p>
-
-<a href="{% url 'login'%}">Click here to login again.</a>
+{% block content %}
+<p>Vous êtes déconnecté</p>
+<a href="{% url 'login'%}">Cliquez ici pour vous reconnecter</a>
 {% endblock %}

@@ -1,39 +1,45 @@
-{% extends "blog/skeleton.html" %}
+{% extends "trotteurs/skeleton.html" %}
 
-{% block blog_content %}
+{% load staticfiles %}
 
+{% block css %}
+{{ block.super }}
+<link href="{% static 'trotteurs/css/login.css' %}" rel="stylesheet" />
+{% endblock %}
+
+{% block content %}
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
+<p>Votre nom d'utilisateur et votre mot de passe ne corresponde pas. Merci de réessayer.</p>
 {% endif %}
 
-{% if next %}
-    {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
-    {% else %}
-    <p>Please login to see this page.</p>
-    {% endif %}
-{% endif %}
 
 <form method="post" action="{% url 'login' %}">
-{% csrf_token %}
+  {% csrf_token %}
 
-<div>
-  <td>{{ form.username.label_tag }}</td>
-  <td>{{ form.username }}</td>
-</div>
-<div>
-  <td>{{ form.password.label_tag }}</td>
-  <td>{{ form.password }}</td>
-</div>
-
-<div>
-  <input type="submit" value="login" />
-  <input type="hidden" name="next" value="" />
-</div>
+  <!-- hidden anchor to stop jump http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
+  <a class="hiddenanchor" id="tologin"></a>
+  <div id="wrapper">
+    <div id="login" class="animate form">
+      <form  action="mysuperscript.php" autocomplete="on">
+        <h1>Log in</h1>
+        <p>
+          <label for="username" class="uname" >{{ form.username.label_tag }}</label>
+          <input id="username" name="username" required="required" type="text" placeholder="nom d'utilisateur"/>
+        </p>
+        <p>
+          <label for="password" class="youpasswd">{{ form.password.label_tag }}</label>
+          <input id="password" name="password" required="required" type="password" placeholder="mot de passe" />
+        </p>
+        <p class="login button">
+          <input type="submit" value="Login" class="btn btn-primary"/>
+        </p>
+        <p class="change_link">
+          Pas encore membre ?
+          <a href="{% url 'registration_register' %}#toregister" class="to_register">Rejoignez nous</a>
+        </p>
+      </form>
+    </div>
+  </div>
 </form>
-
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 
 {% endblock %}

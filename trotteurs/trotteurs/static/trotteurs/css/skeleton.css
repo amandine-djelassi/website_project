@@ -1,0 +1,69 @@
+:root {
+
+  /* main color of the theme */
+  --theme_color1: #354649;
+  --theme_color2: #EF6C33;
+  --theme_color3: #f5f5f5;
+  --theme_color4: #E1DDDB;
+
+  /* color of the title */
+  --text_color1: #EF6C33;
+  --text_color2: #197278;
+  --text_color3: #43AA8B;
+  --text_color4: #D7B49E;
+  --text_color5: #BC412B;
+
+  --main-bg-color: var(--theme_color4);
+  --navbar-bg-color: var(--theme_color1);
+  --navbar-border-color: var(--theme_color1);
+  --navbar-color: var(--theme_color4);
+  --navbar-focus-color: white;
+}
+
+h1  {
+  color:var(--text_color1);
+}
+h2 {
+  color:var(--text_color2);
+}
+h3{
+  color:var(--text_color3);
+}
+h4 {
+  color:var(--text_color4);
+}
+h5 {
+  color:var(--text_color5);
+}
+
+/* Navbar */
+.affix {
+    top: 0;
+    width: 100%;
+}
+
+.affix + .container-fluid {
+    padding-top: 70px;
+}
+
+.navbar{
+  z-index: 9999;
+  background-color:var(--navbar-bg-color);
+  border-color:var(--navbar-border-color);
+}
+
+.navbar-inverse .navbar-brand, .navbar-inverse #navbar-collapse-1 ul li a{
+  color: var(--navbar-color);
+}
+
+.navbar-inverse .navbar-brand:focus, .navbar-inverse .navbar-brand:hover,
+.navbar-inverse #navbar-collapse-1 ul li a:focus, .navbar-inverse #navbar-collapse-1 ul li a:hover{
+  color:var(--navbar-focus-color);
+  font-weight: bold;
+}
+
+
+/* Main page */
+body{
+  background-color:var(--main-bg-color);
+}
