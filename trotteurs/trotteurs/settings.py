@@ -36,15 +36,18 @@ SECRET_KEY = 's7&w3=y!_64^82m^=@ui2cz*zk$unrapm*qyl4vr4nms9p*(p-'
 DEBUG = True
 
 # configure email
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = get_env_variable('EMAIL_ADRESS')
-EMAIL_HOST_PASSWORD = get_env_variable('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = 587
-EMAIN_SUBJECT_PREFIX = '[Trotteurs]'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_USE_TLS = True
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_HOST_USER = get_env_variable('EMAIL_ADRESS')
+# EMAIL_HOST_PASSWORD = get_env_variable('EMAIL_HOST_PASSWORD')
+# EMAIL_PORT = 587
+# EMAIN_SUBJECT_PREFIX = '[Trotteurs]'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # print in the console instead of send an email
-#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# print in a file
+# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+# EMAIL_FILE_PATH = 'tmp/email-messages/'
 
 ACCOUNT_ACTIVATION_DAYS = 7 # One-week activation window;
 REGISTRATION_OPEN = True # If True, users can register
@@ -53,11 +56,14 @@ LOGIN_REDIRECT_URL = '/' # The page you want users to arrive at after they succe
 LOGIN_URL = '/accounts/login/' # The page users are directed to if they are not logged in, and are trying to access pages requiring authentication
 INCLUDE_REGISTER_URL = True
 
+AUTH_USER_MODEL = 'trotteurs.User'
+
 ALLOWED_HOSTS = ['5.48.217.250','127.0.0.1','.trotteur.tk', 'localhost']
 
 
 # Application definition
 INSTALLED_APPS = [
+    'registration',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -69,7 +75,6 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'django_countries',
-    'registration',
     'gunicorn',
 ]
 

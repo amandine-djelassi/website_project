@@ -20,6 +20,7 @@ from django.conf.urls.static import static
 from django.views.generic import TemplateView
 from . import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     # Administration page
@@ -30,7 +31,13 @@ urlpatterns = [
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     #Add Django site authentication urls (for login, logout, password management)
     url('^accounts/', include('django.contrib.auth.urls')),
+    # url('^accounts/', include('registration.backends.default.urls')),
     url('^accounts/', include('registration.backends.hmac.urls')),
+    url(r'^accounts/password_reset/$', auth_views.password_reset, name='auth_password_reset'),
+    url(r'^accounts/password_reset/done/$', auth_views.password_reset_done, name='auth_password_reset_done'),
+    url(r'^accounts/reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', \
+        auth_views.password_reset_confirm, name='auth_password_reset_confirm'),
+    url(r'^accounts/reset/done/$', auth_views.password_reset_complete, name='auth_password_reset_complete'),
     # Access to the profile
     url('^profile/$', views.ProfileView.as_view(), name="profile"),
     # Static files

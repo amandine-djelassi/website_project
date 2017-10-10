@@ -19,12 +19,6 @@
       <form  action="mysuperscript.php" autocomplete="on">
         <h1> Sign up </h1>
         <p>
-          <label for="id_username">{{ form.username.label_tag }}</label>
-          <input autofocus="" id="id_username" maxlength="150" name="username" type="text" required placeholder="nom d'utilisateur"/>
-          {{ form.username.errors}}
-        </p>
-
-        <p>
           <label for="id_email">{{ form.email.label_tag }}</label>
           <input id="id_email" name="email" type="email" required placeholder="email"/>
           {{ form.email.errors}}
