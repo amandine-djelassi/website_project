@@ -23,21 +23,25 @@
       <form  action="mysuperscript.php" autocomplete="on">
         <h1>Log in</h1>
         <p>
-          <label for="username" class="uname" >{{ form.username.label_tag }}</label>
-          <input id="username" name="username" required="required" type="text" placeholder="nom d'utilisateur"/>
+          <label for="email" class="uname" >{{ form.username.label_tag }}</label>
+          <input id="email" name="email" required="required" type="text" placeholder="email"/>
         </p>
         <p>
           <label for="password" class="youpasswd">{{ form.password.label_tag }}</label>
           <input id="password" name="password" required="required" type="password" placeholder="mot de passe" />
         </p>
-        <p class="login button">
+        <p>
           <input type="submit" value="Login" class="btn btn-primary"/>
+        </p>
+        <p class="reset_password">
+          mot de passe oublié ?
+          <a href="{% url 'auth_password_reset' %}">Reset it</a>
         </p>
         <p class="change_link">
           Pas encore membre ?
           <a href="{% url 'registration_register' %}#toregister" class="to_register">Rejoignez nous</a>
         </p>
-      </form>
+              </form>
     </div>
   </div>
 </form>
