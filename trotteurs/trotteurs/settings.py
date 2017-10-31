@@ -35,6 +35,8 @@ SECRET_KEY = 's7&w3=y!_64^82m^=@ui2cz*zk$unrapm*qyl4vr4nms9p*(p-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
+
 # configure email
 # EMAIL_USE_TLS = True
 # EMAIL_HOST = 'smtp.gmail.com'
@@ -71,6 +73,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
+    'gallery.apps.GalleryConfig',
     'trotteurs.apps.TrotteursConfig',
     'ckeditor',
     'ckeditor_uploader',
@@ -107,7 +110,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'trotteurs.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
@@ -152,7 +154,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static_files")
 #STATICFILES_DIRS = (os.path.join(BASE_DIR, "blog/static"), )
 
-
+AVATAR_SIZE = (100, 100)
+DEFAULT_AVATAR_URL = STATIC_URL + 'trotteurs/img/avatar.jpg'
 # Media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'

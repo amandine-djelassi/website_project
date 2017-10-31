@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth import get_user_model
-
+from django_countries.widgets import CountrySelectWidget
 User = get_user_model()
 
 class UserCreationForm(forms.ModelForm):
@@ -15,13 +15,11 @@ class UserCreationForm(forms.ModelForm):
 
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
-    # first_name = forms.CharField(label='first_name', required=False)
-    # last_name = forms.CharField(label='last_name', required=False)
-    # is_active = forms.BooleanField(label='is_active', required=False)
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'is_active')
+        fields = ('email', 'first_name', 'last_name', 'country', 'is_active')
+
 
     def clean_password2(self):
         """
@@ -54,7 +52,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'first_name', 'last_name', 'is_active', 'is_admin')
+        fields = ('email', 'password', 'first_name', 'last_name', 'country', 'username', 'is_active', 'is_admin')
 
     def clean_password(self):
         """
@@ -76,10 +74,10 @@ class UserAdmin(BaseUserAdmin):
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
     list_display = ('email', 'is_admin')
-    list_filter = ('is_admin',)
+    list_filter = ('is_admin', 'country')
     fieldsets = (
-        (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields':('first_name', 'last_name')}),
+        (None, {'fields': ('email', 'password', 'username')}),
+        ('Personal info', {'fields':('first_name', 'last_name', 'country')}),
         ('Permissions', {'fields': ('is_admin',)}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin

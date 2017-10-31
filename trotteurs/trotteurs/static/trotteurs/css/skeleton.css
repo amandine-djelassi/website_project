@@ -47,7 +47,7 @@ h5 {
 }
 
 .navbar{
-  z-index: 9999;
+  z-index: 10;
   background-color:var(--navbar-bg-color);
   border-color:var(--navbar-border-color);
 }

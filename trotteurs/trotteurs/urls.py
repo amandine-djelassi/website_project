@@ -27,9 +27,12 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # Access to the blog part
     url(r'^blog/', include('blog.urls')),
+    # Access to the gallery part
+    url(r'^gallery/', include('gallery.urls')),
     # Pretty editor for the admin part
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     #Add Django site authentication urls (for login, logout, password management)
+    url(r'^accounts/register/$', views.RegistrationView.as_view(), name='registration_register'),
     url('^accounts/', include('django.contrib.auth.urls')),
     # url('^accounts/', include('registration.backends.default.urls')),
     url('^accounts/', include('registration.backends.hmac.urls')),
@@ -39,7 +42,8 @@ urlpatterns = [
         auth_views.password_reset_confirm, name='auth_password_reset_confirm'),
     url(r'^accounts/reset/done/$', auth_views.password_reset_complete, name='auth_password_reset_complete'),
     # Access to the profile
-    url('^profile/$', views.ProfileView.as_view(), name="profile"),
+    url(r'^profile/edit/(?P<slug>[\-\w]+)/$', views.UpdateProfileView.as_view(), name='profile_edit'),
+    # url('^profile/edit/$', views.ProfileEditView.as_view(), name="profile_edit"),
     # Static files
     url(r'^about$', views.AboutView.as_view(), name='about'),
     url(r'^contact$', views.ContactView.as_view(), name='contact'),

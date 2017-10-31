@@ -1,52 +1,68 @@
 {% extends "trotteurs/skeleton.html" %}
 
-
 {% load staticfiles %}
 
 {% block css %}
 {{ block.super }}
 <link href="{% static 'trotteurs/css/login.css' %}" rel="stylesheet" />
+<style>
+
+label.required::after {
+  content: " *";
+  color: red;
+  position: absolute;
+}
+</style>
 {% endblock %}
 
 {% block content %}
-<form method="post" action=".#toregister">
+<form method="post" action="{% url 'registration_register' %}">
   {% csrf_token %}
 
-  <!-- hidden anchor to stop jump http://www.css3create.com/Astuce-Empecher-le-scroll-avec-l-utilisation-de-target#wrap4  -->
-  <a class="hiddenanchor" id="toregister"></a>
+<div class="login-page">
   <div id="wrapper">
-    <div id="register" class="animate form">
-      <form  action="mysuperscript.php" autocomplete="on">
-        <h1> Sign up </h1>
-        <p>
-          <label for="id_email">{{ form.email.label_tag }}</label>
-          <input id="id_email" name="email" type="email" required placeholder="email"/>
-          {{ form.email.errors}}
-        </p>
+    <form class="login-form">
 
-        <p>
-          <label for="id_password1">{{ form.password1.label_tag }}</label>
-          <input id="id_password1" name="password1" type="password" required placeholder="mot de passe"/>
-          {{ form.password1.errors}}
-        </p>
+      <h1>Sign up</h1>
+      {{ form.errors }}
+      <p>
+        <label for="username" class="required">Username</label>
+        <input id="username" name="username" required type="text" placeholder="username"/>
+      </p>
+      <p>
+        <label for="email" class="required">Email</label>
+        <input id="email" name="email" required type="email" placeholder="email"/>
+      </p>
+      <p>
+        <label for="first_name">First name</label>
+        <input id="first_name" name="first_name" type="text" placeholder="first name"/>
+      </p>
+      <p>
+        <label for="last_name">Last name</label>
+        <input id="last_name" name="last_name" type="text" placeholder="last name"/>
+      </p>
+      <p>
+        <label for="country">Country</label>
+        {{ form.country }}
+      </p>
+      <p>
+        <label for="password1" class="required">Mot de passe</label>
+        <input id="password1" name="password1" required type="password" placeholder="password" />
+      </p>
+      <p>
+        <label for="password2" class="required">Confirmation du mot de passe</label>
+        <input id="password2" name="password2" required type="password" placeholder="password" />
+      </p>
+      <p>
+        <input type="submit" value="Register" class="btn btn-primary"/>
+      </p>
+      <p class="change_link">
+        Déjà membre ?
+        <a href="{% url 'login' %}">Log in</a>
+      </p>
 
-        <p>
-          <label for="id_password2">{{ form.password2.label_tag }}</label>
-          <input id="id_password2" name="password2" type="password" required placeholder="mot de passe"/>
-          {{ form.password2.errors}}
-        </p>
-
-        <p class="signup button">
-          <input type="submit" value="Sign up" class="btn btn-primary"/>
-        </p>
-        <p class="change_link">
-          Déjà menbre
-          <a href="{% url 'login' %}#tologin" class="to_register">Se connecter</a>
-        </p>
-      </form>
-    </div>
-
+    </form>
   </div>
+</div>
 </form>
-
 {% endblock %}
