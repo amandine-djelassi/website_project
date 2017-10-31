@@ -11,6 +11,8 @@ class IndexView(LoginRequiredMixin, ListView):
     template_name = 'blog/index.html'
     context_object_name = 'latest_article_list'
 
+    paginate_by = 2
+
     def get_queryset(self):
         """
             Return the last published articles
@@ -64,6 +66,7 @@ class DetailView(LoginRequiredMixin, DetailView):
 class TagView(LoginRequiredMixin, ListView):
     template_name = 'blog/result_list.html'
     context_object_name = 'article_list'
+    paginate_by = 10
 
     def get_queryset(self):
         """
@@ -99,6 +102,8 @@ class ArticleYearArchiveView(LoginRequiredMixin, YearArchiveView):
     date_field = "date"
     make_object_list = True
 
+    paginate_by = 10
+
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(ArticleYearArchiveView, self).get_context_data(**kwargs)
@@ -126,6 +131,8 @@ class ArticleMonthArchiveView(LoginRequiredMixin, MonthArchiveView):
     queryset = Article.objects.all()
     date_field = "date"
     make_object_list = True
+
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

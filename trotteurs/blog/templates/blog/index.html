@@ -30,6 +30,9 @@
 
             <hr>
         {% endfor %}
+
+          {% include "blog/pagination.html" %}
+          
     {% else %}
         <h2>No article are available.</h2>
     {% endif %}

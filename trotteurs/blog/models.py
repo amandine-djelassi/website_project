@@ -6,7 +6,7 @@ from ckeditor_uploader.fields import RichTextUploadingField
 
 class Tag(models.Model):
     """
-        An Tag is composed of :
+        A Tag is composed of :
             * a name
             * a slug
     """
