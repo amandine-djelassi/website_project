@@ -1,0 +1,91 @@
+{% extends "gallery/skeleton.html" %}
+{% load staticfiles %}
+
+{% block css %}
+{{ block.super }}
+<style type="text/css">
+/* Style the buttons that are used to open and close the accordion panel */
+button.accordion {
+   background-color: #eee;
+   color: #444;
+   cursor: pointer;
+   padding: 18px;
+   width: 100%;
+   text-align: left;
+   border: none;
+   outline: none;
+   transition: 0.4s;
+   margin-top: 0;
+   margin-bottom: 0;
+}
+
+button.accordion.active, button.accordion:hover {
+   background-color: #ccc;
+}
+
+.btn-group-vertical a {
+    background-color: white;
+    border: none;
+    color: #444;
+    padding: 10px 24px;
+    cursor: pointer;
+    width: 100%;
+    display: block;
+    text-align: left;
+}
+
+.btn-group-vertical a:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
+
+/* Add a background color on hover */
+.btn-group-vertical a:hover {
+    background-color: #eee;
+}
+
+div.panel {
+    padding: 0;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+</style>
+{% endblock %}
+
+{% block gallery_content %}
+
+{% for country in country_list %}
+  <button class="accordion">{{ country.name}}</button>
+  <div class="panel">
+    <div class="btn-group-vertical btn-block">
+      {% for city in country.city_set.all %}
+        <a href={% url 'gallery:album_list' city.slug %} class="btn btn-default">{{ city.name }}</a>
+      {% endfor %}
+    </div>
+  </div>
+{% endfor %}
+
+<!-- Animated Accordion (Slide Down) -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  }
+}
+
+</script>
+{% endblock %}

@@ -1,0 +1,104 @@
+{% extends "gallery/skeleton.html" %}
+{% load staticfiles %}
+
+{% block css %}
+  {{ block.super }}
+  <link href="{% static 'gallery/css/photo-grid.css' %}" rel="stylesheet" />
+  <style>
+
+  </style>
+{% endblock %}
+
+{% block js %}
+  {{ block.super }}
+  <script type="text/javascript" src="{% static 'gallery/js/photo-grid.js' %}"></script>
+{% endblock %}
+
+{% block gallery_content %}
+  <div class="container-fluid">
+    <h1> {{ album_photo.title }}</h1>
+    <hr>
+    <div class="col-md-12">
+  	<div id="grid" class="row">
+  		<div id="posts" class="gal">
+        {% for photo in album_photo.photo_set.all %}
+        <div class="post">
+          <a title="{{ photo.title }}" href="#"><img class="thumbnail img-responsive" src="{{ photo.image.url }}"></a>
+        </div>
+        {% endfor %}
+  		</div>
+  	</div>
+  </div>
+
+  <div class="modal" id="myModal" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      	<div class="modal-header">
+      		<button class="close" type="button" data-dismiss="modal">×</button>
+      	</div>
+      	<div class="modal-body">
+      		<div id="modalCarousel" class="carousel carousel-fit">
+                <div class="carousel-inner"></div>
+                <a class="carousel-control left" href="#modalCarousel" data-slide="prev"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                <a class="carousel-control right" href="#modalCarousel" data-slide="next"><i class="glyphicon glyphicon-chevron-right"></i></a>
+              </div>
+      	</div>
+       </div>
+    </div>
+  </div>
+</div>
+
+  <script type='text/javascript'>
+  $(document).ready(function() {
+    /* copy loaded thumbnails into carousel */
+    $('.row .gal .post .thumbnail').on('load', function() {
+
+    }).each(function(i) {
+      if(this.complete) {
+      	var item = $('<div class="item"></div>');
+        var itemDiv = $(this).parents('div');
+        var title = $(this).parent('a').attr("title");
+
+        item.attr("title",title);
+      	$(itemDiv.html()).appendTo(item);
+      	item.appendTo('.carousel-inner');
+        if (i==0){ // set first item active
+         item.addClass('active');
+        }
+      }
+    });
+
+    $("#modalCarousel").swiperight(function() {
+       $(this).carousel('prev');
+     });
+    $("#modalCarousel").swipeleft(function() {
+       $(this).carousel('next');
+    });
+
+    /* activate the carousel */
+    $('#modalCarousel').carousel({interval:false});
+
+    /* change modal title when slide changes */
+    $('#modalCarousel').on('slid.bs.carousel', function () {
+      $('.modal-title').html($(this).find('.active').attr("title"));
+    })
+
+    /* when clicking a thumbnail */
+    $('.row .gal .post .thumbnail').click(function($e){
+        $e.preventDefault();
+        var idx = $(this).parents('div').index();
+      	var id = parseInt(idx);
+      	$('#myModal').modal('show'); // show the modal
+        $('#modalCarousel').carousel(id); // slide carousel to selected
+
+    });
+
+    $('#modalCarousel').click(function($e){
+        $e.preventDefault();
+    });
+  });
+
+  </script>
+
+
+  {% endblock %}

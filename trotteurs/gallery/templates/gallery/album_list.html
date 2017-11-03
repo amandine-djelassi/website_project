@@ -1,0 +1,145 @@
+{% extends "gallery/skeleton.html" %}
+{% load staticfiles %}
+
+{% block css %}
+  {{ block.super }}
+  <link href="{% static 'gallery/css/photo-grid.css' %}" rel="stylesheet" />
+  <style>
+
+  .post figure{
+    position: relative;
+  	float: left;
+  	overflow: hidden;
+  	width: 346px;
+  	height: 220px;
+    text-align: center;
+    cursor: pointer;
+    margin: 0 0 20px;
+
+  }
+  .post figure img {
+    padding: 0 15px;
+    width: 100%;
+    height: 100%;
+    /* darken */
+    filter: brightness(85%);
+    -webkit-filter: brightness(85%);
+    -moz-filter: brightness(85%);
+    -o-filter: brightness(85%);
+    -ms-filter: brightness(85%);
+  }
+
+  /* zoom */
+  figure.album-effect {
+  	-webkit-perspective: 1000px;
+  	 perspective: 1000px;
+  }
+
+  figure.album-effect:hover img {
+  	/* darken */
+    filter: brightness(50%);
+    -webkit-filter: brightness(50%);
+    -moz-filter: brightness(50%);
+    -o-filter: brightness(50%);
+    -ms-filter: brightness(50%);
+
+    /* zoom */
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+
+    -webkit-transition: -webkit-filter 0.35s, -webkit-transform 0.35s;
+  	transition: filter 0.35s, transform 0.35s;
+  }
+
+  /* lines */
+  figure.album-effect figcaption::before,
+  figure.album-effect figcaption::after {
+  	position: absolute;
+  	top: 50%;
+  	left: 50%;
+  	width: 80%;
+  	height: 1px;
+  	background: #fff;
+  	content: '';
+  	-webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+  	transition: opacity 0.35s, transform 0.35s;
+  	-webkit-transform: translate3d(-50%,-50%,0);
+  	transform: translate3d(-50%,-50%,0);
+  }
+  figure.album-effect:hover figcaption::before {
+  	opacity: 0.5;
+  	-webkit-transform: translate3d(-50%,-50%,0) rotate(45deg);
+  	transform: translate3d(-50%,-50%,0) rotate(45deg);
+  }
+  figure.album-effect:hover figcaption::after {
+  	opacity: 0.5;
+  	-webkit-transform: translate3d(-50%,-50%,0) rotate(-45deg);
+  	transform: translate3d(-50%,-50%,0) rotate(-45deg);
+  }
+
+  /* titles */
+  figure.album-effect h2,
+  figure.album-effect p {
+    color: white;
+  	position: absolute;
+  	top: 50%;
+  	left: 0;
+  	width: 100%;
+  	-webkit-transition: -webkit-transform 0.35s;
+  	transition: transform 0.35s;
+  }
+  figure.album-effect h2 {
+  	-webkit-transform: translate3d(0,-50%,0) translate3d(0,-150%,0);
+  	transform: translate3d(0,-50%,0) translate3d(0,-150%,0);
+  }
+  figure.album-effect p {
+  	padding: 0.25em 2em;
+  	-webkit-transform: translate3d(0,-50%,0) translate3d(0,150%,0);
+  	transform: translate3d(0,-50%,0) translate3d(0,150%,0);
+  }
+  figure.album-effect:hover h2 {
+  	-webkit-transform: translate3d(0,-50%,0) translate3d(0,-100%,0);
+  	transform: translate3d(0,-50%,0) translate3d(0,-100%,0);
+  }
+  figure.album-effect:hover p {
+  	-webkit-transform: translate3d(0,-50%,0) translate3d(0,100%,0);
+  	transform: translate3d(0,-50%,0) translate3d(0,100%,0);
+  }
+  </style>
+{% endblock %}
+
+{% block js %}
+  {{ block.super }}
+  <script type="text/javascript" src="{% static 'gallery/js/photo-grid.js' %}"></script>
+{% endblock %}
+
+{% block gallery_content %}
+  <div class="container-fluid">
+    <h1>Pays 0</h1>
+    <hr>
+    <div class="col-md-12">
+  	<div id="grid" class="row">
+  		<div id="posts" class="gal">
+
+  		</div>
+  	</div>
+  </div>
+
+  {% for album in album_list %}
+	<div class="post">
+		<figure class="album-effect">
+      <a href={% url 'gallery:album_photo_grid' album.slug  %} >
+			<img src="{{ album.image.url }}" alt="{{ album.title }}"/>
+      </a>
+			<figcaption>
+				<h2>{{ album.title }}</h2>
+        {% if album.description %}
+				<p>{{ album.description }}</p>
+        {% endif %}
+			</figcaption>
+		</figure>
+	</div>
+  {% endfor %}
+
+{% endblock %}
