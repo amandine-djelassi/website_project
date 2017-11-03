@@ -4,5 +4,7 @@ from . import views
 
 app_name = 'gallery'
 urlpatterns = [
-    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^album/(?P<slug>[\w-]+)/$', views.AlbumPhotoGridView.as_view(), name='album_photo_grid'),
+    url(r'^city/(?P<slug>[\w-]+)/$', views.AlbumListView.as_view(), name='album_list'),
+    url(r'^$', views.MenuDropdownView.as_view(), name='index')
 ]

@@ -2,11 +2,8 @@ from django.db import models
 import datetime
 from django.template.defaultfilters import slugify
 
-class Album(models.Model):
+class Country(models.Model):
     """
-        An album is composed of :
-            * a name
-            * a slug
     """
     name = models.CharField("Nom", max_length=200)
     slug = models.SlugField(blank=True, unique=True)
@@ -24,7 +21,57 @@ class Album(models.Model):
         # If the object is newly created, we set the slug
         if not self.id:
             self.slug = slugify(self.name)
+        super(Country, self).save(*args, **kwargs)
+
+class City(models.Model):
+    """
+    """
+    name = models.CharField("Nom", max_length=200)
+    slug = models.SlugField(blank=True, unique=True)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE)
+
+    def __str__(self):
+        """
+            Return the string version of the object
+        """
+        return self.name
+
+    def save(self, *args, **kwargs):
+        """
+            Create a slug when saved
+        """
+        # If the object is newly created, we set the slug
+        if not self.id:
+            self.slug = slugify(self.name)
+        super(City, self).save(*args, **kwargs)
+
+class Album(models.Model):
+    """
+        An album is composed of :
+            * a name
+            * a slug
+    """
+    title = models.CharField("Nom", max_length=200)
+    image = models.ImageField(upload_to='media/images')
+    description = models.CharField("Description", max_length=1000, blank=True)
+    slug = models.SlugField(blank=True, unique=True)
+    city = models.ManyToManyField(City)
+
+    def __str__(self):
+        """
+            Return the string version of the object
+        """
+        return self.title
+
+    def save(self, *args, **kwargs):
+        """
+            Create a slug when saved
+        """
+        # If the object is newly created, we set the slug
+        if not self.id:
+            self.slug = slugify(self.title)
         super(Album, self).save(*args, **kwargs)
+
 
 class Photo(models.Model):
     """
