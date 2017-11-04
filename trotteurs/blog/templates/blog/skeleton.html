@@ -5,6 +5,60 @@
 {% block css %}
 {{ block.super }}
 <link href="{% static 'blog/css/blog_skeleton.css' %}" rel="stylesheet" />
+
+<style type="text/css">
+/* Style the buttons that are used to open and close the accordion panel */
+button.accordion {
+   background-color: #eee;
+   color: #444;
+   cursor: pointer;
+   padding: 18px;
+   width: 100%;
+   text-align: left;
+   border: none;
+   outline: none;
+   transition: 0.4s;
+   margin-top: 0;
+   margin-bottom: 0;
+}
+
+button.accordion.active, button.accordion:hover {
+   background-color: #ccc;
+}
+
+.btn-group-vertical a {
+    background-color: white;
+    border: none;
+    color: #444;
+    padding: 10px 24px;
+    cursor: pointer;
+    width: 100%;
+    display: block;
+    text-align: left;
+}
+
+.btn-group-vertical a:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
+
+/* Add a background color on hover */
+.btn-group-vertical a:hover {
+    background-color: #eee;
+}
+
+div.panel {
+    padding: 0;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+}
+
+</style>
+
 {% endblock %}
 
 {% block content %}
@@ -23,4 +77,6 @@
         {% endblock %}
     </div>
 </div>
+
+
 {% endblock %}

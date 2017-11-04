@@ -11,7 +11,7 @@ class IndexView(LoginRequiredMixin, ListView):
     template_name = 'blog/index.html'
     context_object_name = 'latest_article_list'
 
-    paginate_by = 2
+    paginate_by = 10
 
     def get_queryset(self):
         """
