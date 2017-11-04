@@ -21,8 +21,9 @@ from django.views.generic import TemplateView
 from . import views
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth import views as auth_views
+from django.conf.urls.i18n import i18n_patterns
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     # Administration page
     url(r'^admin/', admin.site.urls),
     # Access to the blog part
@@ -49,7 +50,7 @@ urlpatterns = [
     url(r'^contact$', views.ContactView.as_view(), name='contact'),
     # Home of the website
     url(r'^$', views.IndexView.as_view(), name='home')
-]
+    )
 # Add static and media files
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

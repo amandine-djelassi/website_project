@@ -1,8 +1,10 @@
 {% extends "trotteurs/skeleton.html" %}
+{% load i18n %}
+
 {% block content %}
 
     {% load static %}
-    <h1>About</h1>
+    <h1>{% trans "About" %}</h1>
     <img class="img-responsive" src={% static "trotteurs/img/en-construction.jpg" %} alt="">
 
 {% endblock %}
