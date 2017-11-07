@@ -1,12 +1,12 @@
 from registration.backends.hmac.views import RegistrationView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, FormView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ObjectDoesNotExist
-from trotteurs.forms import UserProfileRegistrationForm
+from trotteurs.forms import UserProfileRegistrationForm, ContactForm
 
 class RegistrationView(RegistrationView):
     """
@@ -87,8 +87,18 @@ class AboutView(TemplateView):
     template_name = "trotteurs/about.html"
 
 
-class ContactView(TemplateView):
+class ContactView(FormView):
     """
         The contact view
     """
     template_name = "trotteurs/contact.html"
+    form_class = ContactForm
+    success_url = '/'
+
+    # def form_valid(self, form):
+    #     """
+    #         This method is called when valid form data has been POSTed
+    #         It should return an HttpResponse
+    #     """
+    #     form.send_email()
+    #     return super(ContactView, self).form_valid(form)
