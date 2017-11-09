@@ -29,6 +29,8 @@ class City(models.Model):
     name = models.CharField("Nom", max_length=200)
     slug = models.SlugField(blank=True, unique=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
+    latitude = models.DecimalField(blank=True, decimal_places=5, max_digits=10)
+    longitude = models.DecimalField(blank=True, decimal_places=5, max_digits=10)
 
     def __str__(self):
         """

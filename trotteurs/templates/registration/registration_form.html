@@ -16,6 +16,7 @@ label.required::after {
 {% endblock %}
 
 {% block content %}
+<div class="container">
 <form method="post" action="{% url 'registration_register' %}">
   {% csrf_token %}
 
@@ -65,4 +66,5 @@ label.required::after {
   </div>
 </div>
 </form>
+</div>
 {% endblock %}

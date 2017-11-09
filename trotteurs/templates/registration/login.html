@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block content %}
+<div class="container">
 <form method="post" action="{% url 'login' %}">
   {% csrf_token %}
 
@@ -40,4 +41,5 @@
   </div>
 </div>
 </form>
+</div>
 {% endblock %}

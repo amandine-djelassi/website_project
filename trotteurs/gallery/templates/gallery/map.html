@@ -1,0 +1,292 @@
+{% extends "gallery/skeleton.html" %}
+{% load staticfiles %}
+{% load l10n %}
+
+{% block css %}
+  {{ block.super }}
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.4.2/css/ol.css" type="text/css">
+    <style>
+      .map {
+        height: 100%;
+        width: 100%;
+      }
+    </style>
+
+    <style type="text/css">
+    /* Style the buttons that are used to open and close the accordion panel */
+    .col-sm-2, .col-sm-10{
+      padding: 0 !important;
+    }
+
+    button.accordion {
+       background-color: #eee;
+       color: #444;
+       cursor: pointer;
+       padding: 18px;
+       width: 100%;
+       text-align: left;
+       border: none;
+       outline: none;
+       transition: 0.4s;
+       margin: 0;
+    }
+
+    button.accordion.active, button.accordion:hover {
+       background-color: #ccc;
+    }
+
+    .btn-group-vertical a {
+        background-color: white;
+        border: none;
+        color: #444;
+        padding: 10px 24px;
+        cursor: pointer;
+        width: 100%;
+        display: block;
+        text-align: left;
+    }
+
+    .btn-group-vertical a:not(:last-child) {
+        border-bottom: 1px solid #eee;
+    }
+
+    /* Add a background color on hover */
+    .btn-group-vertical a:hover {
+        background-color: #eee;
+    }
+
+    div.panel {
+        padding: 0;
+        background-color: white;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        margin-top: 0;
+        margin-bottom: 0;
+        width: 100%;
+    }
+
+    </style>
+{% endblock %}
+
+{% block js %}
+  {{ block.super }}
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList"></script>
+    <script src="https://openlayers.org/en/v4.4.2/build/ol.js" type="text/javascript"></script>
+{% endblock %}
+
+{% block gallery_content %}
+<div class="container-fluid">
+<div class="row">
+
+    <!--  -->
+    <div class="col-sm-2">
+      {% for country in country_list %}
+        <button class="accordion">{{ country.name}}</button>
+        <div class="panel">
+          <div class="btn-group-vertical btn-block">
+            {% for city in country.city_set.all %}
+              <a href={% url 'gallery:album_list' city.slug %} class="btn btn-default">{{ city.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
+
+
+    </div>
+
+    <!--  -->
+    <div class="col-sm-10">
+        <div id="map" class="hidden-xs"></div>
+    </div>
+</div>
+</div>
+
+
+<!-- Animated Accordion (Slide Down) -->
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].onclick = function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    }
+  }
+}
+
+</script>
+
+  <script>
+
+  (function(){
+
+    var urlMap = []
+    {% for country in country_list %}
+    {% for city in country.city_set.all %}
+
+        var slug = '{{ city.slug }}'.replace('-', '')
+        urlMap[slug] = '{% url "gallery:album_list" city.slug %}';
+    {% endfor %}
+    {% endfor %}
+
+
+    function computeFeatureStyle(feature, style) {
+      // Style of the point of the cities
+      if (style=='init'){
+        return new ol.style.Style({
+          image: new ol.style.Circle({
+            radius: 5,
+            fill: new ol.style.Stroke({color: 'rgba(134,56,23,1)'})
+          })
+        });
+      }
+      // Style of the point of the cities when hover
+      else if (style=='hover') {
+        return new ol.style.Style({
+          image: new ol.style.Circle({
+            radius: 5,
+            fill: new ol.style.Stroke({color: 'rgba(97,41,19,1)'})
+          }),
+          text: new ol.style.Text({
+            text: feature.get('name')
+          })
+        });
+      }
+      // Style of the point of the cities when click
+      else if (style=='click') {
+        return new ol.style.Style({
+          image: new ol.style.Circle({
+            radius: 5,
+            fill: new ol.style.Stroke({color: 'rgba(255,255,255,1)'})
+          })
+        });
+      }
+    }
+
+    var vectorSource = new ol.source.Vector({
+      //create empty vector
+    });
+
+    // Display the differents cities where we took pictures
+    {% localize off %}
+    {% for country in country_list %}
+    {% for city in country.city_set.all %}
+        var feature = new ol.Feature({
+          geometry: new
+            ol.geom.Point(ol.proj.transform([{{ city.longitude }}, {{ city.latitude }}], 'EPSG:4326',   'EPSG:3857')),
+            name: '{{ city.name }}',
+            slug: '{{ city.slug }}'.replace('-', '')
+        });
+
+        style = computeFeatureStyle(feature, 'init')
+        feature.setStyle(style);
+        vectorSource.addFeature(feature);
+      {% endfor %}
+      {% endfor %}
+    {% endlocalize %}
+
+    var layer = new ol.layer.Vector({
+      source: vectorSource
+    })
+
+    // Creation of the map
+    var map = new ol.Map({
+      target: 'map',
+      layers: [
+        // The template of the map
+        new ol.layer.Tile({
+          // source: new ol.source.OSM()
+          source: new ol.source.Stamen({
+            layer: 'watercolor'
+          })
+        }),
+        // add the feature vector to the layer vector
+        layer,
+      ],
+      // Map center on central america
+      view: new ol.View({
+        center: ol.proj.fromLonLat([-60, 20]),
+        zoom: 2
+      }),
+      // Scroll with mouse wheel deactivate
+      interactions: ol.interaction.defaults({mouseWheelZoom:false})
+    });
+
+    ///////////////
+    // Hover effect
+
+    //set a global reference to loop only if needed
+    clickFeature=null;
+    var hovered = false;
+
+    map.on('pointermove', function(evt) {
+      if (evt.dragging) return;
+
+      var feature = map.forEachFeatureAtPixel(evt.pixel, function(ft, l){
+        return ft;
+      });
+
+      if(feature){
+        if(feature === clickFeature) return;
+          hovered = true;
+          style = computeFeatureStyle(feature, 'hover')
+          feature.setStyle(style);
+          removeStyleFromOthersFeatures(feature);
+        } else{
+          removeStyleFromAllFeatures();
+      }
+    });
+
+    function removeStyleFromAllFeatures(){
+    //continue only if needed
+      if(!hovered && typeof clickFeature!=='undefined') return;
+
+
+      layer.getSource().getFeatures().forEach(function(feature){
+        if(feature === clickFeature) return;
+        style = computeFeatureStyle(feature, 'init')
+        feature.setStyle(style);
+      });
+      hovered = false;
+    }
+
+    function removeStyleFromOthersFeatures(feature){
+      layer.getSource().getFeatures().forEach(function(ft){
+        //don't remove from the current hovering
+        if(ft === feature || ft === clickFeature) return;
+        style = computeFeatureStyle(ft, 'init')
+        ft.setStyle(style);
+      });
+    }
+
+    ///////////////////
+    // Click effect
+    map.on('click', function(evt) {
+
+      clickFeature = map.forEachFeatureAtPixel(evt.pixel, function(ft, l){
+        return ft;
+      });
+
+      removeStyleFromAllFeatures();
+
+      if(typeof clickFeature !=='undefined'){
+        style = computeFeatureStyle(clickFeature, 'click')
+        clickFeature.setStyle(style);
+        window.location.href = urlMap[clickFeature.get('slug')];
+      }
+      else{
+        removeStyleFromAllFeatures();
+      }
+    });
+
+  })();
+
+  </script>
+
+{% endblock %}

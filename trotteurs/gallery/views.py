@@ -1,4 +1,4 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Photo, Album, Country, City
 
@@ -26,13 +26,13 @@ class AlbumListView(LoginRequiredMixin, ListView):
         city = City.objects.filter(slug = self.kwargs['slug'])[0]
         return Album.objects.filter(city = city).order_by('-title')[:]
 
-class MenuDropdownView(LoginRequiredMixin, ListView):
-    template_name = 'gallery/dropdown_test.html'
+class MapView(LoginRequiredMixin, ListView):
+    template_name = 'gallery/map.html'
     context_object_name = 'country_list'
 
 
     def get_queryset(self):
         """
-            Return all the country
+            Return all the countries
         """
         return Country.objects.order_by('-name')[:]
