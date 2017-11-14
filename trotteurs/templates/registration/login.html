@@ -1,5 +1,5 @@
 {% extends "trotteurs/skeleton.html" %}
-
+{% load i18n %}
 {% load staticfiles %}
 
 {% block css %}
@@ -9,37 +9,41 @@
 
 {% block content %}
 <div class="container">
-<form method="post" action="{% url 'login' %}">
-  {% csrf_token %}
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
 
-<div class="login-page">
-  <div id="wrapper">
-    <form class="login-form">
+    <div class="login-page">
+      <div id="wrapper">
+        <form class="login-form">
 
-      <h1>Log in</h1>
-      <p>
-        <label for="username" class="uname" >{{ form.username.label_tag }}</label>
-        <input id="username" name="username" required="required" type="username" placeholder="email"/>
-      </p>
-      <p>
-        <label for="password" class="youpasswd">{{ form.password.label_tag }}</label>
-        <input id="password" name="password" required="required" type="password" placeholder="mot de passe" />
-      </p>
-      <p>
-        <input type="submit" value="Login" class="btn btn-primary"/>
-      </p>
-      <p class="reset_password">
-        mot de passe oublié ?
-        <a href="{% url 'auth_password_reset' %}">Reset it</a>
-      </p>
-      <p class="change_link">
-        Pas encore membre ?
-        <a href="{% url 'registration_register' %}">Rejoignez nous</a>
-      </p>
+          <h1>Log in</h1>
+          {% if form.errors %}
+            <p class="error_message"><span>&#8226;</span> {% trans "Incorrect username or password." %}</p>
+          {% endif %}
 
-    </form>
-  </div>
-</div>
-</form>
+          <p>
+            <label>{% trans "Email address:" %}</label>
+            <input id="username" name="username" required="required" type="username" placeholder="{% trans "email address" %}"/>
+          </p>
+          <p>
+            <label>{% trans "Password:" %}</label>
+            <input id="password" name="password" required="required" type="password" placeholder="{% trans "password" %}" />
+          </p>
+          <p>
+            <input type="submit" value="Login" class="btn btn-primary"/>
+          </p>
+          <p class="reset_password">
+            {% trans "Forgot your password ?" %}
+            <a href="{% url 'auth_password_reset' %}">{% trans "Reset it" %}</a>
+          </p>
+          <p class="change_link">
+            {% trans "Not yet a member ?" %}
+            <a href="{% url 'registration_register' %}">{% trans "Join us !" %}</a>
+          </p>
+
+        </form>
+      </div>
+    </div>
+  </form>
 </div>
 {% endblock %}

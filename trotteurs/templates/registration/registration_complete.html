@@ -1,9 +1,17 @@
 {% extends "trotteurs/skeleton.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block css %}
+  {{ block.super }}
+  <link href="{% static 'trotteurs/css/login.css' %}" rel="stylesheet" />
+{% endblock %}
+
 
 {% block content %}
-<div class="container">
-  <h1>Votre inscription est bien enregistrée !</h1>
-  <p>Un email de confirmation vous a été envoyé</p>
-  <p>Pour activer votre compte, il vous suffit de cliquer sur le lien de validation présent dans le mail de confirmation que vous avez reçu.</p>
+<div class="container" id="page">
+  <h1>{% trans "Your registration is recorded !" %}</h1>
+  <p>{% trans "A confirmation email has been send to you.
+    Open your email and click on the link to activate your account." %}</p>
 </div>
 {% endblock %}

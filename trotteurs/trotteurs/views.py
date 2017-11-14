@@ -21,8 +21,6 @@ class RegistrationView(RegistrationView):
           # get the user creditials
           email = form.cleaned_data['email']
           password = form.cleaned_data['password1']
-          # authenticate and login
-        #   self.auth_login(self.request, email, password)
 
           return response
 
@@ -56,7 +54,7 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
     User = get_user_model()
     model = User
     fields = ['first_name', 'last_name', 'country', 'avatar', 'about']
-    template_name = 'trotteurs/profile_edit.html'
+    template_name = 'registration/profile_edit.html'
     slug_field = 'slug'
     slug_url_kwarg = 'slug'
 
@@ -94,11 +92,3 @@ class ContactView(FormView):
     template_name = "trotteurs/contact.html"
     form_class = ContactForm
     success_url = '/'
-
-    # def form_valid(self, form):
-    #     """
-    #         This method is called when valid form data has been POSTed
-    #         It should return an HttpResponse
-    #     """
-    #     form.send_email()
-    #     return super(ContactView, self).form_valid(form)

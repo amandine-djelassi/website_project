@@ -1,7 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser
-)
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.core.validators import RegexValidator
 from django.core.mail import send_mail
 from django.contrib.auth.models import PermissionsMixin
@@ -13,6 +11,7 @@ from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.conf import settings
 from django.template.defaultfilters import slugify
+from django.utils.translation import ugettext_lazy as _
 class OverwriteStorage(FileSystemStorage):
     """
         When saving an image, this storage class deletes existing file,
@@ -99,52 +98,52 @@ class User(AbstractBaseUser, PermissionsMixin):
             *is_active
             *is_admin
     """
+    username = models.CharField(
+        verbose_name=_('Username'),
+        max_length=30,
+        unique=True,
+        error_messages={'unique': _("This username already exists.")}
+    )
+
     email = models.EmailField(
-        verbose_name='email address',
+        verbose_name=_('Email address'),
         max_length=255,
         unique=True,
+        error_messages={'unique': _("This email has already been registered.")}
     )
 
     first_name = models.CharField(
-        verbose_name='first name',
+        verbose_name=_('First name'),
         max_length=30,
         blank=True,
-        help_text=('Required. 30 characters or fewer. Letters, digits and ''@/./+/-/_ only.'),
-        validators=[RegexValidator(r'^[\w.+-]+$', ('Enter a valid first name.'), 'invalid')]
+        validators=[RegexValidator(r'^[\w.+-]+$', _('Enter a valid first name.'), 'invalid')]
     )
 
     last_name = models.CharField(
-        verbose_name='last name',
+        verbose_name=_('Last name'),
         max_length=30,
         blank=True,
-        help_text=('Required. 30 characters or fewer. Letters, digits and ''@/./+/-/_ only.'),
-        validators=[RegexValidator(r'^[\w.+-]+$', ('Enter a valid last name.'), 'invalid')]
+        validators=[RegexValidator(r'^[\w.+-]+$', _('Enter a valid last name.'), 'invalid')]
     )
-    # country of residence. 3rd party component,
-    # saved as ISO code, displayed as full name.
-    # Input control is a dropdown list, supporting localisation
-    country = CountryField(blank_label='(select country)', blank=True)
+
+    country = CountryField(
+        verbose_name=_('Country'),
+        blank_label=_('(Select country)'),
+        blank=True
+    )
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
-    # username present only to avoid error
-    username = models.CharField('username', max_length=30, null=True, blank=True, unique=True)
-
     avatar = MyImageField(storage=OverwriteStorage(), upload_to=avatar_name_path, blank=True)
-    # "about me", biography text field
     about = models.TextField(max_length=500, blank=True)
-    slug = models.SlugField(max_length=30, unique=True)
 
+    slug = models.SlugField(max_length=30, unique=True)
 
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
-
-    # def __init__(self, *args, **kwargs):
-    #     # __original_avatar is used to detect avatar change, to run avatar resize procedure only when needed
-    # __original_avatar = avatar
 
     def __str__(self):
         return self.email

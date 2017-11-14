@@ -1,70 +1,41 @@
 {% extends "trotteurs/skeleton.html" %}
-
+{% load i18n %}
 {% load staticfiles %}
 
 {% block css %}
-{{ block.super }}
-<link href="{% static 'trotteurs/css/login.css' %}" rel="stylesheet" />
-<style>
-
-label.required::after {
-  content: " *";
-  color: red;
-  position: absolute;
-}
-</style>
+  {{ block.super }}
+  <link href="{% static 'trotteurs/css/login.css' %}" rel="stylesheet" />
 {% endblock %}
 
 {% block content %}
-<div class="container">
-<form method="post" action="{% url 'registration_register' %}">
-  {% csrf_token %}
+  <div class="container">
+    <form method="post" action="{% url 'registration_register' %}">
+      {% csrf_token %}
 
-<div class="login-page">
-  <div id="wrapper">
-    <form class="login-form">
+      <div class="login-page">
+        <div id="wrapper">
+          <form class="login-form">
+            <h1>Register</h1>
 
-      <h1>Sign up</h1>
-      {{ form.errors }}
-      <p>
-        <label for="username" class="required">Username</label>
-        <input id="username" name="username" required type="text" placeholder="username"/>
-      </p>
-      <p>
-        <label for="email" class="required">Email</label>
-        <input id="email" name="email" required type="email" placeholder="email"/>
-      </p>
-      <p>
-        <label for="first_name">First name</label>
-        <input id="first_name" name="first_name" type="text" placeholder="first name"/>
-      </p>
-      <p>
-        <label for="last_name">Last name</label>
-        <input id="last_name" name="last_name" type="text" placeholder="last name"/>
-      </p>
-      <p>
-        <label for="country">Country</label>
-        {{ form.country }}
-      </p>
-      <p>
-        <label for="password1" class="required">Mot de passe</label>
-        <input id="password1" name="password1" required type="password" placeholder="password" />
-      </p>
-      <p>
-        <label for="password2" class="required">Confirmation du mot de passe</label>
-        <input id="password2" name="password2" required type="password" placeholder="password" />
-      </p>
-      <p>
-        <input type="submit" value="Register" class="btn btn-primary"/>
-      </p>
-      <p class="change_link">
-        Déjà membre ?
-        <a href="{% url 'login' %}">Log in</a>
-      </p>
+            {% for field in form %}
+              <div class="fieldWrapper"}>
+                {{ field.label_tag }}
+                {{ field.errors }}
+                {{ field }}
+              </div>
+            {% endfor %}
+            
+            <p>
+              <input type="submit" value="Register" class="btn btn-primary"/>
+            </p>
+            <p class="change_link">
+              {% trans "Already a member ?" %}
+              <a href="{% url 'login' %}">{% trans "Log in" %}</a>
+            </p>
 
+          </form>
+        </div>
+      </div>
     </form>
   </div>
-</div>
-</form>
-</div>
 {% endblock %}

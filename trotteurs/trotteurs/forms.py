@@ -2,8 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 from registration.forms import RegistrationForm
-from django_countries.fields import LazyTypedChoiceField
-from django_countries import countries
+from django.utils.translation import ugettext_lazy as _
 User = get_user_model()
 
 class UserCreationForm(UserCreationForm):
@@ -20,15 +19,39 @@ class UserCreationForm(UserCreationForm):
 
 
 class UserProfileRegistrationForm(RegistrationForm):
-    username = forms.CharField(max_length=30, label='Username')
+
+    username = forms.CharField(
+        max_length=30,
+        label=_('Username'),
+        widget=forms.TextInput(attrs={'placeholder': _('username')})
+    )
+
+    email = forms.EmailField(
+        label=_('Email address'),
+        widget=forms.TextInput(attrs={'placeholder': _('email address')})
+    )
+
+    first_name = forms.CharField(
+        max_length=30,
+        label=_('First name'),
+        required=False,
+        widget=forms.TextInput(attrs={'placeholder': _('first name')})
+    )
+
+    last_name = forms.CharField(
+        max_length=30,
+        label=_('Last name'),
+        required=False,
+        widget=forms.TextInput(attrs={'placeholder': _('last name')})
+    )
+
     country = forms.Select()
-    first_name = forms.CharField(max_length=30, label='First name', required=False)
-    last_name = forms.CharField(max_length=30, label='Last name', required=False)
+
     User = get_user_model()
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'country', 'username')
+        fields = ('username', 'email', 'first_name', 'last_name', 'country')
 
 class ContactForm(forms.Form):
     contact_name = forms.CharField(required=True)
@@ -38,6 +61,3 @@ class ContactForm(forms.Form):
         required=True,
         widget=forms.Textarea
     )
-
-    # def send_email(self):
-    #     pass
