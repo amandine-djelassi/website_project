@@ -1,1 +1,2 @@
-Activation du compte sur trotteur.tk 
+{% load i18n %}
+[Trotteurs] {% trans "Count activation" %}

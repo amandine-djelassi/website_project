@@ -15,7 +15,7 @@
       <div class="login-page">
         <div id="wrapper">
           <form class="login-form">
-            <h1>Register</h1>
+            <h1>{% trans "Register" context "Title" %}</h1>
 
             {% for field in form %}
               <div class="fieldWrapper"}>
@@ -24,9 +24,9 @@
                 {{ field }}
               </div>
             {% endfor %}
-            
+
             <p>
-              <input type="submit" value="Register" class="btn btn-primary"/>
+              <input type="submit" value='{% trans "Register" %}' class="btn btn-primary"/>
             </p>
             <p class="change_link">
               {% trans "Already a member ?" %}

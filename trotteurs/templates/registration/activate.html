@@ -1,9 +1,15 @@
 {% extends "trotteurs/skeleton.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block css %}
+{{ block.super }}
+<link href="{% static 'trotteurs/css/login.css' %}" rel="stylesheet" />
+{% endblock %}
 
 {% block content %}
-  <div class="container">
-    <h1>Activation réussi !</h1>
-    <p>Félicitation vous êtes inscrit sur le site trotteur.tk</p>
-    <p>Vous pouvez maintenant vous connecter pour profiter pleinement de son contenu.</p>
+  <div class="container" id="page">
+    <h1>{% trans "Activation successful!" %}</h1>
+    <p>{% trans "Congratulations you are registered on the site trotteur.tk. You can now log in to take full advantage of its content." %}</p>
   </div>
 {% endblock %}

@@ -8,60 +8,283 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-11-04 17:33+0000\n"
+"POT-Creation-Date: 2017-11-15 16:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: templates/trotteurs/about.html:7 templates/trotteurs/header.html:28
-msgid "About"
-msgstr "A propos"
+#: .\templates\registration\activate.html:12
+msgid "Activation successful!"
+msgstr "Activation réussi !"
 
-#: templates/trotteurs/contact.html:7 templates/trotteurs/header.html:29
-msgid "Contact"
-msgstr "Contact"
+#: .\templates\registration\activate.html:13
+msgid ""
+"Congratulations you are registered on the site trotteur.tk. You can now log "
+"in to take full advantage of its content."
+msgstr ""
+"Félicitation vous êtes inscrit sur le site trotteur.tk. Vous pouvez "
+"maintenant vous connecter pour profiter pleinement du site."
 
-#: templates/trotteurs/header.html:20
-msgid "Home"
-msgstr "Accueil"
+#: .\templates\registration\activation_email.txt:2
+#: .\templates\registration\password_reset_email.html:2
+msgid "Hello "
+msgstr "Bonjour "
 
-#: templates/trotteurs/header.html:26
-msgid "Blog"
-msgstr "Blog"
+#: .\templates\registration\activation_email.txt:3
+msgid "thank you for your registration on the website trotteur.tk."
+msgstr "merci pour votre inscription sur le site trotteur.tk."
 
-#: templates/trotteurs/header.html:27
-msgid "Gallery"
-msgstr "Galerie"
+#: .\templates\registration\activation_email.txt:5
+msgid "To finalize your registration click on the following link: "
+msgstr "Pour finaliser votre inscription, cliquez sur le lien suivant : "
 
-#: templates/trotteurs/header.html:36
-msgid "Log out"
-msgstr "Se déconnecter"
+#: .\templates\registration\activation_email.txt:8
+msgid ""
+"Please note that this link expires after 7 days. If you wait longer, you'll "
+"have to request another registration link."
+msgstr ""
+"Notez que le lien expire au bout de 7 jours. Si vous attendez plus "
+"longtemps, vous devrez faire une nouvelle demande d'inscription."
 
-#: templates/trotteurs/header.html:38
+#: .\templates\registration\activation_email.txt:10
+#: .\templates\registration\password_reset_email.html:8
+msgid "Best regards"
+msgstr "Cordialement"
+
+#: .\templates\registration\activation_email_subject.txt:2
+msgid "Count activation"
+msgstr "Activation de compte"
+
+#: .\templates\registration\login.html:19
+msgctxt "Title"
+msgid "Log in"
+msgstr "Connection"
+
+#: .\templates\registration\login.html:21
+msgid "Incorrect email or password."
+msgstr "L'adresse email ou le mot de passe n'est pas correct"
+
+#: .\templates\registration\login.html:25
+msgid "Email address:"
+msgstr "Adresse email"
+
+#: .\templates\registration\login.html:26 .\trotteurs\forms.py:31
+msgid "email address"
+msgstr "adresse email"
+
+#: .\templates\registration\login.html:29
+msgid "Password:"
+msgstr "Mot de passe"
+
+#: .\templates\registration\login.html:30
+msgid "password"
+msgstr "mot de passe"
+
+#: .\templates\registration\login.html:33
+msgid "Login"
+msgstr "Se connecter"
+
+#: .\templates\registration\login.html:36
+msgid "Forgot your password ?"
+msgstr "Vous avez oubliez votre mot de passe ?"
+
+#: .\templates\registration\login.html:37
+msgid "Reset it"
+msgstr "Réinitialisez le"
+
+#: .\templates\registration\login.html:40
+msgid "Not yet a member ?"
+msgstr "Pas encore membre ?"
+
+#: .\templates\registration\login.html:41
+msgid "Join us!"
+msgstr "Rejoignez nous !"
+
+#: .\templates\registration\password_reset_complete.html:12
+#: .\templates\registration\password_reset_confirm.html:16
+#: .\templates\registration\password_reset_done.html:12
+#: .\templates\registration\password_reset_form.html:14
+#: .\templates\registration\password_reset_subject.txt:2
+msgid "Reset password"
+msgstr "RéRéinitialisation du mot de passe"
+
+#: .\templates\registration\password_reset_complete.html:13
+msgid ""
+"The password has been successfully changed. You can now log in to the "
+"website."
+msgstr ""
+"Le mot de passe a été modifié avec succès. Vous pouvez maintenant vous "
+"connecter."
+
+#: .\templates\registration\password_reset_confirm.html:17
+msgid "Please enter (and confirm) your new password."
+msgstr "Entrez (et confirmez) votre nouveau mot de passe."
+
+#: .\templates\registration\password_reset_confirm.html:19
+msgid "New password"
+msgstr "Nouveau mot de passe"
+
+#: .\templates\registration\password_reset_confirm.html:23
+msgid "Confirm the password"
+msgstr "Confirmation du mot de passe"
+
+#: .\templates\registration\password_reset_confirm.html:26
+msgid "Change my password"
+msgstr "Changer mon mot de passe"
+
+#: .\templates\registration\password_reset_done.html:13
+msgid ""
+"The email has been send. Please follow the instructions in the e-mail to "
+"reset your password."
+msgstr ""
+"Un email vous a été envoyé. Suivez les instructions inscrites dans l'email "
+"pour réinitialisez votre mot de passe."
+
+#: .\templates\registration\password_reset_email.html:3
+msgid "a password change request for the {{email}} email has been made."
+msgstr ""
+"un demande de changement de mot de passe a été faite pour l'email {{email}}."
+
+#: .\templates\registration\password_reset_email.html:5
+msgid "To change your password click on the following link: "
+msgstr "Pour changer votre mot de passe, cliquez sur le lien suivant :"
+
+#: .\templates\registration\password_reset_form.html:15
+msgid ""
+"Enter the email address associated with your account and we'll send you "
+"instructions to reset your password"
+msgstr ""
+"Entrez l'adresse email associée à votre compte et nous vous enverrons les "
+"instructions pour réinitialisez votre mot de passe"
+
+#: .\templates\registration\password_reset_form.html:19
+msgid "Reset"
+msgstr "Réinitialisation"
+
+#: .\templates\registration\registration_complete.html:13
+msgid "Your registration is recorded !"
+msgstr "Votre inscription a été enregistrée !"
+
+#: .\templates\registration\registration_complete.html:14
+msgid ""
+"A confirmation email has been send to you. Open your email and click on the "
+"link to activate your account."
+msgstr ""
+"Un email de confirmation vous a été envoyé. Ouvrez votre email et cliquez "
+"sur le lien pour activez votre compte."
+
+#: .\templates\registration\registration_form.html:18
+msgctxt "Title"
+msgid "Register"
+msgstr "Inscription"
+
+#: .\templates\registration\registration_form.html:29
+#: .\templates\trotteurs\header.html:39
+msgid "Register"
+msgstr "S&#39;inscrire"
+
+#: .\templates\registration\registration_form.html:32
+msgid "Already a member ?"
+msgstr "Déjà membre ?"
+
+#: .\templates\registration\registration_form.html:33
+#: .\templates\trotteurs\header.html:38
 msgid "Log in"
 msgstr "Se connecter"
 
-#: templates/trotteurs/header.html:39
-msgid "Register"
-msgstr "S'inscrire"
+#: .\templates\trotteurs\about.html:8 .\templates\trotteurs\header.html:28
+msgid "About"
+msgstr "A propos"
 
-#: templates/trotteurs/home.html:4
+#: .\templates\trotteurs\contact.html:96 .\templates\trotteurs\header.html:29
+msgid "Contact"
+msgstr "Contact"
+
+#: .\templates\trotteurs\header.html:20
+msgid "Home"
+msgstr "Accueil"
+
+#: .\templates\trotteurs\header.html:26
+msgid "Blog"
+msgstr "Blog"
+
+#: .\templates\trotteurs\header.html:27
+msgid "Gallery"
+msgstr "Galerie"
+
+#: .\templates\trotteurs\header.html:36
+msgid "Log out"
+msgstr "Se déconnecter"
+
+#: .\templates\trotteurs\home.html:5
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: templates/trotteurs/skeleton.html:14
+#: .\templates\trotteurs\skeleton.html:14
 msgid "Trotteurs"
 msgstr "Trotteurs"
 
-#: trotteurs/settings.py:154
+#: .\trotteurs\forms.py:25 .\trotteurs\models.py:103
+msgid "Username"
+msgstr "Nom d'utilisateur"
+
+#: .\trotteurs\forms.py:26
+msgid "username"
+msgstr "nom d'utilisateur"
+
+#: .\trotteurs\forms.py:30 .\trotteurs\models.py:110
+msgid "Email address"
+msgstr "Adresse email"
+
+#: .\trotteurs\forms.py:36 .\trotteurs\models.py:117
+msgid "First name"
+msgstr "Prénom"
+
+#: .\trotteurs\forms.py:38
+msgid "first name"
+msgstr "prénom"
+
+#: .\trotteurs\forms.py:43 .\trotteurs\models.py:124
+msgid "Last name"
+msgstr "Nom"
+
+#: .\trotteurs\forms.py:45
+msgid "last name"
+msgstr "nom"
+
+#: .\trotteurs\models.py:106
+msgid "This username already exists."
+msgstr "Ce nom d'utilisateur existe déjà."
+
+#: .\trotteurs\models.py:113
+msgid "This email has already been registered."
+msgstr "Cet email est déjà utilisé."
+
+#: .\trotteurs\models.py:120
+msgid "Enter a valid first name."
+msgstr "Entrez un prénom valide."
+
+#: .\trotteurs\models.py:127
+msgid "Enter a valid last name."
+msgstr "Entrez un nom valide."
+
+#: .\trotteurs\models.py:131
+msgid "Country"
+msgstr "Pays"
+
+#: .\trotteurs\models.py:132
+msgid "(Select country)"
+msgstr "(Sélectionnez un pays)"
+
+#: .\trotteurs\settings.py:153
 msgid "English"
 msgstr "Anglais"
 
-#: trotteurs/settings.py:155
+#: .\trotteurs\settings.py:154
 msgid "French"
 msgstr "Français"

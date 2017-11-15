@@ -19,6 +19,7 @@ class RegistrationView(RegistrationView):
           # save the user
           response = super(RegistrationView, self).form_valid(form)
           # get the user creditials
+          username = form.cleaned_data['username']
           email = form.cleaned_data['email']
           password = form.cleaned_data['password1']
 

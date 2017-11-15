@@ -16,9 +16,9 @@
       <div id="wrapper">
         <form class="login-form">
 
-          <h1>Log in</h1>
+          <h1>{% trans "Log in" context "Title" %}</h1>
           {% if form.errors %}
-            <p class="error_message"><span>&#8226;</span> {% trans "Incorrect username or password." %}</p>
+            <p class="error_message"><span>&#8226;</span> {% trans "Incorrect email or password." %}</p>
           {% endif %}
 
           <p>
@@ -30,7 +30,7 @@
             <input id="password" name="password" required="required" type="password" placeholder="{% trans "password" %}" />
           </p>
           <p>
-            <input type="submit" value="Login" class="btn btn-primary"/>
+            <input type="submit" value='{% trans "Login" %}' class="btn btn-primary"/>
           </p>
           <p class="reset_password">
             {% trans "Forgot your password ?" %}
@@ -38,7 +38,7 @@
           </p>
           <p class="change_link">
             {% trans "Not yet a member ?" %}
-            <a href="{% url 'registration_register' %}">{% trans "Join us !" %}</a>
+            <a href="{% url 'registration_register' %}">{% trans "Join us!" %}</a>
           </p>
 
         </form>

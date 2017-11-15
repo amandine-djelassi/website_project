@@ -44,7 +44,6 @@ DEBUG = True
 # EMAIL_HOST_USER = get_env_variable('EMAIL_ADRESS')
 # EMAIL_HOST_PASSWORD = get_env_variable('EMAIL_HOST_PASSWORD')
 # EMAIL_PORT = 587
-# EMAIN_SUBJECT_PREFIX = '[Trotteurs]'
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # print in the console instead of send an email
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
