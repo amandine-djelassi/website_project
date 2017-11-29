@@ -43,48 +43,24 @@
  height: 143;
 }
 
-/*.content input{
-  font-family: "Roboto", sans-serif;
-  outline: 0;
-  border: 0;
-  width: 100%;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 14px;
-}
-.content input:not([type="submit"]){
-  width: 50%;
-  margin: 0 0 15px;
-  padding: 15px 5% 15px 5%;
-  background: #f2f2f2;
-  border: 1px solid rgb(178, 178, 178);
-	-webkit-appearance: textfield;
-	-webkit-box-sizing: content-box;
-	  -moz-box-sizing : content-box;
-	       box-sizing : content-box;
-	-webkit-border-radius: 3px;
-	   -moz-border-radius: 3px;
-	        border-radius: 3px;
-	-webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
-	   -moz-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
-	        box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
-	-webkit-transition: all 0.2s linear;
-	   -moz-transition: all 0.2s linear;
-	     -o-transition: all 0.2s linear;
-	        transition: all 0.2s linear;
-}
-.content input:not([type="submit"]):active,
-.content input:not([type="submit"]):focus{
-	border: 1px solid rgba(91, 90, 90, 0.7);
-	background: white;
-	-webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.9) inset;
-	   -moz-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.9) inset;
-	        box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.9) inset;
-}*/
 input {
   background-color: transparent;
   border: none;
   border-bottom: 1px solid #CCC;
+  width: 40%;
+}
+#id_subject{
+  background-color: transparent;
+  border: none;
+  width: 75%;
+  border-bottom: 1px solid #CCC;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+textarea {
+  width: 75%;
+  resize: none;
 }
 
 </style>
@@ -96,26 +72,21 @@ input {
 <h1>{% trans "Contact" %}</h1>
 <div id="panel">
   <div class="content">
-    <img src="http://www.letstravelsomewhere.com/wp-content/themes/letstravelsomewhere2013/images/stamp.png"/>
+    <img src={% static "trotteurs/img/timbre.png" %}>
     <form role="form" action="" methode="post">
-      <input type='hidden' name='csrfmiddlewaretoken' value='WmPpHVYF1KSX7cQn0dvnN2ufXIYSQfcDai3kLUuNYrQOWcReDM5uPuetmH5PQO4A' />
-      <p>
-        <label for="id_contact_name">Contact name :</label>
-        <input type="text" name="contact_name" required id="id_contact_name"/>
-      </p>
-      <p>
-        <label for="id_contact_email">Contact email :</label>
-        <input type="email" name="contact_email" required id="id_contact_email" />
-      </p>
-      <p>
-        <label for="id_subject">Subject :</label>
-        <input type="text" name="subject" required id="id_subject" />
-      </p>
-      <p>
-        <label for="id_message">Message :</label>
-        <textarea name="message" rows="10" required id="id_message" cols="40"></textarea>
-      </p>
-      <button type="submit">Submit</button>
+      {% csrf_token %}
+      {% if user.is_authenticated %}
+        <p><input type="text" name="contact_name" required id="id_contact_name" value="{{ user.username }}" placeholder="Name"/></p>
+        <p><input type="email" name="contact_email" required id="id_contact_email" value="{{ user.email }}" placeholder="Email"/></p>
+      {% else %}
+        <p><input type="text" name="contact_name" required id="id_contact_name" placeholder="Name"/></p>
+        <p><input type="email" name="contact_email" required id="id_contact_email" placeholder="Email"/></p>
+      {% endif %}
+      <p><input type="text" name="subject" required id="id_subject" placeholder="Subject"/></p>
+      <div id="divScroll" class="scroll">
+        <textarea name="message" required rows="10" id="id_message"  placeholder="Message"></textarea>
+      </div>
+      <input type="submit" value='{% trans "Send" %}' class="btn btn-primary"/>
     </form>
   </div>
 </div>
