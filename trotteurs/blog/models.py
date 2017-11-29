@@ -3,6 +3,7 @@ import datetime
 from django.db import models
 from django.template.defaultfilters import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.utils.translation import ugettext_lazy as _
 
 class Tag(models.Model):
     """
@@ -12,6 +13,10 @@ class Tag(models.Model):
     """
     name = models.CharField("Nom", max_length=200)
     slug = models.SlugField(blank=True, unique=True)
+
+    class Meta:
+        verbose_name = _('Tag')
+        verbose_name_plural = _('Tags')
 
     def __str__(self):
         """
@@ -48,6 +53,10 @@ class Article(models.Model):
     text = RichTextUploadingField()
     tags = models.ManyToManyField(Tag, blank=True)
     slug = models.SlugField(blank=True, unique=True)
+
+    class Meta:
+        verbose_name = _('Article')
+        verbose_name_plural = _('Articles')
 
     def __str__(self):
         """

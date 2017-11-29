@@ -1,12 +1,17 @@
 from django.db import models
 import datetime
 from django.template.defaultfilters import slugify
+from django.utils.translation import ugettext_lazy as _
 
 class Country(models.Model):
     """
     """
     name = models.CharField("Nom", max_length=200)
     slug = models.SlugField(blank=True, unique=True)
+
+    class Meta:
+        verbose_name = _('Country')
+        verbose_name_plural = _('Countries')
 
     def __str__(self):
         """
@@ -31,6 +36,10 @@ class City(models.Model):
     country = models.ForeignKey(Country, on_delete=models.CASCADE)
     latitude = models.DecimalField(blank=True, decimal_places=5, max_digits=10)
     longitude = models.DecimalField(blank=True, decimal_places=5, max_digits=10)
+
+    class Meta:
+        verbose_name = _('City')
+        verbose_name_plural = _('Cities')
 
     def __str__(self):
         """
@@ -58,6 +67,10 @@ class Album(models.Model):
     description = models.CharField("Description", max_length=1000, blank=True)
     slug = models.SlugField(blank=True, unique=True)
     city = models.ManyToManyField(City)
+
+    class Meta:
+        verbose_name = _('Album')
+        verbose_name_plural = _('Albums')
 
     def __str__(self):
         """
@@ -92,6 +105,10 @@ class Photo(models.Model):
     legend = models.CharField("Légende", max_length=1000, blank=True)
     album = models.ManyToManyField(Album)
     slug = models.SlugField(blank=True, unique=True)
+
+    class Meta:
+        verbose_name = _('Photo')
+        verbose_name_plural = _('Photos')
 
     def __str__(self):
         """
