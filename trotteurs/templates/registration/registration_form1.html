@@ -1,0 +1,76 @@
+
+
+{% extends "trotteurs/skeleton.html" %}
+{% load i18n %}
+{% load staticfiles %}
+
+{% block css %}
+  {{ block.super }}
+  <link href="{% static 'trotteurs/css/login.css' %}" rel="stylesheet" />
+  <style>
+  .helptext{
+    display: none;
+  }
+  th {
+    display: block;
+  }
+  </style>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <form action="" method="post">
+      {% csrf_token %}
+      <div class="login-page">
+        <div id="wrapper">
+          <h1>{% trans "Register" context "Title" %}</h1>
+
+
+          {{ wizard.management_form }}
+          {{ wizard.form.non_field_errors }}
+
+          {% if wizard.form.forms %}
+
+              {{ wizard.form.management_form }}
+              {% for form in wizard.form.forms %}
+                <!-- {% for f in form %} -->
+                  {{ form.as_p }}
+                <!-- {% endfor %} -->
+
+              {% endfor %}
+          {% else %}
+
+            {% for field in wizard.form %}
+              <div class="fieldWrapper"}>
+                {{ field.label_tag }}
+                {{ field.errors }}
+                {{ field }}
+              </div>
+            {% endfor %}
+
+          {% endif %}
+
+
+          {% if wizard.steps.next %}
+          <p>
+            <input type="submit" value='{% trans "Next" %}' class="btn btn-primary"/>
+          </p>
+          {% else %}
+          <p>
+            <input type="submit" value='{% trans "Register" %}' class="btn btn-primary"/>
+          </p>
+          {% endif %}
+
+          <p class="change_link">
+            {% trans "Already a member ?" %}
+            <a href="{% url 'login' %}">{% trans "Log in" %}</a>
+          </p>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    $('input,textarea,select').filter('[required]:visible').parent().parent().find("label").addClass("required_label");
+  </script>
+{% endblock %}

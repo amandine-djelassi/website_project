@@ -9,7 +9,13 @@
 
 {% block content %}
   <div class="container" id="page">
+    {% if active == True %}
     <h1>{% trans "Activation successful!" %}</h1>
     <p>{% trans "Congratulations you are registered on the site trotteur.tk. You can now log in to take full advantage of its content." %}</p>
+    {% else %}
+    <h1>{% trans "Activation Failed!" %}</h1>
+    <p>{% trans "This link is invalid, it may have already been used." %}</p>
+    {% endif %}
+
   </div>
 {% endblock %}

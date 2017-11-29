@@ -52,7 +52,12 @@
   padding: 15px 5% 15px 5%;
   margin: 0 0 15px;
 }
-#wrapper input:not([type="submit"]){
+#wrapper .required_label:after {
+color: red;
+  content:" *";
+}
+
+#wrapper input:not([type="submit"]):not([type="checkbox"]){
   width: 90%;
   margin: 0 0 15px;
   padding: 15px 5% 15px 5%;
@@ -81,6 +86,7 @@
 	   -moz-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.9) inset;
 	        box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.9) inset;
 }
+
 
 #wrapper .reset_password{
   display:block;
@@ -126,11 +132,12 @@
 	position: relative;
 	top: 1px;
 }
-
-#wrapper label{
+#wrapper label {
   color: rgb(64, 92, 96);
-  display:block;
   text-align:left;
+}
+#wrapper label:not([class="checkbox_label"]){
+  display:block;
 }
 
 #wrapper p.error_message{
@@ -151,54 +158,19 @@ label.required::after {
   position: absolute;
 }
 
-#page {
-  background-color:white;
-  padding: 5%;
-  /* offset left, top, thickness, color with alpha */
-  -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+#check label {
+  display: block;
+}
+#check input {
+  width: 13px;
+  height: 13px;
+  padding: 0;
+  margin:0;
+  position: relative;
+  vertical-align: middle;
 }
 
-#page h1 {
-  text-align: center;
-  padding-bottom: 20px;
-}
-
-#page input {
-  font-family: "Roboto", sans-serif;
-  outline: 0;
-  border: 0;
-  width: 20%;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 14px;
-}
-
-#page input:not([type="submit"]){
-  margin: 0 0 15px;
-  background: #f2f2f2;
-  border: 1px solid rgb(178, 178, 178);
-	-webkit-appearance: textfield;
-	-webkit-box-sizing: content-box;
-	  -moz-box-sizing : content-box;
-	       box-sizing : content-box;
-	-webkit-border-radius: 3px;
-	   -moz-border-radius: 3px;
-	        border-radius: 3px;
-	-webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
-	   -moz-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
-	        box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.6) inset;
-	-webkit-transition: all 0.2s linear;
-	   -moz-transition: all 0.2s linear;
-	     -o-transition: all 0.2s linear;
-	        transition: all 0.2s linear;
-}
-#page input:not([type="submit"]):active,
-#page input:not([type="submit"]):focus{
-	border: 1px solid rgba(91, 90, 90, 0.7);
-	background: rgba(238, 236, 240, 0.2);
-	-webkit-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.9) inset;
-	   -moz-box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.9) inset;
-	        box-shadow: 0px 1px 4px 0px rgba(168, 168, 168, 0.9) inset;
+#check span {
+  padding-left: 10px;
+  vertical-align: middle;
 }

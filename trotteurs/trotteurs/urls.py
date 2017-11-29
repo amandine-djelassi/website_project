@@ -18,10 +18,14 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
-from . import views
+from . import views, forms
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth import views as auth_views
 from django.conf.urls.i18n import i18n_patterns
+
+# from myapp.forms import ContactForm1, ContactForm2
+# from myapp.views import ContactWizard
+
 
 urlpatterns = i18n_patterns(
     # Administration page
@@ -33,7 +37,10 @@ urlpatterns = i18n_patterns(
     # Pretty editor for the admin part
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     #Add Django site authentication urls (for login, logout, password management)
-    url(r'^accounts/register/$', views.RegistrationView.as_view(), name='registration_register'),
+    url(r'^accounts/register/$', views.RegistrationView.as_view([forms.RegistrationForm1, forms.RegistrationForm2]), name='registration_register'),
+    # url(r'^accounts/register/complete/$', views.ActivationView.as_view(), name='registration_register_complete'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        views.activate, name='activate'),
     url('^accounts/', include('django.contrib.auth.urls')),
     # url('^accounts/', include('registration.backends.default.urls')),
     url('^accounts/', include('registration.backends.hmac.urls')),

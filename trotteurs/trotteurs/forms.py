@@ -17,8 +17,7 @@ class UserCreationForm(UserCreationForm):
             user.save()
         return user
 
-
-class UserProfileRegistrationForm(RegistrationForm):
+class RegistrationForm1(RegistrationForm):
 
     username = forms.CharField(
         max_length=30,
@@ -30,6 +29,14 @@ class UserProfileRegistrationForm(RegistrationForm):
         label=_('Email address'),
         widget=forms.TextInput(attrs={'placeholder': _('email address')})
     )
+
+    User = get_user_model()
+
+    class Meta:
+        model = User
+        fields = ('username', 'email')
+
+class RegistrationForm2(forms.Form):
 
     first_name = forms.CharField(
         max_length=30,
@@ -47,11 +54,10 @@ class UserProfileRegistrationForm(RegistrationForm):
 
     country = forms.Select()
 
-    User = get_user_model()
-
-    class Meta:
-        model = User
-        fields = ('username', 'email', 'first_name', 'last_name', 'country')
+    newsletter = forms.BooleanField(
+        label=_("Register to the newsletter"),
+        required=False
+    )
 
 class ContactForm(forms.Form):
     contact_name = forms.CharField(required=True)
