@@ -5,6 +5,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth import get_user_model
 from django_countries.widgets import CountrySelectWidget
+from .models import Newsletter
 User = get_user_model()
 
 class UserCreationForm(forms.ModelForm):
@@ -73,12 +74,12 @@ class UserAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ('email', 'is_admin')
+    list_display = ('email', 'is_admin', 'is_active')
     list_filter = ('is_admin', 'country')
     fieldsets = (
         (None, {'fields': ('email', 'password', 'username')}),
         ('Personal info', {'fields':('first_name', 'last_name', 'country')}),
-        ('Permissions', {'fields': ('is_admin',)}),
+        ('Permissions', {'fields': ('is_admin','newsletter')}),
     )
     # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
     # overrides get_fieldsets to use this attribute when creating a user.
@@ -97,3 +98,48 @@ admin.site.register(User, UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)
+
+
+from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
+
+class NewsletterAdmin(admin.ModelAdmin):
+    change_form_template = 'admin/trotteurs/newsletter/change_form.html'
+    list_display = ('subject', 'date', 'sent')
+    model = Newsletter
+
+    def render_change_form(self, request, context, *args, **kwargs):
+        """
+            We need to update the context to show the button.
+        """
+        context.update({'show_save_and_send': True})
+        return super().render_change_form(request, context, *args, **kwargs)
+
+    def response_post_save_change(self, request, obj):
+        """
+            This method is called by `self.changeform_view()` when the form
+            was submitted successfully and should return an HttpResponse.
+        """
+        opts = self.model._meta
+        pk_value = obj._get_pk_val()
+        preserved_filters = self.get_preserved_filters(request)
+
+        if '_save_and_send' in request.POST:
+
+            users = User.objects.filter(newsletter=True)#.all()
+            users_email = [user.email for user in users ]
+
+            send_mail(obj.subject, obj.message, 'noreply@trotteurs.com', users_email)
+
+            # print(product_item)
+            obj.sent = True
+            obj.save()
+            post_url = reverse('admin:index', current_app=self.admin_site.name)
+            return HttpResponseRedirect(post_url)
+
+        else:
+            # Otherwise, use default behavior
+            return super().response_post_save_change(request, obj)
+
+admin.site.register(Newsletter, NewsletterAdmin)
