@@ -26,6 +26,13 @@ class AlbumListView(LoginRequiredMixin, ListView):
         city = City.objects.filter(slug = self.kwargs['slug'])[0]
         return Album.objects.filter(city = city).order_by('-title')[:]
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super(AlbumListView, self).get_context_data(**kwargs)
+        # Add in a QuerySet of the city
+        context['city'] = City.objects.filter(slug = self.kwargs['slug'])[0]
+        return context
+
 class MapView(LoginRequiredMixin, ListView):
     template_name = 'gallery/map.html'
     context_object_name = 'country_list'
