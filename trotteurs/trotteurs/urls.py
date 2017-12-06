@@ -51,10 +51,12 @@ urlpatterns = i18n_patterns(
     url(r'^accounts/reset/done/$', auth_views.password_reset_complete, name='auth_password_reset_complete'),
     # Access to the profile
     url(r'^profile/edit/(?P<slug>[\-\w]+)/$', views.UpdateProfileView.as_view(), name='profile_edit'),
-    # url('^profile/edit/$', views.ProfileEditView.as_view(), name="profile_edit"),
+    url(r'^password/$', views.change_password, name='change_password'),
+    url(r'^confirmation_delete_account/$', views.confirm_delete_account.as_view(), name='confirmation_delete_account'),
+    url(r'^delete_account/$', views.delete_account, name='delete_account'),
     # Static files
     url(r'^about$', views.AboutView.as_view(), name='about'),
-    url(r'^contact$', views.ContactView.as_view(), name='contact'),
+    url(r'^contact$', views.contact, name='contact'),
     # Home of the website
     url(r'^$', views.IndexView.as_view(), name='home')
     )

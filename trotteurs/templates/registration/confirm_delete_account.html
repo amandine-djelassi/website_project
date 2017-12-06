@@ -1,0 +1,47 @@
+{% extends "trotteurs/skeleton.html" %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block css %}
+  {{ block.super }}
+  <style>
+  /* main page */
+  #page {
+    background-color:white;
+    /* offset left, top, thickness, color with alpha */
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    padding:50px;
+    margin-right: 50px;
+    margin-left: 50px;
+  }
+  form{
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+  </style>
+  {% endblock %}
+
+{% block js %}
+  {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div id="page">
+
+    <h1>{% trans "Delete account" %}</h1>
+    <hr>
+    <p>{% trans "Are you sure you want to delete your account?" %}</p>
+    <form action="." method="POST" class="padding">{% csrf_token %}
+    {{ user_form.as_p}}
+    </form>
+
+    <a href="{% url 'profile_edit' user.slug %}" class="btn btn-primary" role="button">{% trans "No, go back to profile" %}</a>
+    <a href="{% url 'delete_account' %}" class="btn btn-primary" role="button">{% trans "Yes, I'm sure" %}</a>
+
+  </div>
+</div>
+
+{% endblock %}

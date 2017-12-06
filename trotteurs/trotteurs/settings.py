@@ -36,17 +36,15 @@ SECRET_KEY = 's7&w3=y!_64^82m^=@ui2cz*zk$unrapm*qyl4vr4nms9p*(p-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
-
 # configure email
-# EMAIL_USE_TLS = True
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = get_env_variable('EMAIL_ADRESS')
-# EMAIL_HOST_PASSWORD = get_env_variable('EMAIL_HOST_PASSWORD')
-# EMAIL_PORT = 587
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = get_env_variable('EMAIL_ADDRESS')
+EMAIL_HOST_PASSWORD = get_env_variable('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # print in the console instead of send an email
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # print in a file
 # EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 # EMAIL_FILE_PATH = 'tmp/email-messages/'

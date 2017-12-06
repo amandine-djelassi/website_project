@@ -18,6 +18,15 @@ from django.utils.encoding import force_bytes
 from .tokens import account_activation_token
 from django.utils.encoding import force_text
 from django.shortcuts import render
+from django.core.mail import EmailMessage
+from django.shortcuts import redirect
+from django.template import Context
+from django.template.loader import get_template
+
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import render, redirect
 
 def activate(request, uidb64, token):
     User = get_user_model()
@@ -84,7 +93,7 @@ class RegistrationView(SessionWizardView):
                 self.first_name = form.cleaned_data['first_name']
                 self.last_name = form.cleaned_data['last_name']
                 self.country = "ok" #form.cleaned_data['country']
-                self.newsletter = form.cleaned_data['Newsletter']
+                self.newsletter = "True"#form.cleaned_data['Newsletter']
 
         user = self.save_user()
 
@@ -97,24 +106,11 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
         Update Profile view
             User must be connected to access this page
     """
-    User = get_user_model()
-    model = User
-    fields = ['first_name', 'last_name', 'country', 'avatar', 'about']
     template_name = 'registration/profile_edit.html'
-    slug_field = 'slug'
-    slug_url_kwarg = 'slug'
-
-    def user_passes_test(self, request):
-        if request.user.is_authenticated():
-            self.object = self.get_object()
-            return self.object == request.user
-        return False
-
-    def dispatch(self, request, *args, **kwargs):
-        if not self.user_passes_test(request):
-            return redirect_to_login(request.get_full_path())
-        return super(UpdateProfileView, self).dispatch(
-            request, *args, **kwargs)
+    User = get_user_model()
+    model= User
+    fields=["first_name", "last_name", "newsletter", "username", "country"]
+    success_url = '/accounts/register/complete/'
 
 
 class IndexView(TemplateView):
@@ -131,10 +127,63 @@ class AboutView(TemplateView):
     template_name = "trotteurs/about.html"
 
 
-class ContactView(FormView):
-    """
-        The contact view
-    """
-    template_name = "trotteurs/contact.html"
+def contact(request):
     form_class = ContactForm
-    success_url = '/'
+
+    if request.method == 'POST':
+        form = form_class(data=request.POST)
+        if form.is_valid():
+            contact_name = request.POST.get('contact_name', '')
+            contact_email = request.POST.get('contact_email', '')
+            message = request.POST.get('message', '')
+            subject = request.POST.get('subject', '')
+
+            # Email the profile with the contact information
+            template = get_template('trotteurs/contact_template.txt')
+            context = {
+                'contact_name': contact_name,
+                'contact_email': contact_email,
+                'message': message,
+                'subject': subject,
+            }
+            content = template.render(context)
+
+            email = EmailMessage(
+                '[Contact] ' + subject,
+                content,
+                "Trotteurs.fr",
+                ['amandine.djelassi@gmail.com'],
+                headers = {'Reply-To': contact_email }
+            )
+            email.send()
+            return redirect('contact')
+    return render(request, 'trotteurs/contact.html', {
+        'form': form_class,
+    })
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('change_password')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'registration/change_password.html', {
+        'form': form
+    })
+
+class confirm_delete_account(TemplateView):
+    """
+    """
+    template_name = "registration/confirm_delete_account.html"
+
+from django.contrib.auth import logout
+def delete_account(request):
+    request.user.delete()
+    logout(request)
+    return render(request, 'trotteurs/home.html')

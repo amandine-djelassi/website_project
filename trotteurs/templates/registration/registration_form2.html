@@ -1,5 +1,3 @@
-
-
 {% extends "trotteurs/skeleton.html" %}
 {% load i18n %}
 {% load staticfiles %}
@@ -24,20 +22,28 @@
       <div class="login-page">
         <div id="wrapper">
           <h1>{% trans "Register" context "Title" %}</h1>
-
+          <p>
+            <small class="form-text text-muted">
+            {% blocktrans %} We do not require you to fill in this information,
+            however we would love to know more about our visitors. {% endblocktrans %}
+            </small>
+          </p>
 
           {{ wizard.management_form }}
           {{ wizard.form.non_field_errors }}
 
-          <label for="id_1-first_name">{{ trans "First name" }}</label>
-          <input type="text" name="1-first_name" placeholder="{{ trans 'first name'}}" maxlength="30" id="id_1-first_name" />
+          <label for="id_1-first_name">{% trans "First name" %}</label>
+          {{ form.first_name }}
 
-          <label for="id_1-last_name">{{ trans "Last name" }}</label>
-          <input type="text" name="1-last_name" placeholder="{{ trans 'last name' }}" maxlength="30" id="id_1-last_name" />
+          <label for="id_1-last_name">{% trans "Last name" %}</label>
+          {{ form.last_name }}
+
+          <label for="id_1-country">{% trans "Country" %}</label>
+          {{ form.country }}
 
           <div id="check">
           <label class="checkbox_label" for="id_1-newsletter">
-          <input type="checkbox" name="1-newsletter" id="id_1-newsletter" /><span>{{ trans "Register to the newsletter" }}</span></label>
+          <input type="checkbox" name="1-newsletter" id="id_1-newsletter" /><span>{% trans "Register to the newsletter" %}</span></label>
           </div>
 
           {% if wizard.steps.next %}

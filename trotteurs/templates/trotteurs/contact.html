@@ -73,7 +73,7 @@ textarea {
 <div id="panel">
   <div class="content">
     <img src={% static "trotteurs/img/timbre.png" %}>
-    <form role="form" action="" methode="post">
+    <form role="form" action="" method="post">
       {% csrf_token %}
       {% if user.is_authenticated %}
         <p><input type="text" name="contact_name" required id="id_contact_name" value="{{ user.username }}" placeholder="Name"/></p>

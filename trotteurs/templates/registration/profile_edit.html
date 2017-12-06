@@ -1,0 +1,84 @@
+{% extends "trotteurs/skeleton.html" %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block css %}
+  {{ block.super }}
+  <style>
+  /* main page */
+  #page {
+    background-color:white;
+    /* offset left, top, thickness, color with alpha */
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    padding:50px;
+    margin-right: 50px;
+    margin-left: 50px;
+  }
+  form{
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+  </style>
+  {% endblock %}
+
+{% block js %}
+  {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div id="page">
+
+    <h1>{% trans 'Edit profile' %}</h1>
+    <hr>
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <p>
+        <label>{% trans "Email:" %}</label> {{ user.email }}
+      </p>
+
+      <p>
+        {{ form.username.errors }}
+        <label for="id_username">{% trans "Username:" %}</label>
+        {{ form.username }}
+      </p>
+
+
+      <p>
+        {{ form.newsletter.errors }}
+        <label for="id_newsletter">{% trans "Newsletter:" %}</label>
+        {{ form.newsletter }}
+      </p>
+
+      <p>
+        {{ form.first_name.errors }}
+        <label for="id_first_name">{% trans "First name:" %}</label>
+        {{ form.first_name }}
+      </p>
+
+      <p>
+        {{ form.last_name.errors }}
+        <label for="id_last_name">{% trans "Last name:" %}</label>
+        {{ form.last_name }}
+      </p>
+
+      <p>
+        {{ form.country.errors }}
+        <label for="id_country">{% trans "Country:" %}</label>
+        {{ form.country }}
+      </p>
+
+        <hr>
+        <p><a href="{% url 'change_password' %}">{% trans 'Change password' %}</a></p>
+        <p><a href="{% url 'confirmation_delete_account' %}">{% trans 'Delete account' %}</a></p>
+
+        <button type="submit" class="btn btn-primary pull-right">{% trans "Save profile" %}</button>
+
+        </form>
+    </div>
+  </div>
+
+{% endblock %}
