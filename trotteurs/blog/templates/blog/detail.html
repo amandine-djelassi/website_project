@@ -1,4 +1,5 @@
 {% extends "blog/skeleton.html" %}
+{% load i18n %}
 
 {% block blog_content %}
 
@@ -12,7 +13,7 @@
 
     <!-- Date/Time -->
     <p>
-      <span class="glyphicon glyphicon-time"></span> Posté le  {{ article.date }}
+      <span class="glyphicon glyphicon-time"></span>{% trans "Posted on" %} {{ article.date }}
       {% include "blog/tag_list.html" with tags=article.tags.all %}
     </p>
 

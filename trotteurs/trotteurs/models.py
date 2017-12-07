@@ -87,11 +87,13 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     country = CountryField(
         verbose_name=_('Country'),
-        blank_label=_('(Select country)'),
         blank=True
     )
 
-    newsletter = models.BooleanField(default=False, blank=True)
+    newsletter = models.BooleanField(
+        default=False,
+        blank=True
+    )
 
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
@@ -161,7 +163,26 @@ class Newsletter(models.Model):
             date
             sent boolean if the email is send or not
     """
-    subject = models.CharField(verbose_name=_('Subject'), max_length=200)
-    date = models.DateField(verbose_name=_('Publication date'), default=datetime.date.today)
-    message = RichTextUploadingField(verbose_name=_('Message'))
-    sent = models.BooleanField(verbose_name=_('Sent'), default=False)
+
+    class Meta:
+        verbose_name = _('Newsletter')
+        verbose_name_plural = _('Newsletters')
+
+    subject = models.CharField(
+        verbose_name=_('Subject'),
+        max_length=200
+    )
+
+    date = models.DateField(
+        verbose_name=_('Publication date'),
+        default=datetime.date.today
+    )
+
+    message = RichTextUploadingField(
+        verbose_name=_('Message')
+    )
+
+    sent = models.BooleanField(
+        verbose_name=_('Sent'),
+        default=False
+    )

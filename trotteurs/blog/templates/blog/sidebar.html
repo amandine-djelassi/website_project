@@ -1,12 +1,14 @@
+{% load i18n %}
+
 <div class="well">
-    <h4>Tags</h4>
+    <h4>{% trans "Tags" %}</h4>
     <p>
       {% include "blog/tag_list.html" with tags=tags %}
     </p>
 </div>
 
 <div class="well">
-    <h4>Archive</h4>
+    <h4>{% trans "Archive" %}</h4>
     <div>
       {% include "blog/archive_list.html" with archive=archive %}
     </div>

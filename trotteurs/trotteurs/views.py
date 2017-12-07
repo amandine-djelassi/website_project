@@ -92,7 +92,7 @@ class RegistrationView(SessionWizardView):
             else:
                 self.first_name = form.cleaned_data['first_name']
                 self.last_name = form.cleaned_data['last_name']
-                self.country = "ok" #form.cleaned_data['country']
+                self.country = form.cleaned_data['country']
                 self.newsletter = form.cleaned_data['newsletter']
 
         user = self.save_user()

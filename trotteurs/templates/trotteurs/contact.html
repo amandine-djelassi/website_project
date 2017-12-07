@@ -1,6 +1,7 @@
 {% extends "trotteurs/skeleton.html" %}
 {% load i18n %}
-  {% load static %}
+{% load static %}
+
 {% block css %}
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link href="{% static 'trotteurs/css/skeleton.css' %}" rel="stylesheet" />
@@ -76,15 +77,15 @@ textarea {
     <form role="form" action="" method="post">
       {% csrf_token %}
       {% if user.is_authenticated %}
-        <p><input type="text" name="contact_name" required id="id_contact_name" value="{{ user.username }}" placeholder="Name"/></p>
-        <p><input type="email" name="contact_email" required id="id_contact_email" value="{{ user.email }}" placeholder="Email"/></p>
+        <p><input type="text" name="contact_name" required id="id_contact_name" value="{{ user.username }}" placeholder='{% trans "name" %}'/></p>
+        <p><input type="email" name="contact_email" required id="id_contact_email" value="{{ user.email }}" placeholder='{% trans "email" %}'/></p>
       {% else %}
-        <p><input type="text" name="contact_name" required id="id_contact_name" placeholder="Name"/></p>
-        <p><input type="email" name="contact_email" required id="id_contact_email" placeholder="Email"/></p>
+        <p><input type="text" name="contact_name" required id="id_contact_name" placeholder='{% trans "name" %}'/></p>
+        <p><input type="email" name="contact_email" required id="id_contact_email" placeholder='{% trans "email" %}'/></p>
       {% endif %}
-      <p><input type="text" name="subject" required id="id_subject" placeholder="Subject"/></p>
+      <p><input type="text" name="subject" required id="id_subject" placeholder='{% trans "subject" %}'/></p>
       <div id="divScroll" class="scroll">
-        <textarea name="message" required rows="10" id="id_message"  placeholder="Message"></textarea>
+        <textarea name="message" required rows="10" id="id_message"  placeholder='{% trans "message" %}'></textarea>
       </div>
       <input type="submit" value='{% trans "Send" %}' class="btn btn-primary"/>
     </form>

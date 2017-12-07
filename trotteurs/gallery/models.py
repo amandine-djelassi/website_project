@@ -6,8 +6,15 @@ from django.utils.translation import ugettext_lazy as _
 class Country(models.Model):
     """
     """
-    name = models.CharField("Nom", max_length=200)
-    slug = models.SlugField(blank=True, unique=True)
+    name = models.CharField(
+        verbose_name=_('Name'),
+        max_length=200
+    )
+
+    slug = models.SlugField(
+        blank=True,
+        unique=True
+    )
 
     class Meta:
         verbose_name = _('Country')
@@ -31,11 +38,32 @@ class Country(models.Model):
 class City(models.Model):
     """
     """
-    name = models.CharField("Nom", max_length=200)
+    name = models.CharField(
+        verbose_name=_('Name'),
+        max_length=200
+    )
+
+    country = models.ForeignKey(
+        Country,
+        verbose_name=_('Country'),
+        on_delete=models.CASCADE
+    )
+
+    latitude = models.DecimalField(
+        verbose_name=_('Latitude'),
+        blank=True,
+        decimal_places=10,
+        max_digits=15
+    )
+
+    longitude = models.DecimalField(
+        verbose_name=_('Longitude'),
+        blank=True,
+        decimal_places=10,
+        max_digits=15
+    )
+
     slug = models.SlugField(blank=True, unique=True)
-    country = models.ForeignKey(Country, on_delete=models.CASCADE)
-    latitude = models.DecimalField(blank=True, decimal_places=5, max_digits=10)
-    longitude = models.DecimalField(blank=True, decimal_places=5, max_digits=10)
 
     class Meta:
         verbose_name = _('City')
@@ -62,11 +90,29 @@ class Album(models.Model):
             * a name
             * a slug
     """
-    title = models.CharField("Nom", max_length=200)
-    image = models.ImageField(upload_to='media/images')
-    description = models.CharField("Description", max_length=1000, blank=True)
+    title = models.CharField(
+        verbose_name=_('Title'),
+        max_length=200
+    )
+
+    image = models.ImageField(
+        upload_to='media/images',
+        verbose_name=_('Cover image'),
+        help_text=_('Size: width: 346px, height: 220px')
+    )
+
+    description = models.CharField(
+        verbose_name=_('Description'),
+        max_length=1000,
+        blank=True
+    )
+
+    city = models.ManyToManyField(
+        City,
+        verbose_name=_('City')
+    )
+
     slug = models.SlugField(blank=True, unique=True)
-    city = models.ManyToManyField(City)
 
     class Meta:
         verbose_name = _('Album')
@@ -99,11 +145,32 @@ class Photo(models.Model):
             * an album
 
     """
-    title = models.CharField("Titre", max_length=200)
-    date = models.DateField("Date de publication", default=datetime.date.today)
-    image = models.ImageField(upload_to='media/images')
-    legend = models.CharField("Légende", max_length=1000, blank=True)
-    album = models.ManyToManyField(Album)
+    title = models.CharField(
+        verbose_name=_('Title'),
+        max_length=200
+    )
+
+    date = models.DateField(
+        verbose_name=_('Publication date'),
+        default=datetime.date.today
+    )
+
+    image = models.ImageField(
+        upload_to='media/images',
+        verbose_name=_('Image')
+    )
+
+    legend = models.CharField(
+        verbose_name=_('Legend'),
+        max_length=1000,
+        blank=True
+    )
+
+    album = models.ManyToManyField(
+        Album,
+        verbose_name=_('Album')
+    )
+
     slug = models.SlugField(blank=True, unique=True)
 
     class Meta:

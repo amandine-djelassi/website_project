@@ -11,7 +11,11 @@ class Tag(models.Model):
             * a name
             * a slug
     """
-    name = models.CharField("Nom", max_length=200)
+    name = models.CharField(
+        verbose_name=_('Name'),
+        max_length=200
+    )
+
     slug = models.SlugField(blank=True, unique=True)
 
     class Meta:
@@ -46,12 +50,36 @@ class Article(models.Model):
             * [an abstract]
 
     """
-    title = models.CharField("Titre", max_length=200)
-    date = models.DateField("Date de publication", default=datetime.date.today)
-    image = models.ImageField(upload_to='media/images', blank=True)
-    abstract = models.CharField("Résumé", max_length=1000, blank=True)
+    title = models.CharField(
+        verbose_name=_('Title'),
+        max_length=200
+    )
+
+    date = models.DateField(
+        verbose_name=_('Date'),
+        default=datetime.date.today
+    )
+
+    image = models.ImageField(
+        upload_to='media/images',
+        verbose_name=_('Image'),
+        help_text=_('Size: height:300px, width:900px'),
+        blank=True)
+
+    abstract = models.CharField(
+        verbose_name=_('Abstract'),
+        max_length=1000,
+        blank=True
+    )
+
     text = RichTextUploadingField()
-    tags = models.ManyToManyField(Tag, blank=True)
+
+    tags = models.ManyToManyField(
+        Tag,
+        verbose_name=_('Tags'),
+        blank=True
+    )
+
     slug = models.SlugField(blank=True, unique=True)
 
     class Meta:

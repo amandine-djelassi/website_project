@@ -54,7 +54,6 @@ class RegistrationForm2(forms.Form):
         widget=forms.TextInput(attrs={'placeholder': _('last name')})
     )
 
-    #country = forms.Select()
     country = LazyTypedChoiceField(choices=countries)
 
     newsletter = forms.BooleanField(
@@ -63,10 +62,27 @@ class RegistrationForm2(forms.Form):
     )
 
 class ContactForm(forms.Form):
-    contact_name = forms.CharField(required=True)
-    contact_email = forms.EmailField(required=True)
-    subject = forms.CharField(required=True)
-    message = forms.CharField(
+    contact_name = forms.CharField(
+        max_length=30,
+        label=_('Name'),
         required=True,
-        widget=forms.Textarea
+        widget=forms.TextInput(attrs={'placeholder': _('name')})
+    )
+
+    contact_email = forms.EmailField(
+        label=_('Email address'),
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': _('email address')})
+    )
+
+    subject = forms.CharField(
+        max_length=30,
+        label=_('Subject'),
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': _('subject')})
+    )
+    message = forms.CharField(
+        label=_('Message'),
+        required=True,
+        widget=forms.Textarea(attrs={'placeholder': _('message')})
     )
