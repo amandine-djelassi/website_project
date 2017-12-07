@@ -34,7 +34,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 's7&w3=y!_64^82m^=@ui2cz*zk$unrapm*qyl4vr4nms9p*(p-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = get_env_variable('DEBUG_TROTTEUR')
 
 # configure email
 EMAIL_USE_TLS = True
