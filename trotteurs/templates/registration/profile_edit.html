@@ -71,13 +71,13 @@
         {{ form.country }}
       </p>
 
-        <hr>
-        <p><a href="{% url 'change_password' %}">{% trans 'Change password' %}</a></p>
-        <p><a href="{% url 'confirmation_delete_account' %}">{% trans 'Delete account' %}</a></p>
+      <button type="submit" class="btn btn-primary pull-right">{% trans "Save profile" %}</button>
 
-        <button type="submit" class="btn btn-primary pull-right">{% trans "Save profile" %}</button>
+      <hr>
+      <p><a href="{% url 'change_password' %}">{% trans 'Change password' %}</a></p>
+      <p><a href="{% url 'confirmation_delete_account' %}">{% trans 'Delete account' %}</a></p>
 
-        </form>
+      </form>
     </div>
   </div>
 

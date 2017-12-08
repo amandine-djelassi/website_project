@@ -27,6 +27,7 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
+from django.contrib.auth import logout
 
 def activate(request, uidb64, token):
     User = get_user_model()
@@ -110,7 +111,7 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
     User = get_user_model()
     model= User
     fields=["first_name", "last_name", "newsletter", "username", "country"]
-    success_url = '/accounts/register/complete/'
+    success_url = '/'
 
 
 class IndexView(TemplateView):
@@ -182,7 +183,6 @@ class confirm_delete_account(TemplateView):
     """
     template_name = "registration/confirm_delete_account.html"
 
-from django.contrib.auth import logout
 def delete_account(request):
     request.user.delete()
     logout(request)
