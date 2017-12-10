@@ -1,55 +1,49 @@
+{% load staticfiles %}
+{% load i18n %}
+
 <!DOCTYPE html>
 <html>
 
-    {% load staticfiles %}
-    {% load i18n %}
     <head>
 
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="">
-        <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-        <title>{% trans "Trotteurs" %}</title>
+    <title>{% trans "Trotteurs" %}</title>
 
-        <!-- Add of the css files -->
-        {% block css %}
-          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-          <link href="{% static 'trotteurs/css/skeleton.css' %}" rel="stylesheet" />
-        {% endblock %}
+    {% block css %}
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="{% static 'trotteurs/css/skeleton.css' %}" rel="stylesheet" />
+    {% endblock %}
 
-        <!-- Add of the jQuery files -->
-        {% block jquery %}
-        {% endblock %}
-
-        <!-- Add of the js files -->
-        {% block js %}
+    {% block js %}
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="http://code.jquery.com/jquery.js"></script>
         <script>
-          //premoad configuration
-          $( document ).on( "mobileinit", function() {
+            $( document ).on( "mobileinit", function() {
             $.mobile.autoInitializePage = false;
-          });
-          </script>
-
+            });
+        </script>
         <script src="http://code.jquery.com/mobile/1.5.0-alpha.1/jquery.mobile-1.5.0-alpha.1.min.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/masonry/3.1.5/masonry.pkgd.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
-        {% endblock %}
+    {% endblock %}
 
     </head>
+
     <body>
 
         <!-- Navigation bar -->
         {% block header %}
-          {% include "trotteurs/header.html" %}
+            {% include "trotteurs/header.html" %}
         {% endblock %}
 
         <!-- Page Content -->
@@ -58,7 +52,7 @@
 
         <!-- Footer -->
         {% block footer %}
-          {% include "trotteurs/footer.html" %}
+            {% include "trotteurs/footer.html" %}
         {% endblock %}
 
     </body>

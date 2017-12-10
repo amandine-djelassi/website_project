@@ -2,81 +2,33 @@
 {% load staticfiles %}
 
 {% block css %}
-  {{ block.super }}
-  <link href="{% static 'gallery/css/photo-grid.css' %}" rel="stylesheet" />
-  <link href="{% static 'gallery/css/jquery.fancybox.min.css' %}" rel="stylesheet" />
-  <style>
-
-  </style>
+    {{ block.super }}
+    <link href="{% static 'gallery/css/photo-grid.css' %}" rel="stylesheet" />
+    <link href="{% static 'gallery/css/jquery.fancybox.min.css' %}" rel="stylesheet" />
 {% endblock %}
 
 {% block js %}
-  {{ block.super }}
-  <script type="text/javascript" src="{% static 'gallery/js/photo-grid.js' %}"></script>
-  <script type="text/javascript" src="{% static 'gallery/js/jquery.fancybox.min.js' %}"></script>
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'gallery/js/photo-grid.js' %}"></script>
+    <script type="text/javascript" src="{% static 'gallery/js/jquery.fancybox.min.js' %}"></script>
 {% endblock %}
 
 {% block gallery_content %}
-<div class="container">
-  <div class="container-fluid">
-    <h1> {{ album_photo.title }}</h1>
-    <hr>
-    <div id='contain-grid' style="{width: 100%}">
-      <div id="grid" class="row">
-    	   <div id="posts" class="gal">
-           {% for photo in album_photo.photo_set.all %}
-           <a href="{{ photo.image.url }}" data-fancybox="images" class="post fancybox" rel="allimages" title="un titre" >
-             <img class="thumbnail img-responsive" src="{{ photo.image.url }}" />
-           </a>
-           {% endfor %}
-         </div>
-       </div>
-     </div>
-   </div>
- </div>
-
- <script>
-
-
- $(document).ready(function() {
-   $('[data-fancybox]').fancybox({
-    buttons : [
-          'fullScreen',
-          'close'
-    ],
-    infobar : false,
-    lang : 'en',
-    i18n : {
-      'en' : {
-          CLOSE       : 'Close',
-          NEXT        : 'Next',
-          PREV        : 'Previous',
-          ERROR       : 'The requested content cannot be loaded. <br/> Please try again later.',
-          PLAY_START  : 'Start slideshow',
-          PLAY_STOP   : 'Pause slideshow',
-          FULL_SCREEN : 'Full screen',
-          THUMBS      : 'Thumbnails',
-          DOWNLOAD    : 'Download',
-          SHARE       : 'Share',
-          ZOOM        : 'Zoom'
-      },
-      'fr' : {
-          CLOSE       : 'Fermer',
-          NEXT        : 'Suivant',
-          PREV        : 'Précédent',
-          ERROR       : "Le contenu ne peux pas être chargé. <br/> Merci d'essayer ultérieurement.",
-          PLAY_START  : 'Démarrer le diaporama',
-          PLAY_STOP   : 'Pause',
-          FULL_SCREEN : 'Plein écran',
-          THUMBS      : 'Miniature',
-          DOWNLOAD    : 'Télécharger',
-          SHARE       : 'Partager',
-          ZOOM        : 'Zoom'
-      }
-    }
- });
-});
-
-</script>
-
-  {% endblock %}
+    <div class="container">
+        <div class="container-fluid">
+            <h1> {{ album_photo.title }}</h1>
+            <hr>
+            <div id='contain-grid' style="{width: 100%}">
+                <div id="grid" class="row">
+                    <div id="posts" class="gal">
+                        {% for photo in album_photo.photo_set.all %}
+                            <a href="{{ photo.image.url }}" data-fancybox="images" class="post fancybox" rel="allimages" title="un titre" >
+                                <img class="thumbnail img-responsive" src="{{ photo.image.url }}" />
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

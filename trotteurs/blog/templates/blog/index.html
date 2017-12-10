@@ -12,8 +12,8 @@
 
             <!-- date and tag -->
             <p>
-              <span class="glyphicon glyphicon-time"></span>{% trans "Posted on" %} {{ article.date }}
-              {% include "blog/tag_list.html" with tags=article.tags.all %}
+                <span class="glyphicon glyphicon-time"></span>{% trans "Posted on" %} {{ article.date }}
+                {% include "blog/tag_list.html" with tags=article.tags.all %}
             </p>
 
             <hr>
@@ -32,7 +32,7 @@
             <hr>
         {% endfor %}
 
-          {% include "blog/pagination.html" %}
+        {% include "blog/pagination.html" %}
 
     {% else %}
         <h2>No article are available.</h2>

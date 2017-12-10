@@ -5,50 +5,47 @@
 
     {% if article_list %}
         {% for article in article_list %}
-        <!-- Page Content -->
-        <div class="container" id="article">
-            <div class="row">
+            <!-- Page Content -->
+            <div class="container" id="article">
+                <div class="row">
 
-                <!-- image -->
-                <div class="col-md-3">
-                    <img class="img-thumbnail" src="{{ article.image.url }}" style="max-width:100%; height:auto; display:block;" alt="">
+                    <!-- image -->
+                    <div class="col-md-3">
+                        <img class="img-thumbnail" src="{{ article.image.url }}" style="max-width:100%; height:auto; display:block;" alt="">
+                    </div>
+
+                    <!-- text -->
+                    <div class="col-md-5">
+                        <!-- title -->
+                        <h2>
+                            <a href="{% url 'blog:detail' article.slug %}">{{ article.title }}</a>
+                        </h2>
+
+                        <!-- date and tag -->
+                        <p>
+                            <span class="glyphicon glyphicon-time"></span>{% trans "Posted on" %} {{ article.date }}
+                            {% include "blog/tag_list.html" with tags=article.tags.all %}
+                        </p>
+
+                        <!-- abstract -->
+                        {% if article.abstract %}
+                            <p>{{ article.abstract }}</p>
+                        {% endif %}
+
+                        <!-- read more -->
+                        <a class="btn btn-primary" href="{% url 'blog:detail' article.slug %}">{% trans "Read More" %}<span class="glyphicon glyphicon-chevron-right"></span></a>
+
+                    </div>
                 </div>
-
-                <!-- text -->
-                <div class="col-md-5">
-                  <!-- title -->
-                  <h2>
-                      <a href="{% url 'blog:detail' article.slug %}">{{ article.title }}</a>
-                  </h2>
-
-                  <!-- date and tag -->
-                  <p>
-                    <span class="glyphicon glyphicon-time"></span>{% trans "Posted on" %} {{ article.date }}
-                    {% include "blog/tag_list.html" with tags=article.tags.all %}
-                  </p>
-
-                  <!-- abstract -->
-                  {% if article.abstract %}
-                      <p>{{ article.abstract }}</p>
-                  {% endif %}
-
-                  <!-- read more -->
-                  <a class="btn btn-primary" href="{% url 'blog:detail' article.slug %}">{% trans "Read More" %}<span class="glyphicon glyphicon-chevron-right"></span></a>
-
-                </div>
-              </div>
             </div>
             <hr>
         {% endfor %}
 
-      {% include "blog/pagination.html" %}
-
+        {% include "blog/pagination.html" %}
 
     {% else %}
         <h2>No article are available.</h2>
     {% endif %}
-
-
 
 {% endblock %}
 

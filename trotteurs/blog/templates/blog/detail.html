@@ -13,8 +13,8 @@
 
     <!-- Date/Time -->
     <p>
-      <span class="glyphicon glyphicon-time"></span>{% trans "Posted on" %} {{ article.date }}
-      {% include "blog/tag_list.html" with tags=article.tags.all %}
+        <span class="glyphicon glyphicon-time"></span>{% trans "Posted on" %} {{ article.date }}
+        {% include "blog/tag_list.html" with tags=article.tags.all %}
     </p>
 
     <hr>

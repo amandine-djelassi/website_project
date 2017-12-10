@@ -1,42 +1,93 @@
 :root {
-  --page-bg-color: white;
-  --archive-year-color: black;
-  --archive-month-color:black;
-  --sidebar-bg-color: var(--theme_color3);
-  --sidebar_border_color: black;
+    --page-bg-color: white;
+    --archive-year-color: black;
+    --archive-month-color:black;
+    --sidebar-bg-color: var(--theme_color3);
+    --sidebar_border_color: black;
 }
 
 /* sidebar */
 .well h4  {
-  color:var(--text_color1);
+    color:var(--text_color1);
 }
 
 .well {
-  background-color:var(--sidebar-bg-color);
-  border:var(--sidebar_border_color);
+    background-color:var(--sidebar-bg-color);
+    border:var(--sidebar_border_color);
 }
 
 .well ul li a{
-  color:var(--archive-year-color);
+    color:var(--archive-year-color);
 }
 
 .well ul ul li a{
-  color:var(--archive-month-color);
+    color:var(--archive-month-color);
 }
 
 /* main page */
 #page h2 a  {
-  color:var(--text_color1);
+    color:var(--text_color1);
 }
 
 #page {
-  background-color:var(--page-bg-color);
-  /* offset left, top, thickness, color with alpha */
-  -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    background-color:var(--page-bg-color);
+    /* offset left, top, thickness, color with alpha */
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 }
 
 #page #article {
-  margin-top: 20px
+    margin-top: 20px
+}
+
+/* Style the buttons that are used to open and close the accordion panel */
+button.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #ccc;
+}
+
+
+.btn-group-vertical a {
+    background-color: white;
+    border: none;
+    color: #444;
+    padding: 10px 24px;
+    cursor: pointer;
+    width: 100%;
+    display: block;
+    text-align: left;
+}
+
+.btn-group-vertical a:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
+
+/* Add a background color on hover */
+.btn-group-vertical a:hover {
+    background-color: #eee;
+}
+
+div.panel {
+    padding: 0;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
 }

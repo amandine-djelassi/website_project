@@ -1,84 +1,33 @@
 {% extends "trotteurs/skeleton.html" %}
-
 {% load staticfiles %}
 
 {% block css %}
-{{ block.super }}
-<link href="{% static 'blog/css/blog_skeleton.css' %}" rel="stylesheet" />
+    {{ block.super }}
+    <link href="{% static 'blog/css/blog_skeleton.css' %}" rel="stylesheet" />
+{% endblock %}
 
-<style type="text/css">
-/* Style the buttons that are used to open and close the accordion panel */
-button.accordion {
-   background-color: #eee;
-   color: #444;
-   cursor: pointer;
-   padding: 18px;
-   width: 100%;
-   text-align: left;
-   border: none;
-   outline: none;
-   transition: 0.4s;
-   margin-top: 0;
-   margin-bottom: 0;
-}
-
-button.accordion.active, button.accordion:hover {
-   background-color: #ccc;
-}
-
-.btn-group-vertical a {
-    background-color: white;
-    border: none;
-    color: #444;
-    padding: 10px 24px;
-    cursor: pointer;
-    width: 100%;
-    display: block;
-    text-align: left;
-}
-
-.btn-group-vertical a:not(:last-child) {
-    border-bottom: 1px solid #eee;
-}
-
-/* Add a background color on hover */
-.btn-group-vertical a:hover {
-    background-color: #eee;
-}
-
-div.panel {
-    padding: 0;
-    background-color: white;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.2s ease-out;
-    margin-top: 0;
-    margin-bottom: 0;
-    width: 100%;
-}
-
-</style>
-
+{% block js %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'blog/js/blog.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-<div class="row">
+    <div class="container">
+        <div class="row">
 
-    <!-- Blog content -->
-    <div class="col-md-8" id="page">
-      {% block blog_content %}
-      {% endblock %}
+            <!-- Blog content -->
+            <div class="col-md-8" id="page">
+                {% block blog_content %}
+                {% endblock %}
+            </div>
+
+            <!-- Blog sidebar -->
+            <div class="col-md-4" style="padding-top:70px;">
+                {% block sidebar %}
+                    {% include "blog/sidebar.html" %}
+                {% endblock %}
+            </div>
+
+        </div>
     </div>
-
-    <!-- Blog sidebar -->
-    <div class="col-md-4" style="padding-top:70px;">
-        {% block sidebar %}
-          {% include "blog/sidebar.html" %}
-        {% endblock %}
-    </div>
-</div>
-</div>
-
-
 {% endblock %}

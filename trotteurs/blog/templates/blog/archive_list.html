@@ -1,42 +1,24 @@
 {% if archive %}
-  {% if archive|length == 1 %}
-    <div class="btn-group-vertical btn-block">
-      {% for y, months in archive %}
-        {% for m in months %}
-          <a href="{% url 'blog:article_month_archive' y.year m.month %}" class="btn btn-default">{{ m|date:"F" }}</a>
+    <!-- If only one year, we display only the months -->
+    {% if archive|length == 1 %}
+        <div class="btn-group-vertical btn-block">
+            {% for y, months in archive %}
+                {% for m in months %}
+                    <a href="{% url 'blog:article_month_archive' y.year m.month %}" class="btn btn-default">{{ m|date:"F" }}</a>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    <!-- Else, display years and months -->
+    {% else %}
+        {% for y, months in archive %}
+            <button class="accordion">{{ y.year }}</button>
+            <div class="panel">
+                <div class="btn-group-vertical btn-block">
+                    {% for m in months %}
+                        <a href="{% url 'blog:article_month_archive' y.year m.month %}" class="btn btn-default">{{ m|date:"F" }}</a>
+                    {% endfor %}
+                </div>
+            </div>
         {% endfor %}
-      {% endfor %}
-    </div>
-  {% else %}
-  {% for y, months in archive %}
-    <button class="accordion">{{ y.year }}</button>
-    <div class="panel">
-      <div class="btn-group-vertical btn-block">
-        {% for m in months %}
-          <a href="{% url 'blog:article_month_archive' y.year m.month %}" class="btn btn-default">{{ m|date:"F" }}</a>
-        {% endfor %}
-      </div>
-    </div>
-  {% endfor %}
-{% endif %}
-
-
-  <!-- Animated Accordion (Slide Down) -->
-  <script>
-  var acc = document.getElementsByClassName("accordion");
-  var i;
-
-  for (i = 0; i < acc.length; i++) {
-    acc[i].onclick = function() {
-      this.classList.toggle("active");
-      var panel = this.nextElementSibling;
-      if (panel.style.maxHeight){
-        panel.style.maxHeight = null;
-      } else {
-        panel.style.maxHeight = panel.scrollHeight + "px";
-      }
-    }
-  }
-
-  </script>
+    {% endif %}
 {% endif %}

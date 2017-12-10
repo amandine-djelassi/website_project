@@ -3,400 +3,231 @@
 {% load l10n %}
 
 {% block css %}
-  {{ block.super }}
+    {{ block.super }}
     <link rel="stylesheet" href="https://openlayers.org/en/v4.4.2/css/ol.css" type="text/css">
-    <style>
-
-      /* ***********************
-                Map
-      ************************** */
-
-      #map {
-        height: 100%;
-        width: 100%;
-        position: relative;
-      }
-
-      /* Zoom */
-      #map .ol-zoom .ol-zoom-out {
-        margin-top: 204px;
-      }
-
-      #map .ol-zoomslider {
-        background-color: transparent;
-        top: 2.3em;
-        left: unset;
-        right: 8px;
-      }
-
-      #map .ol-zoom {
-        left: unset;
-        right: 8px;
-      }
-
-      /* ***********************
-              Menu button
-      ************************** */
-
-      #menu3Bar {
-        padding-top: 10px;
-        padding-left: 20px;
-        position: absolute;
-        z-index: 1;
-        left: 0;
-        transition: 0.5s;
-      }
-
-      /* Menu hiden button */
-      .bar1, .bar2, .bar3 {
-          width: 35px;
-          height: 5px;
-          background-color: #333;
-          margin: 6px 0;
-          transition: 0.4s;
-      }
-
-      /* Menu shown button */
-        /* Rotate first bar */
-      .change .bar1 {
-          -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
-          transform: rotate(-45deg) translate(-9px, 6px) ;
-      }
-        /* Fade out the second bar */
-      .change .bar2 {
-          opacity: 0;
-      }
-        /* Rotate last bar */
-      .change .bar3 {
-          -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
-          transform: rotate(45deg) translate(-8px, -8px) ;
-      }
-
-      /* ***********************
-          Side navigation menu
-      ************************** */
-      #sidenav {
-        width: 0;
-        height: 100%;
-        top:0;
-        left: 0;
-        z-index: 1;
-        overflow-x: hidden;
-        transition: 0.5s;
-        position: absolute;
-        background-color: #354649;
-      }
-
-      /* countries buttons */
-      button.accordion {
-         background-color: #354649;
-         color: #E1DDDB;
-         padding: 18px;
-         width: 100%;
-         text-align: left;
-         transition: 0.4s;
-         border: none;
-         border-bottom: 1px solid #4b6368;
-      }
-
-      button.accordion.active, button.accordion:hover {
-         background-color: #4b6368;
-      }
-
-      /* cities buttons */
-      div.panel {
-        padding: 0;
-        background-color: white;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.2s ease-out;
-        margin-top: 0;
-        margin-bottom: 0;
-        width: 100%;
-        border: none;
-        border-radius: 0;
-      }
-
-      .btn-group-vertical a {
-          background-color: white;
-          color: #444;
-          padding: 10px 24px;
-          width: 100%;
-          display: block;
-          text-align: left;
-          border-radius: 0;
-          border: none;
-      }
-      .btn-group-vertical a:hover {
-          background-color: #eee;
-      }
-
-      #citiesButton:not(:last-child) {
-        border-bottom: 1px solid #eee;
-      }
-
-    </style>
+    <link href="{% static 'gallery/css/map.css' %}" rel="stylesheet" />
 {% endblock %}
 
 {% block js %}
-  {{ block.super }}
+    {{ block.super }}
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList"></script>
     <script src="https://openlayers.org/en/v4.4.2/build/ol.js" type="text/javascript"></script>
+
+
 {% endblock %}
 
 {% block gallery_content %}
-<div class="container-fluid">
-  <div class="row">
-
-    <!-- <div id="myMenu">
-
-
-
-    </div> -->
-    <div id="map" class="hidden-xs">
-      <div id="menu3Bar" onclick="barFunction(this)">
-        <div class="bar1"></div>
-        <div class="bar2"></div>
-        <div class="bar3"></div>
-      </div>
-
-      <div id="sidenav">
-        {% for country in country_list %}
-          <button class="accordion">{{ country.name}}</button>
-          <div class="panel">
-            <div class="btn-group-vertical btn-block">
-              {% for city in country.city_set.all %}
-                <div id="citiesButton">
-                <a href={% url 'gallery:album_list' city.slug %} class="btn btn-default">{{ city.name }}</a>
-              </div>
-              {% endfor %}
+    <div class="container-fluid">
+        <div class="row">
+            <!-- map -->
+            <div id="map" class="hidden-xs">
+                <!-- menu button -->
+                <div id="menu3Bar" onclick="barFunction(this)">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
+                <!-- navigation sidebar -->
+                <div id="sidenav">
+                    {% for country in country_list %}
+                        <button class="accordion">{{ country.name}}</button>
+                        <div class="panel">
+                            <div class="btn-group-vertical btn-block">
+                                {% for city in country.city_set.all %}
+                                    <div id="citiesButton">
+                                        <a href={% url 'gallery:album_list' city.slug %} class="btn btn-default">{{ city.name }}</a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-          </div>
-        {% endfor %}
-      </div>
+        </div>
     </div>
 
+    <script type="text/javascript" src="{% static 'gallery/js/map.js' %}"></script>
+    <script>
+        (function(){
 
-  </div>
-</div>
-
-
-
-
-
-<script>
-var acc = document.getElementsByClassName("accordion");
-var i;
-
-for (i = 0; i < acc.length; i++) {
-  acc[i].onclick = function() {
-    this.classList.toggle("active");
-    var panel = this.nextElementSibling;
-    if (panel.style.maxHeight){
-      panel.style.maxHeight = null;
-    } else {
-      panel.style.maxHeight = panel.scrollHeight + "px";
-    }
-  }
-}
-
-(function(){
-
-  var urlMap = []
-  {% for country in country_list %}
-  {% for city in country.city_set.all %}
-
-      var slug = '{{ city.slug }}'.replace('-', '')
-      urlMap[slug] = '{% url "gallery:album_list" city.slug %}';
-  {% endfor %}
-  {% endfor %}
+            var urlMap = []
+            {% for country in country_list %}
+                {% for city in country.city_set.all %}
+                    var slug = '{{ city.slug }}'.replace('-', '')
+                    urlMap[slug] = '{% url "gallery:album_list" city.slug %}';
+                {% endfor %}
+            {% endfor %}
 
 
-  function computeFeatureStyle(feature, style) {
-    // Style of the point of the cities
-    if (style=='init'){
-      return new ol.style.Style({
-        image: new ol.style.Circle({
-          radius: 5,
-          fill: new ol.style.Stroke({color: 'rgba(134,56,23,1)'})
-        })
-      });
-    }
-    // Style of the point of the cities when hover
-    else if (style=='hover') {
-      return new ol.style.Style({
-        image: new ol.style.Circle({
-          radius: 5,
-          fill: new ol.style.Stroke({color: 'rgba(97,41,19,1)'})
-        }),
-        text: new ol.style.Text({
-          text: feature.get('name'),
-          offsetX: 50,
-          font: "16px Helvetica"
-        })
-      });
-    }
-    // Style of the point of the cities when click
-    else if (style=='click') {
-      return new ol.style.Style({
-        image: new ol.style.Circle({
-          radius: 5,
-          fill: new ol.style.Stroke({color: 'rgba(255,255,255,1)'})
-        })
-      });
-    }
-  }
+            function computeFeatureStyle(feature, style) {
+                // Style of the point of the cities
+                if (style=='init'){
+                    return new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: 5,
+                            fill: new ol.style.Stroke({color: 'rgba(134,56,23,1)'})
+                        })
+                    });
+                }
 
-  var vectorSource = new ol.source.Vector({
-    //create empty vector
-  });
+                // Style of the point of the cities when hover
+                else if (style=='hover') {
+                    return new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: 5,
+                            fill: new ol.style.Stroke({color: 'rgba(97,41,19,1)'})
+                        }),
+                        text: new ol.style.Text({
+                            text: feature.get('name'),
+                            offsetX: 50,
+                            font: "16px Helvetica"
+                        })
+                    });
+                }
 
-  // Display the differents cities where we took pictures
-  {% localize off %}
-  {% for country in country_list %}
-  {% for city in country.city_set.all %}
-      var feature = new ol.Feature({
-        geometry: new
-          ol.geom.Point(ol.proj.transform([{{ city.longitude }}, {{ city.latitude }}], 'EPSG:4326',   'EPSG:3857')),
-          name: '{{ city.name }}',
-          slug: '{{ city.slug }}'.replace('-', '')
-      });
+                // Style of the point of the cities when click
+                else if (style=='click') {
+                    return new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: 5,
+                            fill: new ol.style.Stroke({color: 'rgba(255,255,255,1)'})
+                        })
+                    });
+                }
+            }
 
-      style = computeFeatureStyle(feature, 'init')
-      feature.setStyle(style);
-      vectorSource.addFeature(feature);
-    {% endfor %}
-    {% endfor %}
-  {% endlocalize %}
+            var vectorSource = new ol.source.Vector({
+                //create empty vector
+            });
 
-  var layer = new ol.layer.Vector({
-    source: vectorSource
-  })
+            // Display the differents cities where we took pictures
+            {% localize off %}
+                {% for country in country_list %}
+                    {% for city in country.city_set.all %}
+                        var feature = new ol.Feature({
+                            geometry: new ol.geom.Point(ol.proj.transform([{{ city.longitude }}, {{ city.latitude }}], 'EPSG:4326',   'EPSG:3857')),
+                            name: '{{ city.name }}',
+                            slug: '{{ city.slug }}'.replace('-', '')
+                        });
 
-  // Creation of the map
-  var map = new ol.Map({
-    // controls: [],
-    target: 'map',
-    layers: [
-      // The template of the map
-      new ol.layer.Tile({
-        // source: new ol.source.OSM()
-        source: new ol.source.Stamen({
-          layer: 'watercolor'
-        })
-      }),
-      // add the feature vector to the layer vector
-      layer,
-    ],
-    // Map center on central america
-    view: new ol.View({
-      center: ol.proj.fromLonLat([-60, -20]),
-      zoom: 3
-    }),
-    // Scroll with mouse wheel deactivate
-    interactions: ol.interaction.defaults({mouseWheelZoom:false})
-  });
-  map.addControl(new ol.control.ZoomSlider());
+                        style = computeFeatureStyle(feature, 'init');
+                        feature.setStyle(style);
+                        vectorSource.addFeature(feature);
+                    {% endfor %}
+                {% endfor %}
+            {% endlocalize %}
 
-  ///////////////
-  // Hover effect
+            var layer = new ol.layer.Vector({
+                source: vectorSource
+            })
 
-  //set a global reference to loop only if needed
-  clickFeature=null;
-  var hovered = false;
+            // Creation of the map
+            var map = new ol.Map({
+                target: 'map',
+                layers: [
+                    // The template of the map
+                    new ol.layer.Tile({
+                        // source: new ol.source.OSM()
+                        source: new ol.source.Stamen({
+                            layer: 'watercolor'
+                        })
+                    }),
+                    // add the feature vector to the layer vector
+                    layer,
+                ],
+                // Map center on central america
+                view: new ol.View({
+                    center: ol.proj.fromLonLat([-60, -20]),
+                    zoom: 3
+                }),
+                // Scroll with mouse wheel deactivate
+                interactions: ol.interaction.defaults({mouseWheelZoom:false})
+            });
+            map.addControl(new ol.control.ZoomSlider());
 
-  map.on('pointermove', function(evt) {
-    if (evt.dragging) return;
+            //////////////////
+            // Hover effect //
+            //////////////////
 
-    var feature = map.forEachFeatureAtPixel(evt.pixel, function(ft, l){
-      return ft;
-    });
+            //set a global reference to loop only if needed
+            clickFeature=null;
+            var hovered = false;
 
-    if(feature){
-      if(feature === clickFeature) return;
-        hovered = true;
-        style = computeFeatureStyle(feature, 'hover')
-        feature.setStyle(style);
-        removeStyleFromOthersFeatures(feature);
-      } else{
-        removeStyleFromAllFeatures();
-    }
-  });
+            map.on('pointermove', function(evt) {
+                if (evt.dragging) return;
 
-  function removeStyleFromAllFeatures(){
-  //continue only if needed
-    if(!hovered && typeof clickFeature!=='undefined') return;
+                var feature = map.forEachFeatureAtPixel(evt.pixel, function(ft, l){
+                    return ft;
+                });
 
+                if(feature){
+                    if(feature === clickFeature) return;
+                    hovered = true;
+                    style = computeFeatureStyle(feature, 'hover')
+                    feature.setStyle(style);
+                    removeStyleFromOthersFeatures(feature);
+                } else{
+                    removeStyleFromAllFeatures();
+                }
+            });
 
-    layer.getSource().getFeatures().forEach(function(feature){
-      if(feature === clickFeature) return;
-      style = computeFeatureStyle(feature, 'init')
-      feature.setStyle(style);
-    });
-    hovered = false;
-  }
+            function removeStyleFromAllFeatures(){
+                //continue only if needed
+                if(!hovered && typeof clickFeature!=='undefined') return;
 
-  function removeStyleFromOthersFeatures(feature){
-    layer.getSource().getFeatures().forEach(function(ft){
-      //don't remove from the current hovering
-      if(ft === feature || ft === clickFeature) return;
-      style = computeFeatureStyle(ft, 'init')
-      ft.setStyle(style);
-    });
-  }
+                layer.getSource().getFeatures().forEach(function(feature){
+                    if(feature === clickFeature) return;
+                    style = computeFeatureStyle(feature, 'init')
+                    feature.setStyle(style);
+                });
+                hovered = false;
+            }
 
-  ///////////////////
-  // Click effect
-  map.on('click', function(evt) {
+            function removeStyleFromOthersFeatures(feature){
+                layer.getSource().getFeatures().forEach(function(ft){
+                    //don't remove from the current hovering
+                    if(ft === feature || ft === clickFeature) return;
+                    style = computeFeatureStyle(ft, 'init')
+                    ft.setStyle(style);
+                });
+            }
 
-    clickFeature = map.forEachFeatureAtPixel(evt.pixel, function(ft, l){
-      return ft;
-    });
+            //////////////////
+            // Click effect //
+            //////////////////
+            map.on('click', function(evt) {
 
-    removeStyleFromAllFeatures();
+                clickFeature = map.forEachFeatureAtPixel(evt.pixel, function(ft, l){
+                    return ft;
+                });
 
-    if(typeof clickFeature !=='undefined'){
-      style = computeFeatureStyle(clickFeature, 'click')
-      clickFeature.setStyle(style);
-      window.location.href = urlMap[clickFeature.get('slug')];
-    }
-    else{
-      removeStyleFromAllFeatures();
-    }
-  });
+                removeStyleFromAllFeatures();
 
-    // change mouse cursor when over marker
-    var target = map.getTarget();
-    var jTarget = typeof target === "string" ? $("#" + target) : $(target);
-    $(map.getViewport()).on('mousemove', function (e) {
-        var pixel = map.getEventPixel(e.originalEvent);
-        var hit = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
-            return true;
-        });
-        if (hit) {
-            jTarget.css("cursor", "pointer");
-        } else {
-            jTarget.css("cursor", "");
-        }
-    });
+                if(typeof clickFeature !=='undefined'){
+                    style = computeFeatureStyle(clickFeature, 'click')
+                    clickFeature.setStyle(style);
+                    window.location.href = urlMap[clickFeature.get('slug')];
+                } else{
+                    removeStyleFromAllFeatures();
+                }
+            });
 
-})();
+            // change mouse cursor when over marker
+            var target = map.getTarget();
+            var jTarget = typeof target === "string" ? $("#" + target) : $(target);
+            $(map.getViewport()).on('mousemove', function (e) {
+                var pixel = map.getEventPixel(e.originalEvent);
+                var hit = map.forEachFeatureAtPixel(pixel, function (feature, layer) {
+                    return true;
+                });
+                if (hit) {
+                    jTarget.css("cursor", "pointer");
+                } else {
+                    jTarget.css("cursor", "");
+                }
+            });
 
+        })();
+    </script>
 
-
-function barFunction(x) {
-    /* Change aspect of the menu button */
-    x.classList.toggle("change");
-    if (document.getElementById("sidenav").offsetWidth == "0") {
-      /* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
-      document.getElementById("sidenav").style.width = "250px";
-      document.getElementById("menu3Bar").style.left = "250px";
-    }
-    else {
-      /* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
-      document.getElementById("sidenav").style.width = "0";
-      document.getElementById("menu3Bar").style.left = "0";
-    }
-}
-</script>
 {% endblock %}

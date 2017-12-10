@@ -1,0 +1,128 @@
+/* ***********************
+            Map
+************************** */
+
+#map {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+/* Zoom */
+#map .ol-zoom .ol-zoom-out {
+    margin-top: 204px;
+}
+
+#map .ol-zoomslider {
+    background-color: transparent;
+    top: 2.3em;
+    left: unset;
+    right: 8px;
+}
+
+#map .ol-zoom {
+    left: unset;
+    right: 8px;
+}
+
+/* ***********************
+        Menu button
+************************** */
+
+#menu3Bar {
+    padding-top: 10px;
+    padding-left: 20px;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+/* Menu hiden button */
+.bar1, .bar2, .bar3 {
+    width: 35px;
+    height: 5px;
+    background-color: #333;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+/* Menu shown button */
+/* Rotate first bar */
+.change .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+    transform: rotate(-45deg) translate(-9px, 6px) ;
+}
+/* Fade out the second bar */
+.change .bar2 {
+    opacity: 0;
+}
+/* Rotate last bar */
+.change .bar3 {
+    -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
+    transform: rotate(45deg) translate(-8px, -8px) ;
+}
+
+/* ***********************
+    Side navigation menu
+************************** */
+#sidenav {
+    width: 0;
+    height: 100%;
+    top:0;
+    left: 0;
+    z-index: 1;
+    overflow-x: hidden;
+    transition: 0.5s;
+    position: absolute;
+    background-color: #354649;
+}
+
+/* countries buttons */
+button.accordion {
+    background-color: #354649;
+    color: #E1DDDB;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    transition: 0.4s;
+    border: none;
+    border-bottom: 1px solid #4b6368;
+}
+
+button.accordion.active, button.accordion:hover {
+    background-color: #4b6368;
+}
+
+/* cities buttons */
+div.panel {
+    padding: 0;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    margin-top: 0;
+    margin-bottom: 0;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+}
+
+.btn-group-vertical a {
+    background-color: white;
+    color: #444;
+    padding: 10px 24px;
+    width: 100%;
+    display: block;
+    text-align: left;
+    border-radius: 0;
+    border: none;
+}
+.btn-group-vertical a:hover {
+    background-color: #eee;
+}
+
+#citiesButton:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
