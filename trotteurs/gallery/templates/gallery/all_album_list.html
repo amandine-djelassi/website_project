@@ -1,0 +1,40 @@
+{% extends "gallery/skeleton.html" %}
+{% load staticfiles %}
+
+{% block css %}
+    {{ block.super }}
+    <link href="{% static 'gallery/css/photo-grid.css' %}" rel="stylesheet" />
+    <link href="{% static 'gallery/css/album-list.css' %}" rel="stylesheet" />
+{% endblock %}
+
+
+{% block gallery_content %}
+    <div class="container">
+        <div class="container-fluid">
+            {% for country in country_list %}
+                <h1>{{ country.name }}</h1>
+                <hr>
+                {% for city in country.city_set.all %}
+                    <h2>{{ city.name }}</h2>
+                    <div class="row">
+                        {% for album in city.album_set.all %}
+                            <div class="post col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <figure class="album-effect">
+                                    <a href={% url 'gallery:album_photo_grid' album.slug  %} >
+                                        <img src="{{ album.image.url }}" alt="{{ album.title }}"/>
+                                    </a>
+                                    <figcaption>
+                                        <h2><a href={% url 'gallery:album_photo_grid' album.slug  %} >{{ album.title }}</a></h2>
+                                        {% if album.description %}
+                                            <p><a href={% url 'gallery:album_photo_grid' album.slug  %} >{{ album.description }}</a></p>
+                                        {% endif %}
+                                    </figcaption>
+                                </figure>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

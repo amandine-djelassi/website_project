@@ -1,6 +1,7 @@
 {% extends "gallery/skeleton.html" %}
 {% load staticfiles %}
 {% load l10n %}
+{% load i18n %}
 
 {% block css %}
     {{ block.super }}
@@ -30,17 +31,18 @@
                 <!-- navigation sidebar -->
                 <div id="sidenav">
                     {% for country in country_list %}
-                        <button class="accordion">{{ country.name}}</button>
+                        <button class="accordion">{{ country.name }}</button>
                         <div class="panel">
                             <div class="btn-group-vertical btn-block">
                                 {% for city in country.city_set.all %}
                                     <div id="citiesButton">
-                                        <a href={% url 'gallery:album_list' city.slug %} class="btn btn-default">{{ city.name }}</a>
+                                        <a href={% url 'gallery:album_city_list' city.slug %} class="btn btn-default">{{ city.name }}</a>
                                     </div>
                                 {% endfor %}
                             </div>
                         </div>
                     {% endfor %}
+                    <a id="allAlbumButton" href={% url 'gallery:all_album_list' %} class="btn">{% trans "All albums" %}</a>
                 </div>
             </div>
         </div>
@@ -54,7 +56,7 @@
             {% for country in country_list %}
                 {% for city in country.city_set.all %}
                     var slug = '{{ city.slug }}'.replace('-', '')
-                    urlMap[slug] = '{% url "gallery:album_list" city.slug %}';
+                    urlMap[slug] = '{% url "gallery:album_city_list" city.slug %}';
                 {% endfor %}
             {% endfor %}
 

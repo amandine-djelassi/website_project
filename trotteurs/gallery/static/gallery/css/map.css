@@ -95,6 +95,20 @@ button.accordion.active, button.accordion:hover {
     background-color: #4b6368;
 }
 
+/* All albums buttons */
+#allAlbumButton{
+    background-color: #E1DDDB;
+    color: #354649;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    border-radius: 0;
+}
+#allAlbumButton:hover {
+    background-color: #eee;
+}
+
 /* cities buttons */
 div.panel {
     padding: 0;

@@ -103,7 +103,7 @@ class Album(models.Model):
 
     description = models.CharField(
         verbose_name=_('Description'),
-        max_length=1000,
+        max_length=50,
         blank=True
     )
 

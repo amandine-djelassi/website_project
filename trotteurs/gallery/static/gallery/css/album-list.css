@@ -1,3 +1,7 @@
+.post {
+    width: 346px;
+    height: 220px;
+}
 .post figure{
     position: relative;
     float: left;
