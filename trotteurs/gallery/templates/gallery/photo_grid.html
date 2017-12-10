@@ -5,6 +5,9 @@
   {{ block.super }}
   <link href="{% static 'gallery/css/photo-grid.css' %}" rel="stylesheet" />
   <link href="{% static 'gallery/css/jquery.fancybox.min.css' %}" rel="stylesheet" />
+  <style>
+
+  </style>
 {% endblock %}
 
 {% block js %}
@@ -18,7 +21,7 @@
   <div class="container-fluid">
     <h1> {{ album_photo.title }}</h1>
     <hr>
-    <div class="col-md-12">
+    <div id='contain-grid' style="{width: 100%}">
       <div id="grid" class="row">
     	   <div id="posts" class="gal">
            {% for photo in album_photo.photo_set.all %}
@@ -33,6 +36,7 @@
  </div>
 
  <script>
+
 
  $(document).ready(function() {
    $('[data-fancybox]').fancybox({

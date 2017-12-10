@@ -21,10 +21,17 @@ jQuery(window).load(function () {
       jQuery('#posts, body > #grid').css('width', 'auto');
 
       // Calculates how many .post elements will actually fit per row. Could this code be cleaner?
-      posts_per_row = jQuery('#posts').innerWidth() / post_width;
+      posts_inner_width = jQuery('#contain-grid').innerWidth()
+      posts_per_row = posts_inner_width / post_width;
       floor_posts_width = (Math.floor(posts_per_row) * post_width) - gutter;
       ceil_posts_width = (Math.ceil(posts_per_row) * post_width) - gutter;
-      posts_width = (ceil_posts_width > jQuery('#posts').innerWidth()) ? floor_posts_width : ceil_posts_width;
+      // posts_width =
+      if (ceil_posts_width > posts_inner_width) {
+        posts_width = floor_posts_width;
+      }
+      else {
+        posts_width = ceil_posts_width;
+      }
       if (posts_width == jQuery('.post').width()) {
         posts_width = '100%';
       }

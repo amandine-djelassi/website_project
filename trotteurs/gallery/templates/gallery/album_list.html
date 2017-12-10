@@ -79,8 +79,8 @@
   }
 
   /* titles */
-  figure.album-effect h2,
-  figure.album-effect p {
+  figure.album-effect h2 a,
+  figure.album-effect p a{
     color: white;
   	position: absolute;
   	top: 50%;
@@ -89,20 +89,22 @@
   	-webkit-transition: -webkit-transform 0.35s;
   	transition: transform 0.35s;
   }
-  figure.album-effect h2 {
+  figure.album-effect h2 a{
   	-webkit-transform: translate3d(0,-50%,0) translate3d(0,-150%,0);
   	transform: translate3d(0,-50%,0) translate3d(0,-150%,0);
   }
-  figure.album-effect p {
+  figure.album-effect p a{
   	padding: 0.25em 2em;
   	-webkit-transform: translate3d(0,-50%,0) translate3d(0,150%,0);
   	transform: translate3d(0,-50%,0) translate3d(0,150%,0);
   }
-  figure.album-effect:hover h2 {
+  figure.album-effect:hover h2 a{
+    text-decoration: none;
   	-webkit-transform: translate3d(0,-50%,0) translate3d(0,-100%,0);
   	transform: translate3d(0,-50%,0) translate3d(0,-100%,0);
   }
-  figure.album-effect:hover p {
+  figure.album-effect:hover p a{
+    text-decoration: none;
   	-webkit-transform: translate3d(0,-50%,0) translate3d(0,100%,0);
   	transform: translate3d(0,-50%,0) translate3d(0,100%,0);
   }
@@ -111,7 +113,6 @@
 
 {% block js %}
   {{ block.super }}
-  <script type="text/javascript" src="{% static 'gallery/js/photo-grid.js' %}"></script>
 {% endblock %}
 
 {% block gallery_content %}
@@ -134,9 +135,9 @@
 			<img src="{{ album.image.url }}" alt="{{ album.title }}"/>
       </a>
 			<figcaption>
-				<h2>{{ album.title }}</h2>
+				<h2><a href={% url 'gallery:album_photo_grid' album.slug  %} >{{ album.title }}</a></h2>
         {% if album.description %}
-				<p>{{ album.description }}</p>
+				    <p><a href={% url 'gallery:album_photo_grid' album.slug  %} >{{ album.description }}</a></p>
         {% endif %}
 			</figcaption>
 		</figure>

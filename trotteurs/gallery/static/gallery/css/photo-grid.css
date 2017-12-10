@@ -29,7 +29,6 @@
 @media (min-width: 1200px) {
 	#grid > #posts .post { width: 346px; }
 	#grid > #posts .post.cs2 { width: 742px; }
-
 }
 
 .thumbnail {
@@ -37,11 +36,4 @@
   box-shadow: none;
   border-radius: 0;
 	margin: 0 0 0;
-}
-
-
-.modal {
-	z-index: 9999;
-}
-.modal-dialog {
 }
