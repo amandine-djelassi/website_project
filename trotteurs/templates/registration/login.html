@@ -11,7 +11,7 @@
 <div class="container">
   <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
-
+    <input name="next" type="hidden" value="{{next}}"/>
     <div class="login-page">
       <div id="wrapper">
         <form class="login-form">
