@@ -1,14 +1,15 @@
 {% load staticfiles %}
 {% load i18n %}
 
-<!-- Logo disapear when the page is scrolled -->
-<div class="container-fluid" style="height:150px; background-color:#ffffff;" >
-    <img class="img-responsive" src={% static "trotteurs/img/logo.png" %} alt="" height="150" style="margin-left: auto; margin-right: auto;">
-</div>
-
+{% if logo %}
+    <!-- Logo disapear when the page is scrolled -->
+    <div class="container-fluid" style="height:150px; background-color:#ffffff;" >
+        <img class="img-responsive" src={% static "trotteurs/img/logo.png" %} alt="" height="150" style="margin-left: auto; margin-right: auto;">
+    </div>
+{% endif %}
 <!-- Navigation -->
-<nav class="navbar navbar-inverse" data-spy="affix" data-offset-top="150">
-    <div class="container">
+<nav class="navbar navbar-inverse" id="navbar" data-spy="affix" data-offset-top="150">
+    <div class="container" style="background-color=red;">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
@@ -26,7 +27,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="{% url 'blog:index' %}">{% trans "Blog" %}</a></li>
                 <li><a href="{% url 'gallery:index' %}">{% trans "Gallery" %}</a></li>
-                <li><a href="{% url 'about' %}">{% trans "About" %}</a></li>
+                <li><a href="{% url 'route' %}">{% trans "Route" %}</a></li>
                 <li><a href="{% url 'contact' %}">{% trans "Contact" %}</a></li>
             </ul>
 
@@ -43,3 +44,11 @@
         </div>
     </div>
 </nav>
+
+<script>
+    // Delete margin for full-screen map 
+    if (!{{logo|yesno:"true,false" }}) {
+        document.getElementById("navbar").style.marginBottom = "0";
+    }
+
+</script>

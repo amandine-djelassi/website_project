@@ -29,7 +29,7 @@ class AlbumCityListView(LoginRequiredMixin, ListView):
             Return all the albums
         """
         city = City.objects.filter(slug = self.kwargs['slug'])[0]
-        return Album.objects.filter(city = city).order_by('-title')[:]
+        return Album.objects.filter(city = city).order_by('title')[:]
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -49,7 +49,7 @@ class AllAlbumListView(LoginRequiredMixin, ListView):
         """
 
         """
-        return Country.objects.order_by('-name')[:]
+        return Country.objects.order_by('name')[:]
 
 
 class MapView(LoginRequiredMixin, ListView):
@@ -64,4 +64,4 @@ class MapView(LoginRequiredMixin, ListView):
         """
             Return all the countries
         """
-        return Country.objects.order_by('-name')[:]
+        return Country.objects.order_by('name')[:]

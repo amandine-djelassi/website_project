@@ -17,6 +17,10 @@
 
 {% endblock %}
 
+{% block header %}
+    {% include "trotteurs/header.html" with logo=False %}
+{% endblock %}
+
 {% block gallery_content %}
     <div class="container-fluid">
         <div class="row">
@@ -129,7 +133,6 @@
                 layers: [
                     // The template of the map
                     new ol.layer.Tile({
-                        // source: new ol.source.OSM()
                         source: new ol.source.Stamen({
                             layer: 'watercolor'
                         })
@@ -143,7 +146,7 @@
                     zoom: 3
                 }),
                 // Scroll with mouse wheel deactivate
-                interactions: ol.interaction.defaults({mouseWheelZoom:false})
+                // interactions: ol.interaction.defaults({mouseWheelZoom:false})
             });
             map.addControl(new ol.control.ZoomSlider());
 
@@ -232,4 +235,8 @@
         })();
     </script>
 
+{% endblock %}
+
+<!-- Delete footer for the full screen map -->
+{% block footer %}
 {% endblock %}

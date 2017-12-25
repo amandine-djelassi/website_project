@@ -1,0 +1,212 @@
+{% extends "trotteurs/skeleton.html" %}
+{% load staticfiles %}
+{% load l10n %}
+{% load i18n %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.4.2/css/ol.css" type="text/css">
+    <!-- <link href="{% static 'gallery/css/map.css' %}" rel="stylesheet" /> -->
+    <style>
+    /* .map { */
+        #map {
+            height: 100%;
+            width: 100%;
+            position: fixed;
+        }
+
+        /* Zoom */
+        #map .ol-zoom .ol-zoom-out {
+            margin-top: 204px;
+        }
+
+        #map .ol-zoomslider {
+            background-color: transparent;
+            top: 2.3em;
+            left: unset;
+            right: 8px;
+        }
+
+        #map .ol-zoom {
+            left: unset;
+            right: 8px;
+        }
+         /* overflow: hidden;
+    } */
+    </style>
+{% endblock %}
+
+{% block js %}
+    {{ block.super }}
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList"></script>
+    <script src="https://openlayers.org/en/v4.4.2/build/ol.js" type="text/javascript"></script>
+
+{% endblock %}
+
+{% block header %}
+    {% include "trotteurs/header.html" with logo=False %}
+{% endblock %}
+
+{% block content %}
+    <!-- map -->
+    <div id="map" class="map">
+    </div>
+
+    <script type="text/javascript" src="{% static 'gallery/js/map.js' %}"></script>
+    <script>
+        var vectorSource = new ol.source.Vector({
+            //create empty vector
+        });
+
+        var cityReachedStyle = new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 5,
+                fill: new ol.style.Stroke({color: 'rgba(12, 157, 176, 1)'})
+            })
+        });
+        var cityStyle = new ol.style.Style({
+            image: new ol.style.Circle({
+                radius: 5,
+                fill: new ol.style.Stroke({color: 'rgba(134,56,23,1)'})
+            })
+        });
+
+        var lineReachedStyle = new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'rgba(12, 157, 176, 1)',
+                weight: 4
+            }),
+            stroke: new ol.style.Stroke({
+                color: 'rgba(12, 157, 176, 1)',
+                width: 2
+            })
+        });
+
+        var lineStyle = new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'rgba(134,56,23,1)',
+                weight: 4
+            }),
+            stroke: new ol.style.Stroke({
+                color: 'rgba(134,56,23,1)',
+                width: 2
+            })
+        });
+
+        // Display the differents cities
+        var coordinates = new Array();
+        var coordinatesReached = new Array();
+        {% localize off %}
+            {% for checkpoint in checkpoint_list %}
+                    var feature = new ol.Feature({
+                        geometry: new ol.geom.Point(ol.proj.transform([{{ checkpoint.longitude }}, {{ checkpoint.latitude }}], 'EPSG:4326',   'EPSG:3857')),
+                        name: '{{ checkpoint.city }}',
+                    });
+                    if ({{ checkpoint.reached|yesno:"true,false" }}) {
+                        coordinatesReached.push([{{ checkpoint.longitude }}, {{ checkpoint.latitude }}]);
+                        feature.setStyle(cityReachedStyle);
+                    } else {
+                        coordinates.push([{{ checkpoint.longitude }}, {{ checkpoint.latitude }}]);
+                        feature.setStyle(cityStyle);
+                    }
+                    vectorSource.addFeature(feature);
+            {% endfor %}
+        {% endlocalize %}
+
+        var layer = new ol.layer.Vector({
+            source: vectorSource
+        });
+
+        // Creation of the map
+        var map = new ol.Map({
+            target: 'map',
+            layers: [
+                // The template of the map
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                }),
+                // add the feature vector to the layer vector
+                layer,
+            ],
+            // Map center on central america
+            view: new ol.View({
+                center: ol.proj.fromLonLat([-60, -20]),
+                zoom: 3
+            })
+        });
+        map.addControl(new ol.control.ZoomSlider());
+
+        // add line between the city we reached
+        var featuresReached = new Array();
+        var transformedCoordinatesReached = new Array();
+
+        for (var i = 0; i < coordinatesReached.length; ++i) {
+            transformedCoordinatesReached[i] = ol.proj.transform(coordinatesReached[i], 'EPSG:4326', 'EPSG:3857');
+            featuresReached[i] = new ol.Feature(new ol.geom.Point(transformedCoordinatesReached[i]));
+        }
+
+        var sourceReached = new ol.source.Vector({
+            features: featuresReached
+        });
+
+        var vectorLineReached = new ol.source.Vector({});
+
+        for (var i = 0; i < transformedCoordinatesReached.length - 1; i++) {
+            var startPoint = transformedCoordinatesReached[i];
+            var endPoint = transformedCoordinatesReached[i+1];
+            var lineArray = [startPoint, endPoint];
+            var featureLine = new ol.Feature({
+                geometry: new ol.geom.LineString(lineArray)
+            });
+
+
+            featureLine.setStyle(lineReachedStyle);
+            vectorLineReached.addFeature(featureLine);
+        }
+
+        var vectorLayerReached = new ol.layer.Vector({
+            source: vectorLineReached
+        });
+
+        map.addLayer(vectorLayerReached);
+
+        // add line between the city we plan to see
+        var features = new Array();
+        var transformedCoordinates = new Array();
+
+        for (var i = 0; i < coordinates.length; ++i) {
+            transformedCoordinates[i] = ol.proj.transform(coordinates[i], 'EPSG:4326', 'EPSG:3857');
+            features[i] = new ol.Feature(new ol.geom.Point(transformedCoordinates[i]));
+        }
+
+        var source = new ol.source.Vector({
+            features: features
+        });
+
+        var vectorLine = new ol.source.Vector({});
+
+        transformedCoordinates.unshift(transformedCoordinatesReached[transformedCoordinatesReached.length-1])
+        for (var i = 0; i < transformedCoordinates.length - 1; i++) {
+            var startPoint = transformedCoordinates[i];
+            var endPoint = transformedCoordinates[i+1];
+            var lineArray = [startPoint, endPoint];
+            var featureLine = new ol.Feature({
+                geometry: new ol.geom.LineString(lineArray)
+            });
+
+            featureLine.setStyle(lineStyle);
+            vectorLine.addFeature(featureLine);
+        }
+
+        var vectorLayer = new ol.layer.Vector({
+            source: vectorLine
+        });
+
+        map.addLayer(vectorLayer);
+    </script>
+
+{% endblock %}
+
+<!-- Delete footer for the full screen map -->
+{% block footer %}
+{% endblock %}

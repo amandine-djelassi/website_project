@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'django_countries',
     'gunicorn',
+    'adminsortable2',
 ]
 
 MIDDLEWARE = [

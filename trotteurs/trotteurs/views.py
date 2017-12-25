@@ -2,7 +2,7 @@ from registration.backends.hmac.views import RegistrationView, ActivationView
 from django.views.generic.edit import UpdateView, FormView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ObjectDoesNotExist
@@ -28,6 +28,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
+from trotteurs.models import Checkpoint
 
 def activate(request, uidb64, token):
     User = get_user_model()
@@ -121,11 +122,19 @@ class IndexView(TemplateView):
     """
     template_name = "trotteurs/home.html"
 
-class AboutView(TemplateView):
+class RouteView(LoginRequiredMixin, ListView):
     """
-        The about view
+        Create a view with all the countries in the db
     """
-    template_name = "trotteurs/about.html"
+    template_name = 'trotteurs/route.html'
+    context_object_name = 'checkpoint_list'
+
+
+    def get_queryset(self):
+        """
+            Return all the checkpoint
+        """
+        return Checkpoint.objects.order_by('position')[:]
 
 
 def contact(request):

@@ -51,14 +51,12 @@ class City(models.Model):
 
     latitude = models.DecimalField(
         verbose_name=_('Latitude'),
-        blank=True,
         decimal_places=10,
         max_digits=15
     )
 
     longitude = models.DecimalField(
         verbose_name=_('Longitude'),
-        blank=True,
         decimal_places=10,
         max_digits=15
     )

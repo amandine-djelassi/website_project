@@ -186,3 +186,43 @@ class Newsletter(models.Model):
         verbose_name=_('Sent'),
         default=False
     )
+
+class Checkpoint(models.Model):
+    """
+        A checkpoint is composed of :
+
+    """
+
+    class Meta:
+        verbose_name = _('Checkpoint')
+        verbose_name_plural = _('Checkpoints')
+        ordering = ['position']    
+
+    city = models.CharField(
+        verbose_name=_('City'),
+        max_length=200
+    )
+
+    date = models.DateField(
+        verbose_name=_('Date'),
+        blank=True,
+    )
+
+    latitude = models.DecimalField(
+        verbose_name=_('Latitude'),
+        decimal_places=10,
+        max_digits=15
+    )
+
+    longitude = models.DecimalField(
+        verbose_name=_('Longitude'),
+        decimal_places=10,
+        max_digits=15
+    )
+
+    reached = models.BooleanField(
+        verbose_name=_('City reached'),
+        default=False,
+    )
+
+    position = models.PositiveIntegerField(default=0, blank=False, null=False)

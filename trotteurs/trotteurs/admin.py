@@ -5,7 +5,8 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth import get_user_model
 from django_countries.widgets import CountrySelectWidget
-from .models import Newsletter
+from .models import Newsletter, Checkpoint
+from adminsortable2.admin import SortableAdminMixin
 User = get_user_model()
 
 class UserCreationForm(forms.ModelForm):
@@ -143,3 +144,9 @@ class NewsletterAdmin(admin.ModelAdmin):
             return super().response_post_save_change(request, obj)
 
 admin.site.register(Newsletter, NewsletterAdmin)
+
+class CheckpointAdmin(SortableAdminMixin, admin.ModelAdmin):
+    list_display = ('city', 'date', 'reached', 'position')
+
+
+admin.site.register(Checkpoint, CheckpointAdmin)

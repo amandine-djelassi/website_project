@@ -1,9 +1,19 @@
 {% extends "trotteurs/skeleton.html" %}
 {% load staticfiles %}
 
+{% block header %}
+    {{ block.super }}
+{% endblock %}
+
+
 {% block content %}
 
     {% block gallery_content %}
     {% endblock %}
 
+{% endblock %}
+
+
+{% block footer %}
+    {{ block.super }}
 {% endblock %}

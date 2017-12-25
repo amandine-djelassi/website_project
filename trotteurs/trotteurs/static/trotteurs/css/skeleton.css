@@ -49,6 +49,7 @@ h5 {
     z-index: 10;
     background-color:var(--navbar-bg-color);
     border-color:var(--navbar-border-color);
+    border-radius:0;
 }
 
 .navbar-inverse .navbar-brand, .navbar-inverse #navbar-collapse-1 ul li a{
