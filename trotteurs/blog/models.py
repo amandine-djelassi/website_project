@@ -4,6 +4,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 
 class Tag(models.Model):
     """
@@ -100,3 +101,18 @@ class Article(models.Model):
         if not self.id:
             self.slug = slugify(self.title)
         super(Article, self).save(*args, **kwargs)
+
+class Comment(models.Model):
+    article = models.ForeignKey('Article', related_name='comments')
+    author = models.CharField(max_length=200)
+    text = models.TextField()
+    created_date = models.DateTimeField(default=timezone.now)
+    approved_comment = models.BooleanField(default=True)
+    parent = models.ForeignKey('self', null=True, related_name='replies')
+
+    def approve(self):
+        self.approved_comment = True
+        self.save()
+
+    def __str__(self):
+        return self.text

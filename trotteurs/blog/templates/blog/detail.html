@@ -1,6 +1,21 @@
 {% extends "blog/skeleton.html" %}
 {% load i18n %}
 
+{% block css %}
+    {{ block.super }}
+    <style>
+    #comments, #comments li {
+        margin: 0;
+        padding: 0;
+    }
+
+    #comments li {
+        list-style: none;
+    }
+
+    </style>
+{% endblock %}
+
 {% block blog_content %}
 
     <!-- Blog Post -->
@@ -31,7 +46,9 @@
         <p class="lead">{{ article.abstract }}</p>
     {% endif %}
     {% autoescape off %}{{ article.text }}{% endautoescape %}
-    <hr>
+
+    <!-- Comment -->
+    {% include "blog/comment.html" with comments=comments article=article %}
 
 {% endblock %}
 

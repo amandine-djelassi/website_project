@@ -4,8 +4,12 @@ from django.views.generic import ListView, DetailView, View
 from django.views.generic.base import TemplateView
 from django.views.generic.dates import YearArchiveView, MonthArchiveView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import CommentForm
+from django.shortcuts import get_object_or_404, redirect
+from django.views.generic.edit import FormMixin
+from django.urls import reverse
 
-from .models import Article, Tag
+from .models import Article, Tag, Comment
 
 class IndexView(LoginRequiredMixin, ListView):
     template_name = 'blog/index.html'
@@ -40,15 +44,22 @@ class IndexView(LoginRequiredMixin, ListView):
         return context
 
 
-class DetailView(LoginRequiredMixin, DetailView):
+class DetailView(LoginRequiredMixin, FormMixin, DetailView):
     model = Article
+    form_class = CommentForm
     template_name = 'blog/detail.html'
+
+    def get_success_url(self):
+        return reverse('blog:detail', kwargs={'slug': self.object.slug})
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super(DetailView, self).get_context_data(**kwargs)
         # Add in a QuerySet of all the tags
-        context['tags'] = Tag.objects.all()
+        context['tags'] = Tag.objects.all
+        # add of the form
+        context['form'] = self.get_form()
+        context['comments'] = self.object.comments.order_by('-created_date')
 
         # Archive part
         archive = {}
@@ -62,6 +73,25 @@ class DetailView(LoginRequiredMixin, DetailView):
         context['archive'] = archive
 
         return context
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated():
+            return HttpResponseForbidden()
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            article = get_object_or_404(Article, slug=self.object.slug)
+            comment = form.save(commit=False)
+            comment.article = article
+            comment.save()
+            return self.form_valid(comment)
+        else:
+            return self.form_invalid(comment)
+
+    def form_valid(self, comment):
+        # Here, we would record the user's interest using the message
+        # passed in form.cleaned_data['message']
+        return super(DetailView, self).form_valid(comment)
 
 class TagView(LoginRequiredMixin, ListView):
     template_name = 'blog/result_list.html'
@@ -152,3 +182,19 @@ class ArticleMonthArchiveView(LoginRequiredMixin, MonthArchiveView):
         context['archive'] = archive
 
         return context
+from django.http import HttpResponseRedirect
+def delete_comment(request, article_slug, comment_pk):
+    p = Comment.objects.get(pk=comment_pk)
+    p.delete()
+    return HttpResponseRedirect(reverse('blog:detail', args=(article_slug,)))
+def reply_comment(request, article_slug, comment_pk):
+    article = get_object_or_404(Article, slug=self.object.slug)
+    comment = form.save(commit=False)
+    comment.article = article
+    comment.parent = comment_pk
+    comment.save()
+    return self.form_valid(comment)
+
+    p = Comment.objects.get(pk=comment_pk)
+    p.delete()
+    return HttpResponseRedirect(reverse('blog:detail', args=(article_slug,)))

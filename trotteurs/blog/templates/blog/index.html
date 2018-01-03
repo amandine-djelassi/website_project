@@ -16,6 +16,8 @@
                 {% include "blog/tag_list.html" with tags=article.tags.all %}
             </p>
 
+            <p>Comments: {{ article.comments.count }}</p>
+
             <hr>
 
             <!-- image -->
