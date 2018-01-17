@@ -73,12 +73,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
     'gallery.apps.GalleryConfig',
+    'comment.apps.CommentConfig',
     'trotteurs.apps.TrotteursConfig',
     'ckeditor',
     'ckeditor_uploader',
     'django_countries',
     'gunicorn',
     'adminsortable2',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
