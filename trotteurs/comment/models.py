@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.utils.translation import ugettext_lazy as _
 
 class CommentManager(models.Manager):
     def all(self):
@@ -15,15 +16,15 @@ class CommentManager(models.Manager):
         return qs
 
 class Comment(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, default=1)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('User'), default=1)
 
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    content_type = models.ForeignKey(ContentType, verbose_name=_('Type'), on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
 
-    content = models.TextField()
-    timestamp =  models.DateTimeField(auto_now_add=True)
-    parent = models.ForeignKey("self", null=True, blank=True)
+    content = models.TextField(verbose_name=_('Content'))
+    timestamp =  models.DateTimeField(verbose_name=_('Timestamp'), auto_now_add=True)
+    parent = models.ForeignKey("self", verbose_name=_('Parent'), null=True, blank=True)
 
     objects = CommentManager()
 
@@ -44,3 +45,11 @@ class Comment(models.Model):
         if self.parent is not None:
             return False
         return True
+
+    def get_username(self):
+        return self.user.username
+    get_username.short_description = _('Username')
+    content_object.short_description = _('Object')
+
+    # def get_content_name(self):
+    #     return self.content_object

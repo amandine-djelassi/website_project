@@ -131,6 +131,10 @@ class Album(models.Model):
             self.slug = slugify(self.title)
         super(Album, self).save(*args, **kwargs)
 
+    def get_cities(self):
+        return [city.name for city in self.city.all()]
+    get_cities.short_description = _('Cities')
+
 
 class Photo(models.Model):
     """
@@ -180,6 +184,15 @@ class Photo(models.Model):
             Return the string version of the object
         """
         return self.title
+
+    def get_albums(self):
+        return [album.title for album in self.album.all()]
+    get_albums.short_description = _('Albums')
+
+    def image_tag(self):
+        return u'<img style="width: 200px; height: 150px;"src="%s" />' % self.image.url
+    image_tag.short_description = 'Image'
+    image_tag.allow_tags = True
 
     def save(self, *args, **kwargs):
         """

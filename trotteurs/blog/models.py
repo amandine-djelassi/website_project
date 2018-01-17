@@ -95,6 +95,10 @@ class Article(models.Model):
         qs = Comment.objects.filter_by_instance(self)
         return qs
 
+    def nb_comments(self):
+        return self.comment.count()
+    nb_comments.short_description = _('Comments')
+
     @property
     def get_content_type(self):
         content_type = ContentType.objects.get_for_model(self.__class__)
@@ -114,3 +118,7 @@ class Article(models.Model):
         if not self.id:
             self.slug = slugify(self.title)
         super(Article, self).save(*args, **kwargs)
+
+    def get_tags(self):
+        return [tag.name for tag in self.tags.all()]
+    get_tags.short_description = _('Tags')

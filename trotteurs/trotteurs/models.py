@@ -49,6 +49,7 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     """
         A user is composed of :
+            username
             email
             first_name
             last_name
@@ -91,12 +92,13 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
 
     newsletter = models.BooleanField(
+        verbose_name=_('Newsletter'),
         default=False,
         blank=True
     )
 
-    is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
+    is_active = models.BooleanField(verbose_name=_('Active'), default=True)
+    is_admin = models.BooleanField(verbose_name=_('Admin'), default=False)
 
     slug = models.SlugField(max_length=30, unique=True)
 
@@ -196,7 +198,7 @@ class Checkpoint(models.Model):
     class Meta:
         verbose_name = _('Checkpoint')
         verbose_name_plural = _('Checkpoints')
-        ordering = ['position']    
+        ordering = ['position']
 
     city = models.CharField(
         verbose_name=_('City'),
