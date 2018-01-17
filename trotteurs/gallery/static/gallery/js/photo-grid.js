@@ -49,7 +49,7 @@ $(document).ready(function() {
             'close'
         ],
         infobar : false,
-        lang : 'en',
+        lang : 'fr',
         i18n : {
             'en' : {
                 CLOSE       : 'Close',

@@ -22,8 +22,8 @@
                 <div id="grid" class="row">
                     <div id="posts" class="gal">
                         {% for photo in album_photo.photo_set.all %}
-                            <a href="{{ photo.image.url }}" data-fancybox="images" class="post fancybox" rel="allimages" title="un titre" >
-                                <img class="thumbnail img-responsive" src="{{ photo.image.url }}" />
+                            <a href="{{ photo.image.url }}" data-caption="{{ photo.legend }}" data-fancybox="images" class="post fancybox" rel="allimages" title="{{ photo.title }}" >
+                                <img class="thumbnail img-responsive" src="{{ photo.image.url }}"/>
                             </a>
                         {% endfor %}
                     </div>
