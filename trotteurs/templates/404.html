@@ -3,28 +3,25 @@
 {% load i18n %}
 
 {% block css %}
-  {{ block.super }}
-  <style>
-  /* main page */
-  #page {
-    background-color:white;
-    /* offset left, top, thickness, color with alpha */
-    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-    padding:50px;
-    margin-right: 50px;
-    margin-left: 50px;
-  }
-  form{
-    padding-left: 50px;
-    padding-right: 50px;
-  }
-  </style>
-  {% endblock %}
+{{ block.super }}
+<style>
+img{
+	width: 50%;	
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	margin-top: 20px;
+
+}
+</style>
+{% endblock %}
+
+{% block header %}
+{% include "trotteurs/header.html" with logo=False %}
+{% endblock %}
 
 {% block content %}
-
-<img src={% static "trotteurs/img/404.png" %}>
-
+<div class="container 404">
+<img class="img-responsive" src={% static "trotteurs/img/404.png" %} alt="">
+</div>
 {% endblock %}
