@@ -24,7 +24,7 @@
 
     <!-- Date/Time -->
     <p>
-        <span class="glyphicon glyphicon-time"></span>{% trans "Posted on" %} {{ article.date }}
+        <span class="glyphicon glyphicon-time"></span> {% trans "Posted on" %} {{ article.date }}
         {% include "blog/tag_list.html" with tags=article.tags.all %}
     </p>
 
@@ -59,10 +59,10 @@
                 {% blocktrans with comment.timestamp|timesince as timesince %}{{ timesince }} ago{% endblocktrans %} |
                 <a class='comment-reply-btn' href='#'>{% trans "Reply" %}</a>
                 {% if user == comment.user %}
-                    <a href="{% url 'blog:delete_comment' article.slug comment.pk %}" role="button" onclick="return confirm({% blocktrans %}'Are you sure you want to delete this comment?\nIf it has answers, they will be deleted as well.'{% endblocktrans %});"> | {% trans "Delete my comment" %}</a>
+                    | <a href="{% url 'blog:delete_comment' article.slug comment.pk %}" role="button" onclick="return confirm({% blocktrans %}'Are you sure you want to delete this comment?\nIf it has answers, they will be deleted as well.'{% endblocktrans %});">{% trans "Delete my comment" %}</a>
                 {% endif %}
                 {% if request.user.is_superuser %}
-                    <a href="{% url 'blog:delete_comment' article.slug comment.pk %}" role="button" onclick="return confirm({% blocktrans %}'Are you sure you want to delete this comment?\nIf it has answers, they will be deleted as well.'{% endblocktrans %});"> | {% trans "Delete comment" %}</a>
+                    | <a href="{% url 'blog:delete_comment' article.slug comment.pk %}" role="button" onclick="return confirm({% blocktrans %}'Are you sure you want to delete this comment?\nIf it has answers, they will be deleted as well.'{% endblocktrans %});">{% trans "Delete comment" %}</a>
                 {% endif %}
             </footer>
             <div class='comment-reply' style='display:none;'>
@@ -78,12 +78,12 @@
                 <blockquote>
                     <p>{{ child_comment.content }}</p>
                     <footer>{% trans "via" %} {{ child_comment.user.username }} |
-                        {% blocktrans with child_comment.timestamp|timesince as timesince %}{{ timesince }} ago{% endblocktrans %} |
+                        {% blocktrans with child_comment.timestamp|timesince as timesince %}{{ timesince }} ago{% endblocktrans %}
                         {% if user == comment.user %}
-                            <a href="{% url 'blog:delete_comment' article.slug child_comment.pk %}" role="button" onclick="return confirm({% blocktrans %}'Are you sure you want to delete this comment?'{% endblocktrans %});"> | {% trans "Delete my comment" %}</a>
+                            | <a href="{% url 'blog:delete_comment' article.slug child_comment.pk %}" role="button" onclick="return confirm({% blocktrans %}'Are you sure you want to delete this comment?'{% endblocktrans %});">{% trans "Delete my comment" %}</a>
                         {% endif %}
                         {% if request.user.is_superuser %}
-                            <a href="{% url 'blog:delete_comment' article.slug child_comment.pk %}" role="button" onclick="return confirm({% blocktrans %}'Are you sure you want to delete this comment?'{% endblocktrans %});"> | {% trans "Delete comment" %}</a>
+                            | <a href="{% url 'blog:delete_comment' article.slug child_comment.pk %}" role="button" onclick="return confirm({% blocktrans %}'Are you sure you want to delete this comment?'{% endblocktrans %});">{% trans "Delete comment" %}</a>
                         {% endif %}
                     </footer>
                 </blockquote>

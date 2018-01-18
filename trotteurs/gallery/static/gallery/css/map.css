@@ -81,7 +81,6 @@
 
 /* countries buttons */
 button.accordion {
-    background-color: #354649;
     color: #E1DDDB;
     padding: 18px;
     width: 100%;
@@ -89,10 +88,12 @@ button.accordion {
     transition: 0.4s;
     border: none;
     border-bottom: 1px solid #4b6368;
+    background-color: #4b6368;
 }
 
 button.accordion.active, button.accordion:hover {
-    background-color: #4b6368;
+    background-color: #354649;
+    border: 0px;
 }
 
 /* All albums buttons */

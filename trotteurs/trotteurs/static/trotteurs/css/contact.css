@@ -1,5 +1,4 @@
 #panel{
-    padding: 0 20%;
     box-sizing: border-box;
     -webkit-border-radius: 5px;
     -webkit-box-sizing: border-box;
@@ -27,6 +26,7 @@
     border-radius: 20px;
 }
 
+
 #panel .content img {
     position: absolute;
     top: 10px;
@@ -39,18 +39,35 @@ input {
     background-color: transparent;
     border: none;
     border-bottom: 1px solid #CCC;
-    width: 40%;
+    width: 100%
 }
 #id_subject{
     background-color: transparent;
     border: none;
-    width: 75%;
+    width: 100%;
     border-bottom: 1px solid #CCC;
     margin-top: 20px;
     margin-bottom: 30px;
 }
 
 textarea {
-    width: 75%;
+    width: 100%;
     resize: none;
+}
+
+@media screen and (min-width: 768px){
+    #panel{
+        padding: 0 20%;
+    }
+
+    textarea, #id_subject{
+        width: 75%
+    }
+
+    input{
+        width: 40%;
+    }
+
+
+
 }

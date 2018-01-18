@@ -12,7 +12,7 @@
         <h1>{% trans "Contact" %}</h1>
         <div id="panel">
             <div class="content">
-                <img src={% static "trotteurs/img/timbre.png" %}>
+                <img class="hidden-xs" src={% static "trotteurs/img/timbre.png" %}>
                 <form role="form" action="" method="post">
                     {% csrf_token %}
                     {% if user.is_authenticated %}
