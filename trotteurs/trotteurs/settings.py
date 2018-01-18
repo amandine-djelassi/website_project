@@ -34,7 +34,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = get_env_variable('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = get_env_variable('DEBUG_TROTTEUR')
+DEBUG = (get_env_variable('DEBUG_TROTTEUR')=='True')
 
 # configure email
 EMAIL_USE_TLS = True
