@@ -51,8 +51,6 @@ FORMS = [("user", RegistrationForm1),
 TEMPLATES = {"0": 'registration/registration_form1.html',
 "1": 'registration/registration_form2.html'}
 class RegistrationView(SessionWizardView):
-    # template_name = 'registration/registration_form.html'
-    # form_list=[RegistrationForm1, RegistrationForm2]
     def get_template_names(self):
             return [TEMPLATES[self.steps.current]]
 
@@ -102,6 +100,7 @@ class RegistrationView(SessionWizardView):
         self.send_activation_email(user)
         return HttpResponseRedirect('/accounts/register/complete/')
 
+from django.urls import reverse
 
 class UpdateProfileView(LoginRequiredMixin, UpdateView):
     """
@@ -114,6 +113,12 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
     fields=["first_name", "last_name", "newsletter", "username", "country"]
     success_url = '/'
 
+
+    def dispatch(self, request, slug, *args, **kwargs):
+        if not (request.user.slug == slug):
+            return redirect('profile_edit', slug=request.user.slug)
+        return super(UpdateProfileView, self).dispatch(
+            request, *args, **kwargs)
 
 class IndexView(TemplateView):
     """

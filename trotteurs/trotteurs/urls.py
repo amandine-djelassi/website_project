@@ -23,10 +23,6 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib.auth import views as auth_views
 from django.conf.urls.i18n import i18n_patterns
 
-# from myapp.forms import ContactForm1, ContactForm2
-# from myapp.views import ContactWizard
-
-
 urlpatterns = i18n_patterns(
     # Administration page
     url(r'^admin/', admin.site.urls),

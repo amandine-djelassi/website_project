@@ -33,6 +33,7 @@
                     <div class="bar3"></div>
                 </div>
                 <!-- navigation sidebar -->
+                <div class="sidtotal">
                 <div id="sidenav">
                     {% for country in country_list %}
                         <button class="accordion">{{ country.name }}</button>
@@ -48,6 +49,7 @@
                     {% endfor %}
                     <a id="allAlbumButton" href={% url 'gallery:all_album_list' %} class="btn">{% trans "All albums" %}</a>
                 </div>
+            </div>
             </div>
         </div>
     </div>
