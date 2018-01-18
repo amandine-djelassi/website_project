@@ -1,0 +1,30 @@
+{% extends "trotteurs/skeleton.html" %}
+{% load staticfiles %}
+{% load i18n %}
+
+{% block css %}
+  {{ block.super }}
+  <style>
+  /* main page */
+  #page {
+    background-color:white;
+    /* offset left, top, thickness, color with alpha */
+    -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    padding:50px;
+    margin-right: 50px;
+    margin-left: 50px;
+  }
+  form{
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+  </style>
+  {% endblock %}
+
+{% block content %}
+
+<img src={% static "trotteurs/img/404.png" %}>
+
+{% endblock %}
