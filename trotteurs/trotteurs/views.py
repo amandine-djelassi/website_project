@@ -34,6 +34,15 @@ from django.contrib import messages
 from django.utils.translation import ugettext as _
 from django.urls import reverse
 
+from django.utils import timezone
+
+class LastVisitMixin(object):
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            request.user.last_visit_date = timezone.now()
+            request.user.save(update_fields=['last_visit_date'])
+        return super(LastVisitMixin, self).dispatch(request, *args, **kwargs)
+
 def activate(request, uidb64, token):
     User = get_user_model()
     try:
@@ -119,21 +128,21 @@ class UpdateProfileView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('profile_edit', kwargs = {'slug': self.request.user.slug})
-        
+
     def dispatch(self, request, slug, *args, **kwargs):
         if not (request.user.slug == slug):
             return redirect('profile_edit', slug=request.user.slug)
         return super(UpdateProfileView, self).dispatch(
             request, *args, **kwargs)
 
-class IndexView(TemplateView):
+class IndexView(LastVisitMixin, TemplateView):
     """
         Index view
             view of the home
     """
     template_name = "trotteurs/home.html"
 
-class RouteView(LoginRequiredMixin, ListView):
+class RouteView(LastVisitMixin, LoginRequiredMixin, ListView):
     """
         Create a view with all the countries in the db
     """

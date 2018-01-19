@@ -20,7 +20,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'first_name', 'last_name', 'country', 'is_active')
+        fields = ('email', 'username', 'first_name', 'last_name', 'country', 'is_active', 'is_admin')
 
 
     def clean_password2(self):
@@ -54,7 +54,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'password', 'first_name', 'last_name', 'country', 'username', 'is_active', 'is_admin')
+        fields = ('email', 'password', 'first_name', 'last_name', 'country', 'username', 'is_active', 'is_admin', 'account_creation_date', 'last_visit_date')
 
     def clean_password(self):
         """
@@ -79,7 +79,7 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('is_admin', 'country')
     fieldsets = (
         (None, {'fields': ('username', 'email', 'password')}),
-        ('Personal info', {'fields':('first_name', 'last_name', 'country', 'newsletter')}),
+        ('Personal info', {'fields':('first_name', 'last_name', 'country', 'newsletter', 'account_creation_date', 'last_visit_date')}),
         ('Permissions', {'fields': ('is_admin', 'is_active', 'newsletter')}),
     )
 
@@ -91,8 +91,8 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('email', 'password1', 'password2')}
         ),
     )
-    search_fields = ('email',)
-    ordering = ('email',)
+    search_fields = ('email', 'account_creation_date', 'last_visit_date')
+    ordering = ('-account_creation_date', 'email',)
     filter_horizontal = ()
 
 # Now register the new UserAdmin...

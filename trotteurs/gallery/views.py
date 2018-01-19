@@ -1,8 +1,9 @@
 from django.views.generic import ListView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import Photo, Album, Country, City
+from trotteurs.views import LastVisitMixin
 
-class AlbumPhotoGridView(LoginRequiredMixin, ListView):
+class AlbumPhotoGridView(LastVisitMixin, LoginRequiredMixin, ListView):
     """
         Create a view with all the photos of a specific album
     """
@@ -17,7 +18,7 @@ class AlbumPhotoGridView(LoginRequiredMixin, ListView):
         return Album.objects.filter(slug = self.kwargs['slug'])[0]
 
 
-class AlbumCityListView(LoginRequiredMixin, ListView):
+class AlbumCityListView(LastVisitMixin, LoginRequiredMixin, ListView):
     """
         Create a view with all the albums of a specific city
     """
@@ -38,7 +39,7 @@ class AlbumCityListView(LoginRequiredMixin, ListView):
         context['city'] = City.objects.filter(slug = self.kwargs['slug'])[0]
         return context
 
-class AllAlbumListView(LoginRequiredMixin, ListView):
+class AllAlbumListView(LastVisitMixin, LoginRequiredMixin, ListView):
     """
         Create a view with all the albums
     """
@@ -52,7 +53,7 @@ class AllAlbumListView(LoginRequiredMixin, ListView):
         return Country.objects.order_by('name')[:]
 
 
-class MapView(LoginRequiredMixin, ListView):
+class MapView(LastVisitMixin, LoginRequiredMixin, ListView):
     """
         Create a view with all the countries in the db
     """

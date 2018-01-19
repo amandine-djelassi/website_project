@@ -55,8 +55,10 @@ class User(AbstractBaseUser, PermissionsMixin):
             last_name
             country
             newsletter
-            *is_active
-            *is_admin
+            account_creation_date
+            last_visit_date
+            is_active
+            is_admin
     """
     username = models.CharField(
         verbose_name=_('Username'),
@@ -95,6 +97,16 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name=_('Newsletter'),
         default=False,
         blank=True
+    )
+
+    account_creation_date = models.DateField(
+        verbose_name=_('Account creation date'),
+        default=datetime.date.today,
+    )
+
+    last_visit_date = models.DateField(
+        verbose_name=_('Last visit date'),
+        default=datetime.date.today,
     )
 
     is_active = models.BooleanField(verbose_name=_('Active'), default=True)

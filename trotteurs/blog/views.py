@@ -12,8 +12,9 @@ from comment.models import Comment
 from comment.forms import CommentForm
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
+from trotteurs.views import LastVisitMixin
 
-class IndexView(LoginRequiredMixin, ListView):
+class IndexView(LastVisitMixin, LoginRequiredMixin, ListView):
     template_name = 'blog/index.html'
     context_object_name = 'latest_article_list'
 
@@ -46,7 +47,7 @@ class IndexView(LoginRequiredMixin, ListView):
         return context
 
 
-class DetailView(LoginRequiredMixin, FormMixin, DetailView):
+class DetailView(LastVisitMixin, LoginRequiredMixin, FormMixin, DetailView):
     model = Article
     form_class = CommentForm
     template_name = 'blog/detail.html'
@@ -125,7 +126,7 @@ class DetailView(LoginRequiredMixin, FormMixin, DetailView):
         # passed in form.cleaned_data['message']
         return super(DetailView, self).form_valid(form)
 
-class TagView(LoginRequiredMixin, ListView):
+class TagView(LastVisitMixin, LoginRequiredMixin, ListView):
     template_name = 'blog/result_list.html'
     context_object_name = 'article_list'
     paginate_by = 10
@@ -156,7 +157,7 @@ class TagView(LoginRequiredMixin, ListView):
 
         return context
 
-class ArticleYearArchiveView(LoginRequiredMixin, YearArchiveView):
+class ArticleYearArchiveView(LastVisitMixin, LoginRequiredMixin, YearArchiveView):
     template_name = 'blog/result_list.html'
     context_object_name = 'article_list'
 
@@ -186,7 +187,7 @@ class ArticleYearArchiveView(LoginRequiredMixin, YearArchiveView):
         return context
 
 
-class ArticleMonthArchiveView(LoginRequiredMixin, MonthArchiveView):
+class ArticleMonthArchiveView(LastVisitMixin, LoginRequiredMixin, MonthArchiveView):
     template_name = 'blog/result_list.html'
     context_object_name = 'article_list'
 
