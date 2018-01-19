@@ -58,6 +58,53 @@
             //create empty vector
         });
 
+        function computeFeatureStyle(feature, style) {
+            // Style of the point of the cities
+            if (style=='cityHoverStyle'){
+                if(feature.get('reached')){
+                    return new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: 5,
+                            fill: new ol.style.Stroke({color: 'rgba(12, 157, 176, 1)'})
+                        }),
+                        text: new ol.style.Text({
+                            text: feature.get('date'),
+                            offsetX: 50,
+                            font: "16px Helvetica"
+                        })
+                    });
+                } else {
+                    return new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: 5,
+                            fill: new ol.style.Stroke({color: 'rgba(134,56,23,1)'})
+                        }),
+                        text: new ol.style.Text({
+                            text: feature.get('date'),
+                            offsetX: 50,
+                            font: "16px Helvetica"
+                        })
+                    });
+                }
+            } else if (style=='cityStyle'){
+                if(feature.get('reached')){
+                    return new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: 5,
+                            fill: new ol.style.Stroke({color: 'rgba(12, 157, 176, 1)'})
+                        })
+                    });
+                } else {
+                    return new ol.style.Style({
+                        image: new ol.style.Circle({
+                            radius: 5,
+                            fill: new ol.style.Stroke({color: 'rgba(134,56,23,1)'})
+                        })
+                    });
+                }
+            }
+        }
+
         var cityReachedStyle = new ol.style.Style({
             image: new ol.style.Circle({
                 radius: 5,
@@ -89,6 +136,7 @@
             }),
             stroke: new ol.style.Stroke({
                 color: 'rgba(134,56,23,1)',
+                lineDash: [4,6] ,
                 width: 2
             })
         });
@@ -101,6 +149,9 @@
                     var feature = new ol.Feature({
                         geometry: new ol.geom.Point(ol.proj.transform([{{ checkpoint.longitude }}, {{ checkpoint.latitude }}], 'EPSG:4326',   'EPSG:3857')),
                         name: '{{ checkpoint.city }}',
+                        date: '{{ checkpoint.date|date:"b Y" }}',
+                        reached: {{ checkpoint.reached|yesno:"true,false" }},
+                        checkpoint: true
                     });
                     if ({{ checkpoint.reached|yesno:"true,false" }}) {
                         coordinatesReached.push([{{ checkpoint.longitude }}, {{ checkpoint.latitude }}]);
@@ -156,7 +207,8 @@
             var endPoint = transformedCoordinatesReached[i+1];
             var lineArray = [startPoint, endPoint];
             var featureLine = new ol.Feature({
-                geometry: new ol.geom.LineString(lineArray)
+                geometry: new ol.geom.LineString(lineArray),
+                reached: true
             });
 
 
@@ -191,7 +243,8 @@
             var endPoint = transformedCoordinates[i+1];
             var lineArray = [startPoint, endPoint];
             var featureLine = new ol.Feature({
-                geometry: new ol.geom.LineString(lineArray)
+                geometry: new ol.geom.LineString(lineArray),
+                reached: false
             });
 
             featureLine.setStyle(lineStyle);
@@ -203,6 +256,44 @@
         });
 
         map.addLayer(vectorLayer);
+
+        //////////////////
+        // Hover effect //
+        //////////////////
+
+        //set a global reference to loop only if needed
+        clickFeature=null;
+        var hovered = false;
+
+        map.on('pointermove', function(evt) {
+            if (evt.dragging) return;
+
+            var feature = map.forEachFeatureAtPixel(evt.pixel, function(ft, l){
+                return ft;
+            });
+
+            if(feature && feature.get('checkpoint')){
+                if(feature === clickFeature) return;
+                hovered = true;
+                style = computeFeatureStyle(feature, 'cityHoverStyle');
+                feature.setStyle(style);
+            } else{
+                removeStyleFromAllFeatures();
+            }
+        });
+
+        function removeStyleFromAllFeatures(){
+            //continue only if needed
+            if(!hovered && typeof clickFeature!=='undefined') return;
+
+            layer.getSource().getFeatures().forEach(function(feature){
+                if(feature === clickFeature) return;
+                style = computeFeatureStyle(feature, 'cityStyle');
+                feature.setStyle(style);
+            });
+            hovered = false;
+        }
+
     </script>
 
 {% endblock %}

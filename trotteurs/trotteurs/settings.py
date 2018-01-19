@@ -170,7 +170,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static_files")
 AVATAR_SIZE = (100, 100)
 DEFAULT_AVATAR_URL = STATIC_URL + 'trotteurs/img/avatar.jpg'
 # Media files
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+if DEBUG:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+else:
+    MEDIA_ROOT = get_env_variable("MEDIA_ROOT")
 MEDIA_URL = '/media/'
 
 
