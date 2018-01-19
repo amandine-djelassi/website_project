@@ -105,19 +105,6 @@
             }
         }
 
-        var cityReachedStyle = new ol.style.Style({
-            image: new ol.style.Circle({
-                radius: 5,
-                fill: new ol.style.Stroke({color: 'rgba(12, 157, 176, 1)'})
-            })
-        });
-        var cityStyle = new ol.style.Style({
-            image: new ol.style.Circle({
-                radius: 5,
-                fill: new ol.style.Stroke({color: 'rgba(134,56,23,1)'})
-            })
-        });
-
         var lineReachedStyle = new ol.style.Style({
             fill: new ol.style.Fill({
                 color: 'rgba(12, 157, 176, 1)',
@@ -155,11 +142,11 @@
                     });
                     if ({{ checkpoint.reached|yesno:"true,false" }}) {
                         coordinatesReached.push([{{ checkpoint.longitude }}, {{ checkpoint.latitude }}]);
-                        feature.setStyle(cityReachedStyle);
                     } else {
                         coordinates.push([{{ checkpoint.longitude }}, {{ checkpoint.latitude }}]);
-                        feature.setStyle(cityStyle);
                     }
+                    style = computeFeatureStyle(feature, 'cityStyle');
+                    feature.setStyle(style);
                     vectorSource.addFeature(feature);
             {% endfor %}
         {% endlocalize %}
@@ -182,7 +169,8 @@
             // Map center on central america
             view: new ol.View({
                 center: ol.proj.fromLonLat([-60, -30]),
-                zoom: 3
+                zoom: 3,
+                extent: ol.proj.transform([-180,-90,180,90], 'EPSG:4326', 'EPSG:3857')
             })
         });
         map.addControl(new ol.control.ZoomSlider());
