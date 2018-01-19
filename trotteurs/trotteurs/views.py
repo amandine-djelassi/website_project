@@ -2,6 +2,7 @@ from registration.backends.hmac.views import RegistrationView, ActivationView
 from django.views.generic.edit import UpdateView, FormView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView, ListView
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm
@@ -29,6 +30,9 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
 from trotteurs.models import Checkpoint
+from django.contrib import messages
+from django.utils.translation import ugettext as _
+from django.urls import reverse
 
 def activate(request, uidb64, token):
     User = get_user_model()
@@ -100,9 +104,8 @@ class RegistrationView(SessionWizardView):
         self.send_activation_email(user)
         return HttpResponseRedirect('/accounts/register/complete/')
 
-from django.urls import reverse
 
-class UpdateProfileView(LoginRequiredMixin, UpdateView):
+class UpdateProfileView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     """
         Update Profile view
             User must be connected to access this page
@@ -111,9 +114,12 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
     User = get_user_model()
     model= User
     fields=["first_name", "last_name", "newsletter", "username", "country"]
-    success_url = '/'
+    # success_url = reverse_lazy('profile_edit', kwargs = {'slug': self.user_slug})
+    success_message = _('Your account was successfully update.')
 
-
+    def get_success_url(self):
+        return reverse_lazy('profile_edit', kwargs = {'slug': self.request.user.slug})
+        
     def dispatch(self, request, slug, *args, **kwargs):
         if not (request.user.slug == slug):
             return redirect('profile_edit', slug=request.user.slug)
@@ -171,6 +177,7 @@ def contact(request):
                 headers = {'Reply-To': contact_email }
             )
             email.send()
+            messages.success(request, _('Email send!'))
             return redirect('contact')
     return render(request, 'trotteurs/contact.html', {
         'form': form_class,
@@ -182,10 +189,10 @@ def change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, 'Your password was successfully updated!')
-            return redirect('change_password')
+            messages.success(request, _('Your password was successfully updated!'))
+            return redirect('profile_edit', slug=request.user.slug)
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, _('Please correct the error below.'))
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'registration/change_password.html', {
@@ -200,4 +207,5 @@ class confirm_delete_account(TemplateView):
 def delete_account(request):
     request.user.delete()
     logout(request)
+    messages.success(request, _('Your account was successfully delete. We are sorry to see you go.'))
     return render(request, 'trotteurs/home.html')

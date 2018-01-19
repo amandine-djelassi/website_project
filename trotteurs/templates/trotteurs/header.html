@@ -9,7 +9,7 @@
 {% endif %}
 <!-- Navigation -->
 <nav class="navbar navbar-inverse" id="navbar" data-spy="affix" data-offset-top="150">
-    <div class="container" style="background-color=red;">
+    <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
@@ -46,7 +46,7 @@
 </nav>
 
 <script>
-    // Delete margin for full-screen map 
+    // Delete margin for full-screen map
     if (!{{logo|yesno:"true,false" }}) {
         document.getElementById("navbar").style.marginBottom = "0";
     }

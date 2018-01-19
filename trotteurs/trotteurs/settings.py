@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.messages import constants as messages
 
 def get_env_variable(var_name):
     """
@@ -184,3 +185,7 @@ CKEDITOR_IMAGE_BACKEND = "pillow"
 
 COUNTRIES_FIRST = ['FR',]
 COUNTRIES_FIRST_REPEAT = True
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger'
+}
