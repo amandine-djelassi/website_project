@@ -50,7 +50,7 @@
                 </div>
             </div>
             <!-- navigation sidebar -->
-            <div id="sidenavxs visible-xs" >
+            <div class="visible-xs">
                 {% for country in country_list %}
                     <button class="accordion">{{ country.name }}</button>
                     <div class="panel">
@@ -101,7 +101,8 @@
                         }),
                         text: new ol.style.Text({
                             text: feature.get('name'),
-                            offsetX: 50,
+                            textAlign: 'left',
+                            offsetX: 10,
                             font: "16px Helvetica"
                         })
                     });

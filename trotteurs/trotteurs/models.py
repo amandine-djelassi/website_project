@@ -212,14 +212,16 @@ class Checkpoint(models.Model):
         verbose_name_plural = _('Checkpoints')
         ordering = ['position']
 
-    city = models.CharField(
-        verbose_name=_('City'),
-        max_length=200
+    name = models.CharField(
+        verbose_name=_('Name'),
+        max_length=200,
+        unique=True
     )
 
     date = models.DateField(
         verbose_name=_('Date'),
         blank=True,
+        null=True
     )
 
     latitude = models.DecimalField(

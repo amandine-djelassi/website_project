@@ -147,7 +147,7 @@ class NewsletterAdmin(admin.ModelAdmin):
 admin.site.register(Newsletter, NewsletterAdmin)
 
 class CheckpointAdmin(SortableAdminMixin, admin.ModelAdmin):
-    list_display = ('city', 'date', 'reached', 'position')
+    list_display = ('name', 'date', 'reached', 'position')
 
 
 admin.site.register(Checkpoint, CheckpointAdmin)
