@@ -3,12 +3,12 @@
 
 {% if logo %}
     <!-- Logo disapear when the page is scrolled -->
-    <div class="container-fluid" style="height:150px; background-color:#ffffff;" >
-        <img class="img-responsive" src={% static "trotteurs/img/logo.png" %} alt="" height="150" style="margin-left: auto; margin-right: auto;">
+    <div class="container-fluid" style="background-color:#ffffff;" >
+        <img class="img-responsive" id="header-img" src={% static "trotteurs/img/logo.png" %} alt="" style="margin-left: auto; margin-right: auto;">
     </div>
 {% endif %}
 <!-- Navigation -->
-<nav class="navbar navbar-inverse" id="navbar" data-spy="affix" data-offset-top="150">
+<nav class="navbar navbar-inverse" id="navbar">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -50,5 +50,21 @@
     if (!{{logo|yesno:"true,false" }}) {
         document.getElementById("navbar").style.marginBottom = "0";
     }
+    // $('img').on('load',function(){
+      // check width
+      var img = document.getElementById('header-img');
+      //or however you get a handle to the IMG
+      var height = img.clientHeight;
+      $('#navbar').affix({
+          offset: {
+              top: height
+          }
+      });
+    // });
 
+    // $('#navbar').affix({
+    //   offset: {
+    //     top: 150
+    //   }
+    // });
 </script>
