@@ -1,15 +1,8 @@
 {% extends "blog/skeleton.html" %}
 {% load i18n %}
-{% load crispy_forms_tags %}
 
 {% block css %}
     {{ block.super }}
-    <style>
-    #comment-reply {
-        display:none;
-    }
-
-    </style>
 {% endblock %}
 
 {% block blog_content %}
@@ -48,7 +41,8 @@
         <p class='lead'>{% trans "Comments" %}</p>
         <form method="post" action=".">
             {% csrf_token %}
-            {{ form|crispy }}
+            {{ form }}
+            <br/>
             <input type='submit' value='{% trans "Post comment" %}' class='btn btn-default'>
         </form>
         <hr/>
@@ -68,9 +62,10 @@
             <div class='comment-reply' style='display:none;'>
                 <form method="post" action=".">
                     {% csrf_token %}
-                    {{ form|crispy }}
-
+                    <br/>
+                    {{ form }}
                     <input type='hidden' name='parent_id' value='{{ comment.id }}'>
+                    <br/>
                     <input type='submit' value='reply' class='btn btn-default'>
                 </form>
             </div>

@@ -20,8 +20,11 @@
 
             <!-- image -->
             {% if article.image %}
+            <a href="{% url 'blog:detail' article.slug %}">
                 <img class="img-responsive" src="{{ article.image.url }}" style="height:300px; width:900px" alt="">
+            </a>
             {% endif %}
+            <br/>
 
             <!-- text -->
             {% if article.abstract %}
