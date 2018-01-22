@@ -13,21 +13,23 @@
         <div class="container-fluid">
             <h1>{{ city.name }}</h1>
             <hr>
-            {% for album in album_list %}
-            <div class="post">
-                <figure class="album-effect">
-                    <a href={% url 'gallery:album_photo_grid' album.slug  %} >
-                        <img src="{{ album.image.url }}" alt="{{ album.title }}"/>
-                    </a>
-                    <figcaption>
-                        <h2><a href={% url 'gallery:album_photo_grid' album.slug  %} >{{ album.title }}</a></h2>
-                        {% if album.description %}
-                            <p><a href={% url 'gallery:album_photo_grid' album.slug  %} >{{ album.description }}</a></p>
-                        {% endif %}
-                    </figcaption>
-                </figure>
+            <div class="row">
+                {% for album in album_list %}
+                    <div class="post col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                        <figure class="album-effect">
+                            <a href={% url 'gallery:album_photo_grid' album.slug  %} >
+                                <img src="{{ album.image.url }}" alt="{{ album.title }}"/>
+                            </a>
+                            <figcaption>
+                                <h2><a href={% url 'gallery:album_photo_grid' album.slug  %} >{{ album.title }}</a></h2>
+                                {% if album.description %}
+                                    <p><a href={% url 'gallery:album_photo_grid' album.slug  %} >{{ album.description }}</a></p>
+                                {% endif %}
+                            </figcaption>
+                        </figure>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
     </div>
 {% endblock %}

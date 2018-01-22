@@ -2,6 +2,11 @@ from django.db import models
 import datetime
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext_lazy as _
+from PIL import Image
+import os
+from io import BytesIO
+from django.core.files.base import ContentFile
+
 
 class Country(models.Model):
     """
@@ -135,6 +140,17 @@ class Album(models.Model):
         return [city.name for city in self.city.all()]
     get_cities.short_description = _('Cities')
 
+def has_changed(instance, field, manager='objects'):
+    """Returns true if a field has changed in a model
+
+    May be used in a model.save() method.
+
+    """
+    if not instance.pk:
+        return True
+    manager = getattr(instance.__class__, manager)
+    old = getattr(manager.get(pk=instance.pk), field)
+    return not getattr(instance, field) == old
 
 class Photo(models.Model):
     """
@@ -160,6 +176,12 @@ class Photo(models.Model):
     image = models.ImageField(
         upload_to='media/images',
         verbose_name=_('Image')
+    )
+
+    thumbnail = models.ImageField(
+        upload_to='media/images/thumbs/',
+        verbose_name=_('Thumbnail'),
+        blank=True
     )
 
     legend = models.CharField(
@@ -197,8 +219,39 @@ class Photo(models.Model):
     def save(self, *args, **kwargs):
         """
             Create a slug when saved
+            Create a thumbnail if the image is modificated
         """
+
         # If the object is newly created, we set the slug
         if not self.id:
             self.slug = slugify(self.title)
+
+        # If the image has been change, create the thumbnail
+        if has_changed(self, 'image'):
+            size = 445, 800
+
+            full_image = Image.open(self.image)
+            full_image.thumbnail(size, Image.ANTIALIAS)
+
+            thumb_name, thumb_extension = os.path.splitext(self.image.name)
+            thumb_extension = thumb_extension.lower()
+
+            thumb_filename = thumb_name + '_thumb' + thumb_extension
+
+            if thumb_extension == '.gif':
+                FTYPE = 'GIF'
+            elif thumb_extension == '.png':
+                FTYPE = 'PNG'
+            else:
+                FTYPE = 'JPEG'
+
+            # Save thumbnail to in-memory file as StringIO
+            temp_thumb = BytesIO()
+            full_image.save(temp_thumb, FTYPE)
+            temp_thumb.seek(0)
+
+            # set save=False, otherwise it will run in an infinite loop
+            self.thumbnail.save(thumb_filename, ContentFile(temp_thumb.read()), save=False)
+            temp_thumb.close()
+
         super(Photo, self).save(*args, **kwargs)
