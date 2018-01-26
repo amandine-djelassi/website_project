@@ -104,3 +104,28 @@ body{
     height: auto;
     max-height: 70%;
 }
+
+.align_center { align-items:center; }
+
+#home h1{
+    text-align: center;
+}
+
+#home-img{
+    margin-bottom: 0.75em;
+    max-width:60%;
+    float: right;
+}
+#home-text p {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+    font-size: 20px;
+    text-align: center;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
