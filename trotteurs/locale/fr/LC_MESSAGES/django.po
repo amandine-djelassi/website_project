@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-22 09:35+0100\n"
+"POT-Creation-Date: 2018-11-09 17:32+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Language: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: .\blog\models.py:19 .\gallery\models.py:10 .\gallery\models.py:42
+#: .\blog\models.py:19 .\gallery\models.py:15 .\gallery\models.py:47
 #: .\trotteurs\forms.py:67 .\trotteurs\models.py:216
 msgid "Name"
 msgstr "Nom"
@@ -32,7 +32,7 @@ msgstr "Tag"
 msgid "Tags"
 msgstr "Tags"
 
-#: .\blog\models.py:58 .\gallery\models.py:92 .\gallery\models.py:151
+#: .\blog\models.py:58 .\gallery\models.py:97 .\gallery\models.py:167
 msgid "Title"
 msgstr "Titre"
 
@@ -40,7 +40,7 @@ msgstr "Titre"
 msgid "Date"
 msgstr "Date"
 
-#: .\blog\models.py:69 .\gallery\models.py:162
+#: .\blog\models.py:69 .\gallery\models.py:178
 msgid "Image"
 msgstr "Image"
 
@@ -143,65 +143,69 @@ msgstr "Nom d'utilisateur"
 msgid "Object"
 msgstr "Objet"
 
-#: .\gallery\models.py:20 .\gallery\models.py:48
+#: .\gallery\models.py:25 .\gallery\models.py:53
 #: .\templates\registration\registration_form2.html:41
 #: .\trotteurs\models.py:92
 msgid "Country"
 msgstr "Pays"
 
-#: .\gallery\models.py:21
+#: .\gallery\models.py:26
 msgid "Countries"
 msgstr "Pays"
 
-#: .\gallery\models.py:53 .\trotteurs\models.py:228
+#: .\gallery\models.py:58 .\trotteurs\models.py:228
 msgid "Latitude"
 msgstr "Latitude"
 
-#: .\gallery\models.py:59 .\trotteurs\models.py:234
+#: .\gallery\models.py:64 .\trotteurs\models.py:234
 msgid "Longitude"
 msgstr "Longitude"
 
-#: .\gallery\models.py:67 .\gallery\models.py:110
+#: .\gallery\models.py:72 .\gallery\models.py:115
 msgid "City"
 msgstr "Ville"
 
-#: .\gallery\models.py:68 .\gallery\models.py:136
+#: .\gallery\models.py:73 .\gallery\models.py:141
 msgid "Cities"
 msgstr "Villes"
 
-#: .\gallery\models.py:98
+#: .\gallery\models.py:103
 msgid "Cover image"
 msgstr "Image de couverture"
 
-#: .\gallery\models.py:99
+#: .\gallery\models.py:104
 msgid "Size: width: 346px, height: 220px"
 msgstr "Taille : largeur : 346px, hauteur : 220px"
 
-#: .\gallery\models.py:103
+#: .\gallery\models.py:108
 msgid "Description"
 msgstr "Description"
 
-#: .\gallery\models.py:116 .\gallery\models.py:173
+#: .\gallery\models.py:121 .\gallery\models.py:195
 msgid "Album"
 msgstr "Album"
 
-#: .\gallery\models.py:117 .\gallery\models.py:190
+#: .\gallery\models.py:122 .\gallery\models.py:212
 msgid "Albums"
 msgstr "Albums"
 
-#: .\gallery\models.py:156 .\trotteurs\models.py:191
+#: .\gallery\models.py:172 .\trotteurs\models.py:191
 msgid "Publication date"
 msgstr "Date de publication"
 
-#: .\gallery\models.py:166
+#: .\gallery\models.py:183
+msgid "Thumbnail"
+msgstr "Vignette"
+
+#: .\gallery\models.py:188
 msgid "Legend"
 msgstr "Légende"
 
-#: .\gallery\models.py:179
+#: .\gallery\models.py:201
 msgid "Photo"
 msgstr "Photo"
 
-#: .\gallery\models.py:180
+#: .\gallery\models.py:202
 msgid "Photos"
 msgstr "Photos"
 
@@ -470,6 +474,14 @@ msgstr ""
 "Un email de confirmation vous a été envoyé. Ouvrez votre email et cliquez "
 "sur le lien pour activez votre compte."
 
+#: .\templates\registration\registration_complete.html:15
+msgid ""
+"If you don't receive the email, check your undesirable mail or send an email "
+"through the contact page."
+msgstr ""
+"Si vous ne recevez pas l'email, pensez à vérifier vos courriers indésirable"
+" où envoyer un email à l'aide de la page de contact"
+
 #: .\templates\registration\registration_form1.html:24
 #: .\templates\registration\registration_form2.html:24
 msgctxt "Title"
@@ -483,7 +495,7 @@ msgstr "Suivant"
 
 #: .\templates\registration\registration_form1.html:54
 #: .\templates\registration\registration_form2.html:55
-#: .\templates\trotteurs\header.html:41
+#: .\templates\trotteurs\header.html:35
 msgid "Register"
 msgstr "S&#39;inscrire"
 
@@ -494,7 +506,7 @@ msgstr "Déjà membre ?"
 
 #: .\templates\registration\registration_form1.html:60
 #: .\templates\registration\registration_form2.html:61
-#: .\templates\trotteurs\header.html:40
+#: .\templates\trotteurs\header.html:34
 msgid "Log in"
 msgstr "Se connecter"
 
@@ -520,7 +532,7 @@ msgstr "Nom"
 msgid "Register to the newsletter"
 msgstr "S'abonner à la newsletter"
 
-#: .\templates\trotteurs\contact.html:12 .\templates\trotteurs\header.html:31
+#: .\templates\trotteurs\contact.html:12 .\templates\trotteurs\header.html:25
 msgid "Contact"
 msgstr "Contact"
 
@@ -541,49 +553,29 @@ msgstr "sujet"
 msgid "message"
 msgstr "message"
 
-#: .\templates\trotteurs\header.html:22
-msgid "Home"
-msgstr "Accueil"
+#: .\templates\trotteurs\header.html:16 .\templates\trotteurs\skeleton.html:15
+msgid "Trotteurs"
+msgstr "Trotteurs"
 
-#: .\templates\trotteurs\header.html:28
+#: .\templates\trotteurs\header.html:22
 msgid "Blog"
 msgstr "Blog"
 
-#: .\templates\trotteurs\header.html:29
+#: .\templates\trotteurs\header.html:23
 msgid "Gallery"
 msgstr "Galerie"
 
-#: .\templates\trotteurs\header.html:30
+#: .\templates\trotteurs\header.html:24
 msgid "Route"
 msgstr "Itinéraire"
 
-#: .\templates\trotteurs\header.html:38
+#: .\templates\trotteurs\header.html:32
 msgid "Log out"
 msgstr "Se déconnecter"
 
-#: .\templates\trotteurs\home.html:12
-msgid "Departure in"
-msgstr "Départ dans"
-
-#: .\templates\trotteurs\home.html:18
-msgid "Days"
-msgstr "jours"
-
-#: .\templates\trotteurs\home.html:23
-msgid "Hours"
-msgstr "heures"
-
-#: .\templates\trotteurs\home.html:28
-msgid "Minutes"
-msgstr "minutes"
-
-#: .\templates\trotteurs\home.html:33
-msgid "Seconds"
-msgstr "secondes"
-
-#: .\templates\trotteurs\skeleton.html:15
-msgid "Trotteurs"
-msgstr "Trotteurs"
+#: .\templates\trotteurs\home.html:9
+msgid "Welcome to trotteurs"
+msgstr "Bienvenue sur trotteurs.fr"
 
 #: .\trotteurs\forms.py:27
 msgid "username"
@@ -698,6 +690,24 @@ msgid "Your account was successfully delete. We are sorry to see you go."
 msgstr ""
 "Votre compte a été supprimé avec succès. Nous somme désolé de vous voir "
 "partir."
+
+#~ msgid "Home"
+#~ msgstr "Accueil"
+
+#~ msgid "Departure in"
+#~ msgstr "Départ dans"
+
+#~ msgid "Days"
+#~ msgstr "jours"
+
+#~ msgid "Hours"
+#~ msgstr "heures"
+
+#~ msgid "Minutes"
+#~ msgstr "minutes"
+
+#~ msgid "Seconds"
+#~ msgstr "secondes"
 
 #~ msgid "Count activation"
 #~ msgstr "Activation de compte"
